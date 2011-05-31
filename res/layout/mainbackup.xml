@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" 
+  android:background="#cccccc">
+  
+  <LinearLayout 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:background="@drawable/bg" 
+    android:layout_alignParentTop="true">
+    <ImageView 
+      android:id="@+id/header"
+      android:src="@drawable/left"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"/>
+  </LinearLayout>
+  
+  <ScrollView 
+    android:id="@+id/ScrollView01" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent">
+    
+  	<RelativeLayout 
+  	  android:layout_width="fill_parent" 
+  	  android:layout_height="fill_parent" 
+  	  android:layout_gravity="center">
+  	  
+	  <!-- Use two LinearLayouts to create a border. -->
+	  <LinearLayout 
+	    android:id="@+id/collectionLayout" 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="fill_parent" 
+	    android:background="#808080"
+	  	android:layout_marginBottom="25dip" 
+	  	android:layout_marginLeft="25dip" 
+	  	android:layout_marginRight="25dip" 
+	  	android:layout_alignParentTop="true">
+	  <LinearLayout 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="fill_parent" 
+	    android:background="#eeeeee"
+	  	android:layout_margin="1dip" 
+	  	android:orientation="vertical">
+	  	
+		<TextView
+		  android:text="@string/collection"
+		  android:textColor="#cc0000" 
+		  android:layout_width="wrap_content" 
+		  android:layout_height="wrap_content"
+		  android:id="@+id/textView0" 
+		  android:textStyle="bold" 
+		  android:layout_marginLeft="5dip" 
+		  android:layout_marginRight="5dip"
+		  android:textSize="20sp"/>
+		  
+		<View android:layout_width="fill_parent"
+	      android:layout_height="2dip"
+	      android:background="#cc0000" 
+	      android:layout_marginLeft="5dip" 
+	      android:layout_marginRight="5dip" />
+	      
+		<LinearLayout 
+		  android:layout_width="fill_parent" 
+		  android:layout_height="fill_parent"
+	  	  android:orientation="horizontal" 
+	  	  android:layout_marginTop="8dip" 
+	  	  android:layout_marginBottom="5dip"
+	  	  android:layout_marginLeft="5dip" 
+	      android:layout_marginRight="5dip">
+		  <EditText android:layout_height="wrap_content" 
+		    android:id="@+id/editText1" 
+		    android:layout_gravity="center_vertical" 
+		    android:layout_width="fill_parent" 
+		    android:layout_weight="1"/>
+		  <Button android:layout_width="wrap_content" 
+		    android:text="Search" 
+		    android:layout_height="wrap_content" 
+		    android:id="@+id/button1" 
+		    android:layout_gravity="center_vertical"/>
+		</LinearLayout>
+		
+	  </LinearLayout></LinearLayout>
+		
+	  <!-- Use two LinearLayouts to create a border. -->
+	  <LinearLayout 
+	    android:id="@+id/searchLayout" 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="fill_parent" 
+	    android:background="#808080"
+	  	android:layout_marginLeft="25dip" 
+	  	android:layout_marginRight="25dip" 
+	  	android:layout_alignParentBottom="true" 
+	  	android:layout_below="@id/collectionLayout">
+	  <LinearLayout 
+	    android:id="@+id/searchLayout" 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="fill_parent" 
+	    android:background="#eeeeee"
+	  	android:layout_margin="1dip"
+	  	android:orientation="vertical">
+	  	
+	  	<TextView android:text="@string/search" 
+	  	  android:id="@+id/textView1" 
+	  	  android:textColor="#cc0000" 
+	  	  android:textStyle="bold" 
+	  	  android:layout_width="wrap_content" 
+	  	  android:layout_height="wrap_content" 
+	  	  android:layout_marginLeft="5dip" 
+	  	  android:layout_marginRight="5dip" 
+	  	  android:textSize="20sp"/>
+	  	  
+	  	<View android:layout_width="fill_parent"
+		  android:layout_height="2dip"
+		  android:background="#cc0000" 
+		  android:layout_marginLeft="5dip" 
+		  android:layout_marginRight="5dip"/>
+		  
+	  	<LinearLayout android:layout_width="fill_parent" 
+	  	  android:layout_height="fill_parent"
+	  	  android:orientation="horizontal" 
+	  	  android:layout_marginTop="8dip" 
+	  	  android:layout_marginBottom="5dip"
+	  	  android:layout_marginLeft="5dip" 
+		  android:layout_marginRight="5dip">
+	  	  <EditText android:layout_width="fill_parent" 
+	  	    android:layout_height="wrap_content" 
+	  	    android:id="@+id/editText2" 
+	  	    android:layout_gravity="center_vertical" 
+	  	    android:layout_weight="1"/>
+	  	  <Button android:text="Search" 
+	  	    android:id="@+id/button2" 
+	  	    android:layout_width="wrap_content" 
+	  	    android:layout_height="wrap_content" 
+	  	    android:layout_gravity="center_vertical"/>
+	  	</LinearLayout>
+	  	
+	  </LinearLayout></LinearLayout>
+	  
+  	</RelativeLayout>
+  	
+  </ScrollView>
+  
+  <RelativeLayout android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:background="@drawable/bg" 
+    android:layout_alignParentBottom="true">
+    
+    <ImageView 
+      android:id="@+id/footer"
+      android:src="@drawable/right"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"/>
+      
+  </RelativeLayout>
+  
+</RelativeLayout>

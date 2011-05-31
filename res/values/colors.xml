@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="transparent">#00ffffff</drawable>
+    <drawable name="altercolor1">#ffeeeeee</drawable>
+    <drawable name="altercolor2">#ffdddddd</drawable>
+    <drawable name="altercolor3">#ffcc0000</drawable>
+    <drawable name="altercolor4">#ff808080</drawable>
+</resources>
+

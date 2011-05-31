@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, RFGeneration!</string>
+    <string name="app_name">RFGeneration</string>
+    <string name="search">Database Search</string>
+    <string name="collection">View Collection</string>
+    <string name="main_no_items">No games to display.</string>
+</resources>

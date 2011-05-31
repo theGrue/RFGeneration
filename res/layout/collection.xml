@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="#eeeeee">
+  
+  <ScrollView android:id="@+id/ScrollView01" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="60px" android:layout_gravity="center_vertical">
+	<TableLayout 
+	    android:id="@+id/myTableLayout"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:background="#ffffff" 
+	    >
+
+	</TableLayout>
+  </ScrollView>
+  
+  <TableLayout 
+    android:layout_width="fill_parent" 
+    android:background="@drawable/bg2" 
+    android:id="@+id/HeaderLayout" android:layout_height="wrap_content" android:layout_gravity="top"
+    android:stretchColumns="1" android:paddingTop="5px">
+    <TableRow>
+    <Button android:id="@+id/PrevPage" android:layout_height="wrap_content" android:text="Prev Page" android:layout_width="wrap_content" android:layout_gravity="right"></Button>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical">
+    	<TextView android:text="Collection" android:textColor="#ffffffff" 
+    	android:layout_width="fill_parent" android:layout_height="wrap_content" 
+    	android:textStyle="bold" android:layout_gravity="center_vertical"
+    	android:gravity="center" android:textSize="12px" />
+    	<TextView android:text="All Consoles" android:textColor="#ffffffff" 
+    	android:layout_width="fill_parent" android:layout_height="wrap_content" 
+    	android:textStyle="bold" android:layout_gravity="center_vertical"
+    	android:gravity="center" android:textSize="12px" />
+    	<TextView android:text="All Types" android:textColor="#ffffffff" 
+    	android:layout_width="fill_parent" android:layout_height="wrap_content" 
+    	android:textStyle="bold" android:layout_gravity="center_vertical"
+    	android:gravity="center" android:textSize="12px" />
+    </LinearLayout>
+    <Button android:id="@+id/NextPage" android:layout_gravity="right" android:layout_height="wrap_content" android:text="Next Page" android:layout_width="wrap_content"></Button>
+    </TableRow>
+  </TableLayout>
+  
+</FrameLayout>

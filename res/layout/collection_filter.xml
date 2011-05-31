@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical" android:padding="10dip">
+    <TextView android:text="Folder:" android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+    <Spinner android:layout_height="wrap_content" android:id="@+id/folderSpinner" android:layout_width="fill_parent"></Spinner>
+    <TextView android:text="Console:" android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+    <Spinner android:layout_height="wrap_content" android:id="@+id/consoleSpinner" android:layout_width="fill_parent"></Spinner>
+    <TextView android:text="Type:" android:id="@+id/textView3" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+    <Spinner android:layout_height="wrap_content" android:id="@+id/typeSpinner" android:layout_width="fill_parent"></Spinner>
+</LinearLayout>

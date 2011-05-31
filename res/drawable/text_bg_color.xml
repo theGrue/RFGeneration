@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:state_pressed="false">
+    	<color android:color="@drawable/altercolor2" />
+    </item>
+    <item android:state_focused="true" android:state_pressed="true">
+    	<color android:color="@drawable/altercolor1" />
+    </item>
+    <item android:state_focused="false" android:state_pressed="true">
+    	<color android:color="@drawable/altercolor1" />
+    </item>
+    <item>
+    	<color android:color="@drawable/altercolor3" />
+    </item>
+</selector>
