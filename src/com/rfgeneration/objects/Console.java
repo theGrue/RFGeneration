@@ -206,6 +206,7 @@ public class Console {
 		if(console.equals("Sharp X1")) return "X1";
 		if(console.equals("Sharp X68000")) return "X68k";
 		if(console.equals("Sinclair ZX Spectrum")) return "SZX";
+		if(console.equals("Sinclair Spectrum ZX")) return "SZX";
 		if(console.equals("Sinclair ZX80 / ZX81")) return "ZX81";
 		if(console.equals("SNK Hyper Neo Geo 64")) return "HNG";
 		if(console.equals("SNK Neo Geo AES")) return "AES";
