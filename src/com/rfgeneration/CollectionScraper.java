@@ -51,7 +51,7 @@ public class CollectionScraper {
 		 collectionPage.setPage(page);
 		 
 		 // Load collection table into Game objects.
-		 Element table = document.select("table tr:eq(3) td:eq(1) table:eq(2) tr:eq(1) td form table").get(2);
+		 Element table = document.select("table > tr:eq(3) > td:eq(1) > table:eq(2) > tr:eq(1) > td > form > table").get(0);
 		 Elements tableRows = table.select("tr:gt(0)");
 		 
 		 try {
