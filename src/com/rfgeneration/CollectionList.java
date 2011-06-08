@@ -171,8 +171,10 @@ public class CollectionList extends ListActivity implements OnClickListener {
                         	else
                         		publisher.setText("[" + o.getType() + "] " + o.getPublisher());
                         	
-                        	if(o.getYear() > 0)
+                        	if(o.getYear() > 0 && !o.getPublisher().equals(""))
                         		publisher.setText(publisher.getText() + ", " + o.getYear());
+                        	else if(o.getYear() > 0)
+                        		publisher.setText(publisher.getText() + "" + o.getYear());
                         }
                         
                         RelativeLayout regionLayout = (RelativeLayout) v.findViewById(R.id.regionLayout);
