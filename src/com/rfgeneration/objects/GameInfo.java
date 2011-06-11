@@ -15,7 +15,7 @@ public class GameInfo extends Game {
 	private String mediaFormat;
 	private List<String> nameList;
 	private List<String> creditList;
-	
+	private List<String> imageTypes;
 	
 	public void setAlternateTitle(String alternateTitle) {
 		this.alternateTitle = alternateTitle;
@@ -82,6 +82,12 @@ public class GameInfo extends Game {
 	}
 	public List<String> getCreditList() {
 		return creditList;
+	}
+	public void setImageTypes(List<String> imageTypes) {
+		this.imageTypes = imageTypes;
+	}
+	public List<String> getImageTypes() {
+		return imageTypes;
 	}
 	
 }

@@ -106,6 +106,25 @@ public class GameInfoScraper {
 		 
 		gameInfo.setNameList(names);
 		gameInfo.setCreditList(credits);
+		
+		// Load the state of which images are present for this game.
+		tableRows = document.select("tr#title > td:eq(1) > table.bordercolor td");
+		ArrayList<String> imageTypes = new ArrayList<String>();
+
+		if(tableRows.size() == 5) {
+			if(tableRows.get(0).select("a").size() > 0)
+				 imageTypes.add("bf");
+			 if(tableRows.get(1).select("a").size() > 0)
+				 imageTypes.add("bb");
+			 if(tableRows.get(3).select("a").size() > 0)
+				 imageTypes.add("gs");
+			 if(tableRows.get(4).select("a").size() > 0)
+				 imageTypes.add("ms");
+			 if(tableRows.get(2).select("a").size() > 0)
+				 imageTypes.add("ss");
+		}
+		 
+		gameInfo.setImageTypes(imageTypes);
 
 		return gameInfo;
 	}
