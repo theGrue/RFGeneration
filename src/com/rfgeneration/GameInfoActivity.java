@@ -19,6 +19,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.widget.TableRow.LayoutParams;
@@ -27,6 +29,8 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 	private ProgressDialog m_ProgressDialog = null;
 	 private Runnable viewOrders;
 	 private GameInfo gameInfo;
+	 private int imageIndex = 0;
+	 private boolean firstLoad = true;
 	 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,7 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 	    			gameInfo = GameInfoScraper.getGameInfo(getIntent().getStringExtra("GAMEINFO_RFGID"));
 	    		} catch (Exception e) { }
 	    		
+	    		// Detail
 	    		TextView console = (TextView) findViewById(R.id.gameDetailConsole);
 	            if (console != null)
 	            	console.setText(gameInfo.getConsole());
@@ -137,6 +142,7 @@ public class GameInfoActivity extends Activity implements OnClickListener {
                 	}
 	            }
 	            
+	            // Credits
 	            LinearLayout ll = (LinearLayout)findViewById(R.id.gameCreditsLayout);
 	            
 	            for(int i = 0; i < gameInfo.getNameList().size() && i < gameInfo.getCreditList().size(); i++) {
@@ -162,6 +168,8 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 	            ((TextView)findViewById(R.id.DetailDetail)).setOnClickListener(GameInfoActivity.this);
 	            ((TextView)findViewById(R.id.DetailImages)).setOnClickListener(GameInfoActivity.this);
 	            ((TextView)findViewById(R.id.DetailCredits)).setOnClickListener(GameInfoActivity.this);
+	            ((ImageView)findViewById(R.id.gameImagesLeft)).setOnClickListener(GameInfoActivity.this);
+	            ((ImageView)findViewById(R.id.gameImagesRight)).setOnClickListener(GameInfoActivity.this);
 	            
 	            try {
 	    			setCurrentLayout(findViewById(R.id.DetailDetail));
@@ -170,9 +178,23 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 	      };
 
 	public void onClick(View v) {
-		try {
-			setCurrentLayout(v);
-		} catch (Exception e) { }
+		if(v.getId() == R.id.gameImagesLeft || v.getId() == R.id.gameImagesRight) {
+			if (v.getId() == R.id.gameImagesRight)
+				imageIndex++;
+			else if (v.getId() == R.id.gameImagesLeft)
+				imageIndex--;
+			
+			if(imageIndex >= gameInfo.getImageTypes().size())
+				imageIndex = 0;
+			else if (imageIndex < 0)
+				imageIndex = gameInfo.getImageTypes().size() - 1;
+			
+			setImage(imageIndex);
+		} else {
+			try {
+				setCurrentLayout(v);
+			} catch (Exception e) { }
+		}
 	}
 	
 	private void setCurrentLayout(View v) throws XmlPullParserException, IOException {
@@ -204,8 +226,9 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 			((TextView) findViewById(R.id.DetailCredits)).setClickable(true);
 		 }
 	
+		((ScrollView) findViewById(R.id.gameDetailScrollView)).setVisibility(View.GONE);
 		((LinearLayout) findViewById(R.id.gameDetailLayout)).setVisibility(View.GONE);
-		((LinearLayout) findViewById(R.id.gameImagesLayout)).setVisibility(View.GONE);
+		((RelativeLayout) findViewById(R.id.gameImagesLayout)).setVisibility(View.GONE);
 		((LinearLayout) findViewById(R.id.gameCreditsLayout)).setVisibility(View.GONE);
 		
 		if(v.getId() == R.id.DetailDetail) {
@@ -213,19 +236,45 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 			((TextView) findViewById(R.id.DetailDetail)).setBackgroundColor(0xffeeeeee);
 			((TextView) findViewById(R.id.DetailDetail)).setPadding(padding, padding, padding, padding);
 			((TextView) findViewById(R.id.DetailDetail)).setClickable(false);
+			((ScrollView) findViewById(R.id.gameDetailScrollView)).setVisibility(View.VISIBLE);
 			((LinearLayout) findViewById(R.id.gameDetailLayout)).setVisibility(View.VISIBLE);
 		} else if(v.getId() == R.id.DetailImages) {
 			((TextView) findViewById(R.id.DetailImages)).setTextColor(0xffcc0000);
 			((TextView) findViewById(R.id.DetailImages)).setBackgroundColor(0xffeeeeee);
 			((TextView) findViewById(R.id.DetailImages)).setPadding(padding, padding, padding, padding);
 			((TextView) findViewById(R.id.DetailImages)).setClickable(false);
-			((LinearLayout) findViewById(R.id.gameImagesLayout)).setVisibility(View.VISIBLE);
+			((RelativeLayout) findViewById(R.id.gameImagesLayout)).setVisibility(View.VISIBLE);
+            if(firstLoad && gameInfo.getImageTypes().size() > 0) setImage(0);
+            firstLoad = false;
 		} else if(v.getId() == R.id.DetailCredits) {
 			((TextView) findViewById(R.id.DetailCredits)).setTextColor(0xffcc0000);
 			((TextView) findViewById(R.id.DetailCredits)).setBackgroundColor(0xffeeeeee);
 			((TextView) findViewById(R.id.DetailCredits)).setPadding(padding, padding, padding, padding);
 			((TextView) findViewById(R.id.DetailCredits)).setClickable(false);
+			((ScrollView) findViewById(R.id.gameDetailScrollView)).setVisibility(View.VISIBLE);
 			((LinearLayout) findViewById(R.id.gameCreditsLayout)).setVisibility(View.VISIBLE);
 		}
+	}
+	
+	private void setImage(int index) {
+		String imageType = gameInfo.getImageTypes().get(index);
+		String rfgId = gameInfo.getRFGID();
+		String folder = rfgId.substring(0, 5);
+		
+		LoaderImageView image = (LoaderImageView) findViewById(R.id.gameImagesImage);
+		image.setImageDrawable("http://www.rfgeneration.com/images/games/" + 
+				folder + "/" + imageType + "/" + rfgId + ".jpg");
+		
+		TextView caption = (TextView) findViewById(R.id.gameImagesText);
+		if (imageType.equals("bf"))
+			caption.setText("Box Front");
+		else if (imageType.equals("bb"))
+			caption.setText("Box Back");
+		else if (imageType.equals("gs"))
+			caption.setText("Game");
+		else if (imageType.equals("ms"))
+			caption.setText("Manual");
+		else if (imageType.equals("ss"))
+			caption.setText("Screenshot");
 	}
 }
