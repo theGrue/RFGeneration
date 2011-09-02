@@ -20,5 +20,6 @@
         <activity android:name=".GameInfoActivity" android:theme="@android:style/Theme.NoTitleBar" android:label="@string/app_name"></activity>
         <activity android:name=".GameInfoWidget" android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name=".GameCredits" android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:theme="@android:style/Theme.NoTitleBar" android:name=".SearchList" android:label="@string/app_name"></activity>
     </application>
 </manifest>

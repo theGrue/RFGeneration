@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  <ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01" 
+    android:layout_height="fill_parent" android:layout_width="fill_parent" android:fillViewport="true">
+
+<LinearLayout
   android:layout_width="fill_parent"
   android:layout_height="fill_parent" 
-  android:background="#cccccc">
+  android:background="#cccccc"
+  android:orientation="vertical">
   
     <LinearLayout 
     android:layout_width="fill_parent" 
@@ -14,16 +19,10 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"/>
   </LinearLayout>
-  
-  <ScrollView 
-    android:id="@+id/ScrollView01" 
-    android:layout_width="fill_parent" 
-    android:layout_height="fill_parent" >
     
 	<LinearLayout android:id="@+id/MainLayout" 
 	  android:layout_width="fill_parent" 
-	  android:layout_height="fill_parent" 
-	  android:orientation="vertical" android:layout_gravity="center_vertical">
+	  android:orientation="vertical" android:layout_gravity="center_vertical" android:gravity="center_vertical" android:layout_height="wrap_content">
   	  
 	  <!-- Use two LinearLayouts to create a border. -->
 	  <LinearLayout 
@@ -88,10 +87,9 @@
 	    android:layout_height="wrap_content" 
 	    android:background="#808080"
 	  	android:layout_marginTop="25dip"
-	  	android:layout_marginBottom="100dip"
+	  	android:layout_marginBottom="25dip"
 	  	android:layout_marginLeft="25dip"
-	  	android:layout_marginRight="25dip" 
-	  	android:visibility="gone">
+	  	android:layout_marginRight="25dip">
 	  <LinearLayout 
 	    android:id="@+id/searchLayout" 
 	    android:layout_width="fill_parent" 
@@ -139,14 +137,16 @@
 	  
     </LinearLayout>
     
-  </ScrollView>
-  
 
   
+
+  	<LinearLayout 
+	  android:layout_width="fill_parent" 
+	  android:orientation="vertical" android:layout_gravity="bottom" android:gravity="bottom" android:layout_height="fill_parent">
+  	  
   <RelativeLayout android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
-    android:background="@drawable/bg" 
-    android:layout_gravity="bottom" android:layout_alignParentBottom="true" >
+    android:background="@drawable/bg" >
     
     <ImageView 
       android:id="@+id/footer"
@@ -156,4 +156,6 @@
       android:layout_centerHorizontal="true"/>
       
   </RelativeLayout>
- </RelativeLayout>
+  </LinearLayout>
+ </LinearLayout>
+  </ScrollView>
