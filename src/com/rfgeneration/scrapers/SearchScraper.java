@@ -42,7 +42,7 @@ public class SearchScraper {
 				 newGame.setRFGID(tableData.get(3).select("a").first().attr("href").substring(14));
 				 newGame.setTitle(tableData.get(3).text());
 				 newGame.setPublisher(tableData.get(4).text());
-				 newGame.setYear(Integer.parseInt(tableData.get(5).text()));
+				 try { newGame.setYear(Integer.parseInt(tableData.get(5).text())); } catch (Exception e) { }
 				 newGame.setGenre(tableData.get(6).text());
 				 
 				 // Check for a variation title
