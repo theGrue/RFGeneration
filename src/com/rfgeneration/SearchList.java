@@ -19,6 +19,7 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class SearchList extends ListActivity implements OnClickListener {
 	private ArrayList<Game> gameList = new ArrayList<Game>();
 	private int numPages = 1;
 	private int lastLoadedPage = 1;
+	private ArrayList<Game> items;
 	
     /** Called when the activity is first created. */
     @Override
@@ -66,12 +68,11 @@ public class SearchList extends ListActivity implements OnClickListener {
 
 		private RotateAnimation rotate=null;
 		private ArrayList<Game> gameListToLoad = new ArrayList<Game>();
-		private ArrayList<Game> items;
 		
 		public SearchAdapter(ArrayList<Game> list) {
 			// TODO Auto-generated constructor stub
 			super(new ArrayAdapter<Game>(SearchList.this,
-					R.layout.gamerow,
+					R.layout.pending,
 					android.R.id.text1,
 					list));
 
@@ -154,6 +155,10 @@ public class SearchList extends ListActivity implements OnClickListener {
                     	}
                     }
             }
+            else
+            {
+            	v = super.getView(position, convertView, parent);
+            }
             
             // http://stackoverflow.com/questions/2050533/list-items-with-alternating-colors
             if (position % 2 == 0){
@@ -203,10 +208,21 @@ public class SearchList extends ListActivity implements OnClickListener {
 			if(gameListToLoad.size() > 0) {
 				@SuppressWarnings("unchecked")
 				ArrayAdapter<Game> a=(ArrayAdapter<Game>)getWrappedAdapter();
-				for (int i=0;i<gameListToLoad.size();i++) { a.add(gameListToLoad.get(i)); items.add(gameListToLoad.get(i)); }
+				for (int i=0;i<gameListToLoad.size();i++) { a.add(gameListToLoad.get(i)); /*items.add(gameListToLoad.get(i));*/ }
 			}
 		}
 		
+	}
+	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+	  super.onListItemClick(l, v, position, id);
+	  
+	  try{
+	  	Intent myIntent = new Intent(v.getContext(), GameInfoActivity.class);
+		myIntent.putExtra("GAMEINFO_RFGID", items.get(position).getRFGID());
+		startActivityForResult(myIntent, 0);
+	  	} catch (Exception e) { }
 	}
 	
 }
