@@ -11,6 +11,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -108,9 +109,9 @@ public class SearchList extends ListActivity implements OnClickListener {
                     TextView title = (TextView) v.findViewById(R.id.title);
                     if(title != null)
                     {
-                    	title.setText(o.getTitle());
+                    	title.setText(Html.fromHtml("<b>" + o.getTitle() + "</b>"));
                     	if(o.getVariationTitle() != null)
-       	            		title.setText(title.getText() + " [" + o.getVariationTitle() + "]");
+       	            		title.setText(Html.fromHtml("<b>" + o.getTitle() + "</b> <font color=\"#404040\">[" + o.getVariationTitle() + "]</font>"));
                     }
                     
                     TextView quantity = (TextView) v.findViewById(R.id.quantity);

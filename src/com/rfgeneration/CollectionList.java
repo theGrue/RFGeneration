@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -155,9 +156,9 @@ public class CollectionList extends ListActivity implements OnClickListener {
                         TextView title = (TextView) v.findViewById(R.id.title);
                         if(title != null)
                         {
-                        	title.setText(o.getTitle());
+                        	title.setText(Html.fromHtml("<b>" + o.getTitle() + "</b>"));
                         	if(o.getVariationTitle() != null)
-           	            		title.setText(title.getText() + " [" + o.getVariationTitle() + "]");
+           	            		title.setText(Html.fromHtml("<b>" + o.getTitle() + "</b> <font color=\"#404040\">[" + o.getVariationTitle() + "]</font>"));
                         }
                         
                         TextView quantity = (TextView) v.findViewById(R.id.quantity);

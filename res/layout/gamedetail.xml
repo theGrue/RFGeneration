@@ -71,7 +71,7 @@
 	      android:id="@+id/gameDetailTitle" 
 	      android:layout_width="wrap_content" 
 	      android:layout_height="wrap_content"
-	      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+	      android:textColor="#ffcc0000" android:paddingRight="10dip"
 	      android:textSize="25sp"
 	      android:layout_marginLeft="5dip" android:layout_marginBottom="2dip" android:layout_marginRight="5dip"
 	      ></TextView>

@@ -32,8 +32,7 @@
 		            android:layout_height="wrap_content"
 		            android:text="Game Title [Variant]"
 		            android:textColor="#ff000000"
-		        	android:ellipsize="marquee"
-		        	android:textStyle="bold"/>
+		        	android:ellipsize="marquee"/>
 		        <TextView
 		            android:id="@+id/quantity"
 		            android:layout_width="wrap_content"

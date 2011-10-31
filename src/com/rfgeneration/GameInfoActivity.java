@@ -15,6 +15,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -76,9 +78,9 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 	            TextView title = (TextView) findViewById(R.id.gameDetailTitle);
 	            if(title != null)
 	            {
-	            	title.setText(gameInfo.getTitle());
+	            	title.setText(Html.fromHtml("<b>" + gameInfo.getTitle() + "</b>"));
 	            	if(gameInfo.getVariationTitle() != null)
-	               		title.setText(title.getText() + " [" + gameInfo.getVariationTitle() + "]");
+	               		title.setText(Html.fromHtml("<b>" + gameInfo.getTitle() + "</b> [" + gameInfo.getVariationTitle() + "]"));
 	            }
 	            
 	            TextView alternateTitle = (TextView) findViewById(R.id.gameDetailAlternateTitle);
@@ -98,9 +100,13 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 	            	part.setText(gameInfo.getPartNumber());
 	            
 	            TextView upc = (TextView) findViewById(R.id.gameDetailUPC);
-	            if(upc != null)
-	            	upc.setText(gameInfo.getUPC());
-	            
+	            if(upc != null && gameInfo.getUPC() != "")
+	            {
+	            	upc.setText(Html.fromHtml(gameInfo.getUPC() + " <a href=\"http://videogames.pricecharting.com/search/?q=" + gameInfo.getUPC() + "\">VGPC</a>"));
+	            	upc.setMovementMethod(LinkMovementMethod.getInstance());
+
+	            }
+
 	            TextView publisher = (TextView) findViewById(R.id.gameDetailPublisher);
 	            if(publisher != null)
 	            	publisher.setText(gameInfo.getPublisher());
