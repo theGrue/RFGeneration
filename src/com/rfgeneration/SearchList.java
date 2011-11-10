@@ -8,11 +8,15 @@ import com.rfgeneration.objects.Game;
 import com.rfgeneration.scrapers.SearchScraper;
 
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -31,6 +35,8 @@ public class SearchList extends ListActivity implements OnClickListener {
 	private int numPages = 1;
 	private int lastLoadedPage = 1;
 	private ArrayList<Game> items;
+	private Runnable getData;
+	private ProgressDialog m_ProgressDialog = null;
 	
     /** Called when the activity is first created. */
     @Override
@@ -42,12 +48,21 @@ public class SearchList extends ListActivity implements OnClickListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
+		
+		getData = new Runnable(){
+		    public void run() {
+		        getData();
+		    }
+		};
+		Thread thread = new Thread(getData);
+		thread.start();
+		m_ProgressDialog = ProgressDialog.show(SearchList.this,    
+		      "", "Now loading...", true);
+    }    
+	
+    private void getData() {
 		Intent myIntent = getIntent(); // this is just for example purpose
 		searchGame = myIntent.getStringExtra("SEARCH_GAME");
-		
-		TextView currentPage = (TextView) findViewById(R.id.SearchHeader);
-        currentPage.setText("Search results for \"" + searchGame + "\"...");
 		
 		try {
 			CollectionPage searchResults = SearchScraper.getSearchPage(searchGame, 1);
@@ -58,8 +73,19 @@ public class SearchList extends ListActivity implements OnClickListener {
 			e.printStackTrace();
 		}
 		
-		setListAdapter(new SearchAdapter(gameList));
+		runOnUiThread(returnRes);
     }
+    
+    private Runnable returnRes = new Runnable() {
+        public void run() {	
+        	m_ProgressDialog.dismiss();
+        	
+			TextView currentPage = (TextView) findViewById(R.id.SearchHeader);
+	        currentPage.setText("Search results for \"" + searchGame + "\"...");
+
+			setListAdapter(new SearchAdapter(gameList));
+        }
+    };
     
 	public void onClick(View v) {
 
@@ -227,4 +253,23 @@ public class SearchList extends ListActivity implements OnClickListener {
 	  	} catch (Exception e) { }
 	}
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.searchmenu, menu);
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+		    case R.id.searchmenuhome:
+		    	Intent myIntent = new Intent(this, RFGeneration.class);
+				startActivityForResult(myIntent, 0);
+		        return true;
+		    default:
+		        return super.onOptionsItemSelected(item);
+	    }
+    }
 }
