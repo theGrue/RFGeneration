@@ -47,7 +47,7 @@ public class SearchList extends ListActivity implements OnClickListener {
 		searchGame = myIntent.getStringExtra("SEARCH_GAME");
 		
 		TextView currentPage = (TextView) findViewById(R.id.SearchHeader);
-        currentPage.setText("Search results for \"" + searchGame + "\"");
+        currentPage.setText("Search results for \"" + searchGame + "\"...");
 		
 		try {
 			CollectionPage searchResults = SearchScraper.getSearchPage(searchGame, 1);
@@ -175,9 +175,10 @@ public class SearchList extends ListActivity implements OnClickListener {
 		protected View getPendingView(ViewGroup parent) {
 			View row=getLayoutInflater().inflate(R.layout.pending, null);
 	
-			View child=row.findViewById(android.R.id.text1);
+			TextView child = (TextView)row.findViewById(android.R.id.text1);
+			child.setText("Loading page " + (lastLoadedPage + 1) + " of " + numPages + "...");
 	
-			child.setVisibility(View.GONE);
+			//child.setVisibility(View.GONE);
 	
 			//child=row.findViewById(R.id.throbber);
 			//child.setVisibility(View.VISIBLE);

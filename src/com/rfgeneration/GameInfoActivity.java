@@ -100,11 +100,14 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 	            	part.setText(gameInfo.getPartNumber());
 	            
 	            TextView upc = (TextView) findViewById(R.id.gameDetailUPC);
-	            if(upc != null && gameInfo.getUPC() != "")
+	            if(upc != null)
 	            {
-	            	upc.setText(Html.fromHtml(gameInfo.getUPC() + " <a href=\"http://videogames.pricecharting.com/search/?q=" + gameInfo.getUPC() + "\">VGPC</a>"));
-	            	upc.setMovementMethod(LinkMovementMethod.getInstance());
-
+	            	if(!gameInfo.getUPC().equals("")) {
+	            		upc.setText(Html.fromHtml(gameInfo.getUPC() + " <a href=\"http://videogames.pricecharting.com/search/?q=" + gameInfo.getUPC() + "\">VGPC</a>"));
+	            		upc.setMovementMethod(LinkMovementMethod.getInstance());
+	            	} else {
+	            		upc.setText(gameInfo.getUPC());
+	            	}
 	            }
 
 	            TextView publisher = (TextView) findViewById(R.id.gameDetailPublisher);

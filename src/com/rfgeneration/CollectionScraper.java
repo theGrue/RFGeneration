@@ -40,7 +40,7 @@ public class CollectionScraper {
 		 
 		 // Get the HTML page and parse it with jsoup.
 		 URL url = new URL("http://www.rfgeneration.com/cgi-bin/collection.pl?name=" + userName + "&folder=" + folder + "&firstresult=" + getFirstResult(page) + "&console=" + console + "&type=" + type);
-		 Document document = Jsoup.parse(url, 3000);
+		 Document document = Jsoup.parse(url, 30000);
 		 
 		 // Create the CollectionPage object and set some key info.
 		 CollectionPage collectionPage = new CollectionPage();

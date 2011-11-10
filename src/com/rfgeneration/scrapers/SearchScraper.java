@@ -1,6 +1,7 @@
 package com.rfgeneration.scrapers;
 
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,8 +21,8 @@ public class SearchScraper {
 		 Pattern variantRegex = Pattern.compile(" \\[.*\\]$");
 		 
 		 // Get the HTML page and parse it with jsoup.
-		 URL url = new URL("http://www.rfgeneration.com/cgi-bin/search.pl?search=true&inputtype=title&query=" + query + "&firstresult=" + getFirstResult(page));
-		 Document document = Jsoup.parse(url, 3000);
+		 URL url = new URL("http://www.rfgeneration.com/cgi-bin/search.pl?search=true&inputtype=title&query=" + URLEncoder.encode(query, "ISO-8859-1") + "&firstresult=" + getFirstResult(page));
+		 Document document = Jsoup.parse(url, 30000);
 		 
 		 // Create the CollectionPage object and set some key info.
 		 CollectionPage collectionPage = new CollectionPage();

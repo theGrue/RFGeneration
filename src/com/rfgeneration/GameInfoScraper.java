@@ -33,7 +33,7 @@ public class GameInfoScraper {
 		gameInfo.setRFGID(rfgid);
 		
 		URL url = new URL("http://www.rfgeneration.com/cgi-bin/getinfo.pl?ID=" + rfgid);
-		Document document = Jsoup.parse(url, 3000);
+		Document document = Jsoup.parse(url, 30000);
 		
 		Elements tables = document.select("table tr:eq(3) td:eq(1) table.bordercolor tr td table.windowbg2 tr:eq(3) td table");
 		Element table = tables.get(4);

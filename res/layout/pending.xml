@@ -3,10 +3,12 @@
 	android:id="@android:id/text1"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
-	android:textAppearance="?android:attr/textAppearanceLarge"
 	android:gravity="center_vertical"
-	android:paddingLeft="6dip"
+	android:paddingLeft="10dip"
 	android:minHeight="?android:attr/listPreferredItemHeight"
+	android:ellipsize="marquee"
+    android:singleLine="true"
 	android:text="Please wait..."
+	android:textColor="#ff000000"
 	/>
 
