@@ -135,6 +135,16 @@
 	  	
 	  </LinearLayout></LinearLayout>
 	  
+   	  <TextView 
+   	  	android:id="@+id/aboutrfg"
+  	  	android:text="@string/about"
+  	  	android:layout_width="fill_parent" 
+		  android:layout_height="wrap_content"
+		  android:gravity="center"
+		  android:textColor="#404040"
+		  android:textStyle="bold"
+		  android:layout_marginTop="25dip"/>
+	  
     </LinearLayout>
     
 

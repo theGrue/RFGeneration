@@ -201,9 +201,11 @@ public class SearchList extends ListActivity implements OnClickListener {
 		protected View getPendingView(ViewGroup parent) {
 			View row=getLayoutInflater().inflate(R.layout.pending, null);
 	
-			TextView child = (TextView)row.findViewById(android.R.id.text1);
-			child.setText("Loading page " + (lastLoadedPage + 1) + " of " + numPages + "...");
-	
+			if(numPages > 1)
+			{
+				TextView child = (TextView)row.findViewById(android.R.id.text1);
+				child.setText("Loading page " + (lastLoadedPage + 1) + " of " + numPages + "...");
+			}
 			//child.setVisibility(View.GONE);
 	
 			//child=row.findViewById(R.id.throbber);
