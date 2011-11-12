@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rfgeneration;
+package com.jgrue.rfgeneration;
 
 import android.content.Context;
 import android.os.Handler;
@@ -32,7 +32,7 @@ import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.widget.EditText;
 
-import com.rfgeneration.R;
+import com.jgrue.rfgeneration.R;
 
 /**
  * This class has been pulled from the Android platform source code, its an internal widget that hasn't been

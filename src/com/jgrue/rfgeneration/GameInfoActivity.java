@@ -1,10 +1,12 @@
-package com.rfgeneration;
+package com.jgrue.rfgeneration;
 
 import java.io.IOException;
 
 import org.xmlpull.v1.XmlPullParserException;
 
-import com.rfgeneration.objects.GameInfo;
+import com.jgrue.rfgeneration.objects.GameInfo;
+import com.jgrue.rfgeneration.scrapers.GameInfoScraper;
+import com.jgrue.rfgeneration.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

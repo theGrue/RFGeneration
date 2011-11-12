@@ -1,4 +1,4 @@
-package com.rfgeneration;
+package com.jgrue.rfgeneration.scrapers;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.rfgeneration.objects.GameInfo;
+import com.jgrue.rfgeneration.objects.GameInfo;
 
 public class GameInfoScraper {
 	private static GameInfo lastGame = null;

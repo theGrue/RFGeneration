@@ -1,4 +1,4 @@
-package com.rfgeneration;
+package com.jgrue.rfgeneration;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

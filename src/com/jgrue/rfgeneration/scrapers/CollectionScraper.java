@@ -1,4 +1,4 @@
-package com.rfgeneration;
+package com.jgrue.rfgeneration.scrapers;
 
 import java.net.URL;
 import java.net.URLEncoder;
@@ -12,9 +12,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.rfgeneration.objects.CollectionPage;
-import com.rfgeneration.objects.Console;
-import com.rfgeneration.objects.Game;
+import com.jgrue.rfgeneration.objects.CollectionPage;
+import com.jgrue.rfgeneration.objects.Console;
+import com.jgrue.rfgeneration.objects.Game;
 
 public class CollectionScraper {
 	private static HashMap<String, CollectionPage> collectionPages = null;

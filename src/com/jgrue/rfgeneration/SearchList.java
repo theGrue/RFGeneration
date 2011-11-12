@@ -1,11 +1,12 @@
-package com.rfgeneration;
+package com.jgrue.rfgeneration;
 
 import java.util.ArrayList;
 
 import com.commonsware.cwac.endless.EndlessAdapter;
-import com.rfgeneration.objects.CollectionPage;
-import com.rfgeneration.objects.Game;
-import com.rfgeneration.scrapers.SearchScraper;
+import com.jgrue.rfgeneration.objects.CollectionPage;
+import com.jgrue.rfgeneration.objects.Game;
+import com.jgrue.rfgeneration.scrapers.SearchScraper;
+import com.jgrue.rfgeneration.R;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;

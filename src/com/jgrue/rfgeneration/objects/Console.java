@@ -1,4 +1,4 @@
-package com.rfgeneration.objects;
+package com.jgrue.rfgeneration.objects;
 
 public class Console {
 	private String console;

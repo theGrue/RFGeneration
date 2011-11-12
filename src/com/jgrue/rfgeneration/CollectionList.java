@@ -1,9 +1,11 @@
-package com.rfgeneration;
+package com.jgrue.rfgeneration;
 
 import java.util.ArrayList;
 
-import com.rfgeneration.objects.CollectionPage;
-import com.rfgeneration.objects.Game;
+import com.jgrue.rfgeneration.objects.CollectionPage;
+import com.jgrue.rfgeneration.objects.Game;
+import com.jgrue.rfgeneration.scrapers.CollectionScraper;
+import com.jgrue.rfgeneration.R;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;

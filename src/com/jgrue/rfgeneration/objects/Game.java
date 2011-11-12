@@ -1,6 +1,6 @@
-package com.rfgeneration.objects;
+package com.jgrue.rfgeneration.objects;
 
-import com.rfgeneration.R;
+import com.jgrue.rfgeneration.R;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
