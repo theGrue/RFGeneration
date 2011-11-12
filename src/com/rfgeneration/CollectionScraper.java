@@ -1,6 +1,7 @@
 package com.rfgeneration;
 
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -39,7 +40,7 @@ public class CollectionScraper {
 		 Pattern variantRegex = Pattern.compile(" \\[.*\\]$");
 		 
 		 // Get the HTML page and parse it with jsoup.
-		 URL url = new URL("http://www.rfgeneration.com/cgi-bin/collection.pl?name=" + userName + "&folder=" + folder + "&firstresult=" + getFirstResult(page) + "&console=" + console + "&type=" + type);
+		 URL url = new URL("http://www.rfgeneration.com/cgi-bin/collection.pl?name=" + userName + "&folder=" + URLEncoder.encode(folder, "ISO-8859-1") + "&firstresult=" + getFirstResult(page) + "&console=" + console + "&type=" + type);
 		 Document document = Jsoup.parse(url, 30000);
 		 
 		 // Create the CollectionPage object and set some key info.
