@@ -364,4 +364,20 @@
 	   
 	</RelativeLayout>
 	
+	<LinearLayout android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:id="@+id/gameErrorLayout"
+	    android:padding="5dip"
+	    android:orientation="vertical"
+	    android:gravity="center"
+	    android:visibility="gone">
+	    <ImageView android:src="@drawable/negativeman" android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" android:gravity="center"></ImageView>
+	    <TextView android:id="@+id/gameDetailError" android:layout_width="fill_parent"
+	    android:layout_height="wrap_content" android:gravity="center"
+	    android:textColor="#ff000000" ></TextView>
+	    <EditText android:id="@+id/gameDetailErrorRFGID" android:layout_width="fill_parent"
+	    android:layout_height="wrap_content" android:gravity="center"></EditText>
+    </LinearLayout>
+	
 </LinearLayout>
