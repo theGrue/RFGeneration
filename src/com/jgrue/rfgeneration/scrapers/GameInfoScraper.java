@@ -11,6 +11,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.jgrue.rfgeneration.objects.GameInfo;
+import com.jgrue.rfgeneration.scrapers.HardwareInfoScraper;
 
 public class GameInfoScraper {
 	private static GameInfo lastGame = null;
@@ -36,6 +37,9 @@ public class GameInfoScraper {
 		Document document = Jsoup.parse(url, 30000);
 		
 		Elements tables = document.select("table tr:eq(3) td:eq(1) table.bordercolor tr td table.windowbg2 tr:eq(3) td table");
+		if(tables.size() <= 4)
+			return HardwareInfoScraper.scrapeHardwareInfo(rfgid);
+		
 		Element table = tables.get(4);
 		Elements tableRows = table.select("tr");
 		 

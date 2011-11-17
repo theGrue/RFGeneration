@@ -197,7 +197,7 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 	    			
 	    			EditText errorRFGID = (EditText)findViewById(R.id.gameDetailErrorRFGID);
 	    			if(errorRFGID != null)
-	    				errorRFGID.setText(getIntent().getStringExtra("GAMEINFO_RFGID").substring(8));
+	    				errorRFGID.setText(getIntent().getStringExtra("GAMEINFO_RFGID"));
 	    			
 	    			((ScrollView) findViewById(R.id.gameDetailScrollView)).setVisibility(View.GONE);
 	    			((LinearLayout) findViewById(R.id.gameDetailLayout)).setVisibility(View.GONE);

@@ -63,7 +63,7 @@ public class CollectionScraper {
 				 newGame.setConsole(tableData.get(0).text());
 				 newGame.setRegion(tableData.get(1).select("img").first().attr("title"));
 				 newGame.setType(tableData.get(2).text());
-				 newGame.setRFGID(tableData.get(3).select("a").first().attr("href").substring(14));
+				 newGame.setRFGID(tableData.get(3).select("a").first().attr("href").split("=")[1]);
 				 newGame.setTitle(tableData.get(3).text());
 				 newGame.setPublisher(tableData.get(4).text());
 				 try { newGame.setYear(Integer.parseInt(tableData.get(5).text())); } catch (Exception e) { }
