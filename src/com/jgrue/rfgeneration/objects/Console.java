@@ -146,6 +146,7 @@ public class Console {
 		if(console.equals("Nintendo DSi")) return "DSi";
 		if(console.equals("Nintendo DSiWare")) return "DSiW";
 		if(console.equals("Nintendo e-Reader")) return "eRdr";
+		if(console.equals("Nintendo eShop")) return "eShop";
 		if(console.equals("Nintendo Famicom")) return "FC";
 		if(console.equals("Nintendo Famicom Disk System")) return "FCD";
 		if(console.equals("Nintendo Game Boy")) return "GB";
