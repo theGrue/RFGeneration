@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -227,7 +228,7 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 		 XmlResourceParser   parser     = resources.getXml(R.drawable.text_color);
 		 ColorStateList      text       = ColorStateList.createFromXml(resources, parser);
 		 Drawable text_bg = resources.getDrawable(R.drawable.text_bg_color);
-		 int padding = (int)resources.getDisplayMetrics().density * 5;
+		 int padding = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
 
 		 if(!((TextView) findViewById(R.id.DetailDetail)).isClickable()) {
 			((TextView) findViewById(R.id.DetailDetail)).setTextColor(text);

@@ -9,7 +9,7 @@
   <LinearLayout 
     android:layout_width="fill_parent" 
     android:background="@drawable/bg" 
-    android:layout_height="60px" android:layout_gravity="top">
+    android:layout_height="wrap_content" android:layout_gravity="top">
     <ImageView 
       android:src="@drawable/left"
       android:layout_width="wrap_content"
