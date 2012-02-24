@@ -32,7 +32,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class CollectionList extends ListActivity implements OnClickListener {
+public class CollectionListActivity extends ListActivity implements OnClickListener {
     private ProgressDialog m_ProgressDialog = null;
     private ArrayList<Game> gameList = null;
     private GameAdapter gameAdapter;
@@ -55,6 +55,8 @@ public class CollectionList extends ListActivity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.collectionlist);
+        
+        findViewById(R.id.collection_progress).setVisibility(View.GONE);
         
         Intent myIntent = getIntent(); // this is just for example purpose
         userName = myIntent.getStringExtra("COLLECTION_USERNAME");
@@ -82,7 +84,7 @@ public class CollectionList extends ListActivity implements OnClickListener {
 		};
 		Thread thread =  new Thread(null, viewOrders, "MagentoBackground");
 		thread.start();
-		m_ProgressDialog = ProgressDialog.show(CollectionList.this,    
+		m_ProgressDialog = ProgressDialog.show(CollectionListActivity.this,    
 		      "", "Now loading...", true);
     }
     
@@ -241,7 +243,7 @@ public class CollectionList extends ListActivity implements OnClickListener {
 			       .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 			                //MyActivity.this.finish();
-			        	   Intent myIntent = new Intent(getBaseContext(), CollectionList.class);
+			        	   Intent myIntent = new Intent(getBaseContext(), CollectionListActivity.class);
 							myIntent.putExtra("COLLECTION_USERNAME", userName);
 							myIntent.putExtra("COLLECTION_PAGE", numPicker.getCurrent());
 							myIntent.putExtra("COLLECTION_FOLDER", folder);
@@ -266,7 +268,7 @@ public class CollectionList extends ListActivity implements OnClickListener {
 				page--;
 			
 			if(page != prevPage) {
-				Intent myIntent = new Intent(v.getContext(), CollectionList.class);
+				Intent myIntent = new Intent(v.getContext(), CollectionListActivity.class);
 				myIntent.putExtra("COLLECTION_USERNAME", userName);
 				myIntent.putExtra("COLLECTION_PAGE", page);
 				myIntent.putExtra("COLLECTION_FOLDER", folder);
@@ -342,7 +344,7 @@ public class CollectionList extends ListActivity implements OnClickListener {
 			       .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 			                //MyActivity.this.finish();			        	   
-			        	   Intent myIntent = new Intent(getBaseContext(), CollectionList.class);
+			        	   Intent myIntent = new Intent(getBaseContext(), CollectionListActivity.class);
 							myIntent.putExtra("COLLECTION_USERNAME", userName);
 							myIntent.putExtra("COLLECTION_PAGE", 1);
 							myIntent.putExtra("COLLECTION_FOLDER", folderList.get(folderSpinner.getSelectedItemPosition()));
@@ -365,11 +367,11 @@ public class CollectionList extends ListActivity implements OnClickListener {
 			
 	        return true;
 	    case R.id.home:
-	    	Intent myIntent = new Intent(this, RFGeneration.class);
+	    	Intent myIntent = new Intent(this, RFGenerationActivity.class);
 			startActivityForResult(myIntent, 0);
 	        return true;
 	    case R.id.refresh:
-	    	Intent myIntent2 = new Intent(this, CollectionList.class);
+	    	Intent myIntent2 = new Intent(this, CollectionListActivity.class);
 			myIntent2.putExtra("COLLECTION_USERNAME", userName);
 			myIntent2.putExtra("COLLECTION_PAGE", page);
 			myIntent2.putExtra("COLLECTION_FOLDER", folder);

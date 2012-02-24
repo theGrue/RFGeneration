@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
 
-public class RFGeneration extends Activity implements OnClickListener {
+public class RFGenerationActivity extends Activity implements OnClickListener {
 	
 	public static final String PREFS_NAME = "RFGenerationPrefsFile";
 
@@ -93,7 +93,7 @@ public class RFGeneration extends Activity implements OnClickListener {
 			
 			// Try and check if this collection is valid
 			
-			Intent myIntent = new Intent(arg0.getContext(), CollectionList.class);
+			Intent myIntent = new Intent(arg0.getContext(), CollectionListActivity.class);
 			myIntent.putExtra("COLLECTION_USERNAME", userName);
 			startActivityForResult(myIntent, 0);
 		}
@@ -110,7 +110,7 @@ public class RFGeneration extends Activity implements OnClickListener {
 		      // Commit the edits!
 		      editor.commit();
 			
-		      Intent myIntent = new Intent(arg0.getContext(), SearchList.class);
+		      Intent myIntent = new Intent(arg0.getContext(), SearchListActivity.class);
 				myIntent.putExtra("SEARCH_GAME", searchGame);
 				startActivityForResult(myIntent, 0);
 		}

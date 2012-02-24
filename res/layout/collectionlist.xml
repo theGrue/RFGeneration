@@ -14,6 +14,11 @@
       android:src="@drawable/left"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"/>
+    <ProgressBar
+		    android:id="@+id/collection_progress"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center_vertical"/>
   </LinearLayout>
 
 <!--   <TableLayout 
@@ -51,12 +56,12 @@
     android:layout_width="wrap_content" 
     android:background="@drawable/text_bg_color" android:textColor="@drawable/text_color" 
     android:textStyle="bold"
-    android:layout_margin="1px"
+    android:layout_margin="1dp"
     android:padding="5dip" 
     android:clickable="true" android:layout_gravity="center_vertical" android:visibility="gone"></TextView>
     <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
      android:layout_gravity="center_vertical" android:background="#ffcc0000" 
-     android:layout_marginTop="1px" android:layout_marginBottom="1px" >
+     android:layout_marginTop="1dp" android:layout_marginBottom="1dp" >
     <TextView android:id="@+id/CurrentPage" 
     android:layout_height="wrap_content"
     android:layout_width="fill_parent" 
@@ -70,7 +75,7 @@
     android:text="Next Page" android:layout_width="wrap_content"
     android:background="@drawable/text_bg_color" android:textColor="@drawable/text_color" 
     android:textStyle="bold"
-    android:layout_margin="1px"
+    android:layout_margin="1dp"
     android:padding="5dip" 
     android:clickable="true" android:layout_gravity="center_vertical" android:visibility="gone"></TextView>
     </TableRow>
@@ -82,7 +87,8 @@
     android:layout_height="fill_parent"
     android:cacheColorHint="#00000000" 
     android:divider="#ff808080"
-    android:dividerHeight="1px"
+    android:dividerHeight="1dp"
+    android:fastScrollEnabled="true"
     />
   
 </LinearLayout>

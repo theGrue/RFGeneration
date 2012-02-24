@@ -12,6 +12,11 @@
       android:src="@drawable/left"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"/>
+    <ProgressBar
+		    android:id="@+id/game_progress"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center_vertical"/>
   </LinearLayout>
   
   <LinearLayout android:layout_width="fill_parent" 
@@ -23,17 +28,17 @@
     android:layout_width="fill_parent" 
     android:background="@drawable/text_bg_color" android:textColor="@drawable/text_color" 
     android:textStyle="bold"
-    android:layout_margin="1px" android:layout_weight="1"
+    android:layout_margin="1dp" android:layout_weight="1"
     android:padding="5dip" android:gravity="center" 
     android:clickable="true" android:layout_gravity="center_vertical"></TextView>
 <!--     <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
      android:layout_gravity="center_vertical" android:background="#ffcc0000" 
-     android:layout_marginTop="1px" android:layout_marginBottom="1px" > -->
+     android:layout_marginTop="1dp" android:layout_marginBottom="1dp" > -->
     <TextView android:id="@+id/DetailImages" android:text="Images" 
     android:layout_height="wrap_content"
     android:layout_width="fill_parent" 
     android:background="@drawable/text_bg_color" android:textColor="@drawable/text_color" 
-    android:textStyle="bold" android:layout_marginTop="1px" android:layout_marginBottom="1px"
+    android:textStyle="bold" android:layout_marginTop="1dp" android:layout_marginBottom="1dp"
     android:padding="5dip" android:layout_weight="1"
     android:clickable="true" android:gravity="center" android:layout_gravity="center_vertical"></TextView>
 <!--     </LinearLayout> -->
@@ -42,7 +47,7 @@
     android:text="Credits" android:layout_width="fill_parent"
     android:background="@drawable/text_bg_color" android:textColor="@drawable/text_color" 
     android:textStyle="bold"
-    android:layout_margin="1px" android:layout_weight="1"
+    android:layout_margin="1dp" android:layout_weight="1"
     android:padding="5dip" android:gravity="center" 
     android:clickable="true" android:layout_gravity="center_vertical"></TextView>
 
@@ -78,7 +83,7 @@
 	      
 	    <View
 	      android:layout_width="fill_parent"
-	      android:layout_height="1px"
+	      android:layout_height="1dp"
 	      android:background="#ff808080"
 	      android:layout_marginBottom="10dip"
 	      android:layout_marginLeft="5dip"

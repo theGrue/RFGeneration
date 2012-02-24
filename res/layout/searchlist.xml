@@ -1,37 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:background="#eeeeee"
-  android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#eeeeee"
+    android:orientation="vertical" >
   
-  <LinearLayout 
-    android:layout_width="fill_parent" 
-    android:background="@drawable/bg" 
-    android:layout_height="wrap_content" android:layout_gravity="top">
-    <ImageView 
-      android:src="@drawable/left"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"/>
+  <LinearLayout
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="top"
+      android:background="@drawable/bg">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/left" />
+
+    <ProgressBar
+        android:id="@+id/search_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"/>
+
   </LinearLayout>
-  
-<!--   <TableLayout android:layout_width="fill_parent" 
-    android:background="#ff808080" 
-    android:id="@+id/SearchHeaderLayout" android:layout_height="wrap_content" android:layout_gravity="top"
-    android:stretchColumns="1" android:shrinkColumns="1">
-    <TableRow>
-    <TextView android:id="@+id/PrevPage2" 
-    android:layout_height="wrap_content" android:text="Prev Page" 
-    android:layout_width="wrap_content" 
-    android:background="@drawable/text_bg_color" android:textColor="@drawable/text_color" 
-    android:textStyle="bold"
-    android:layout_margin="1px"
-    android:padding="5dip" 
-    android:clickable="true" android:layout_gravity="center_vertical" android:visibility="gone"></TextView> -->
+
     <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
      android:layout_gravity="top" android:background="#ffcc0000" 
-     android:layout_marginTop="1px" android:layout_marginBottom="1px" >
+     android:layout_marginTop="1dp" android:layout_marginBottom="1dp" >
     <TextView android:id="@+id/SearchHeader" 
     android:layout_height="wrap_content"
     android:layout_width="fill_parent" 
@@ -40,16 +35,6 @@
     android:padding="5dip" 
     android:clickable="true" android:gravity="left"></TextView>
     </LinearLayout>
-<!--     <TextView android:id="@+id/NextPage2" 
-    android:layout_height="wrap_content" 
-    android:text="Next Page" android:layout_width="wrap_content"
-    android:background="@drawable/text_bg_color" android:textColor="@drawable/text_color" 
-    android:textStyle="bold"
-    android:layout_margin="1px"
-    android:padding="5dip" 
-    android:clickable="true" android:layout_gravity="center_vertical" android:visibility="gone"></TextView>
-    </TableRow>
-  </TableLayout> -->
   
   <ListView
     android:id="@+id/android:list"
@@ -57,7 +42,8 @@
     android:layout_height="fill_parent"
     android:cacheColorHint="#00000000" 
     android:divider="#ff808080"
-    android:dividerHeight="1px"
+    android:dividerHeight="1dp"
+    android:fastScrollEnabled="true"
     />
   
 </LinearLayout>

@@ -43,6 +43,8 @@ public class GameInfoActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gamedetail);
         
+        findViewById(R.id.game_progress).setVisibility(View.GONE);
+        
         viewOrders = new Runnable(){
 		    public void run() {
 		        getOrders();

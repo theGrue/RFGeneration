@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,68 +30,27 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class SearchList extends ListActivity implements OnClickListener {
-
+public class SearchListActivity extends ListActivity {
+	private static final String TAG = "SearchListActivity";
 	private String searchGame;
-	private ArrayList<Game> gameList = new ArrayList<Game>();
-	private int numPages = 1;
-	private int lastLoadedPage = 1;
+	private ArrayList<Game> gameList;
 	private ArrayList<Game> items;
-	private Runnable getData;
-	private ProgressDialog m_ProgressDialog = null;
+	private int numPages = -1;
+	private int nextPage = 1;
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		try {
         setContentView(R.layout.searchlist);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		getData = new Runnable(){
-		    public void run() {
-		        getData();
-		    }
-		};
-		Thread thread = new Thread(getData);
-		thread.start();
-		m_ProgressDialog = ProgressDialog.show(SearchList.this,    
-		      "", "Now loading...", true);
-    }    
-	
-    private void getData() {
-		Intent myIntent = getIntent(); // this is just for example purpose
-		searchGame = myIntent.getStringExtra("SEARCH_GAME");
-		
-		try {
-			CollectionPage searchResults = SearchScraper.getSearchPage(searchGame, 1);
-			gameList = searchResults.getList();
-			numPages = searchResults.getTotalPages();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		runOnUiThread(returnRes);
+        
+        searchGame = getIntent().getStringExtra("SEARCH_GAME");
+        TextView currentPage = (TextView) findViewById(R.id.SearchHeader);
+        currentPage.setText("Search results for \"" + searchGame + "\"...");
+        
+        gameList = new ArrayList<Game>();
+        setListAdapter(new SearchAdapter(gameList));
     }
-    
-    private Runnable returnRes = new Runnable() {
-        public void run() {	
-        	m_ProgressDialog.dismiss();
-        	
-			TextView currentPage = (TextView) findViewById(R.id.SearchHeader);
-	        currentPage.setText("Search results for \"" + searchGame + "\"...");
-
-			setListAdapter(new SearchAdapter(gameList));
-        }
-    };
-    
-	public void onClick(View v) {
-
-	}
 
 	private class SearchAdapter extends EndlessAdapter {
 
@@ -99,7 +59,7 @@ public class SearchList extends ListActivity implements OnClickListener {
 		
 		public SearchAdapter(ArrayList<Game> list) {
 			// TODO Auto-generated constructor stub
-			super(new ArrayAdapter<Game>(SearchList.this,
+			super(new ArrayAdapter<Game>(SearchListActivity.this,
 					R.layout.pending,
 					android.R.id.text1,
 					list));
@@ -200,47 +160,46 @@ public class SearchList extends ListActivity implements OnClickListener {
 		
 		@Override
 		protected View getPendingView(ViewGroup parent) {
-			View row=getLayoutInflater().inflate(R.layout.pending, null);
+			View row = getLayoutInflater().inflate(R.layout.pending, null);
 	
 			if(numPages > 1)
 			{
 				TextView child = (TextView)row.findViewById(android.R.id.text1);
-				child.setText("Loading page " + (lastLoadedPage + 1) + " of " + numPages + "...");
+				child.setText("Loading page " + nextPage + " of " + numPages + "...");
+				findViewById(R.id.search_progress).setVisibility(View.VISIBLE);
 			}
-			//child.setVisibility(View.GONE);
-	
-			//child=row.findViewById(R.id.throbber);
-			//child.setVisibility(View.VISIBLE);
-			//child.startAnimation(rotate);
 	
 			return(row);
 		}
 		
 		@Override
 		protected boolean cacheInBackground() throws Exception {
-			if(lastLoadedPage < numPages)
-			{
-				try {
-					gameListToLoad = SearchScraper.getSearchPage(searchGame, lastLoadedPage + 1).getList();
-					lastLoadedPage++;
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					return false;
-				}
+			// Load the current page.
+			CollectionPage searchResults = SearchScraper.getSearchPage(searchGame, nextPage);
+			gameListToLoad = searchResults.getList();
+			
+			// If this is the first time, save the total number of pages.
+			if(numPages == -1) {
+				numPages = searchResults.getTotalPages();
+				Log.i(TAG, "Initial load done, " + numPages + " total page(s) found, " + 
+						gameListToLoad.size() + " games on page.");
+			} else {
+				Log.i(TAG, "Loaded " + gameListToLoad.size() + " games on page " + nextPage + ".");
 			}
 			
-			return (lastLoadedPage < numPages);
+			nextPage++;
+			return (nextPage <= numPages);
 		}
 
 		@Override
 		protected void appendCachedData() {
-			// TODO Auto-generated method stub
 			if(gameListToLoad.size() > 0) {
 				@SuppressWarnings("unchecked")
 				ArrayAdapter<Game> a=(ArrayAdapter<Game>)getWrappedAdapter();
 				for (int i=0;i<gameListToLoad.size();i++) { a.add(gameListToLoad.get(i)); /*items.add(gameListToLoad.get(i));*/ }
 			}
+			
+			findViewById(R.id.search_progress).setVisibility(View.GONE);
 		}
 		
 	}
@@ -268,7 +227,7 @@ public class SearchList extends ListActivity implements OnClickListener {
 	    // Handle item selection
 	    switch (item.getItemId()) {
 		    case R.id.searchmenuhome:
-		    	Intent myIntent = new Intent(this, RFGeneration.class);
+		    	Intent myIntent = new Intent(this, RFGenerationActivity.class);
 				startActivityForResult(myIntent, 0);
 		        return true;
 		    default:
