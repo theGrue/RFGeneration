@@ -11,10 +11,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.util.Log;
+
 import com.jgrue.rfgeneration.objects.CollectionPage;
 import com.jgrue.rfgeneration.objects.Game;
 
 public class SearchScraper {
+	private static final String TAG = "SearchScraper";
 	
 	public static CollectionPage getSearchPage(String query, int page) throws Exception {
 		ArrayList<Game> gameList = new ArrayList<Game>();
@@ -22,7 +25,9 @@ public class SearchScraper {
 		 
 		 // Get the HTML page and parse it with jsoup.
 		 URL url = new URL("http://www.rfgeneration.com/cgi-bin/search.pl?search=true&inputtype=title&query=" + URLEncoder.encode(query, "ISO-8859-1") + "&firstresult=" + getFirstResult(page));
+		 Log.i(TAG, "Target URL: " + url.toString());
 		 Document document = Jsoup.parse(url, 30000);
+		 Log.i(TAG, "Retrieved URL: " + document.baseUri());
 		 
 		 // Create the CollectionPage object and set some key info.
 		 CollectionPage collectionPage = new CollectionPage();
@@ -66,6 +71,7 @@ public class SearchScraper {
 			 collectionPage.setTotalPages(getTotalPages(Integer.parseInt(divText.substring(0, divText.indexOf(" ")))));
 		 } catch (Exception e) {
 			 collectionPage.setTotalPages(1);
+			 Log.e(TAG, "Error retrieving total number of pages.");
 		 }
 		 
 		 return collectionPage;

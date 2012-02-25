@@ -10,10 +10,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.util.Log;
+
 import com.jgrue.rfgeneration.objects.GameInfo;
 import com.jgrue.rfgeneration.scrapers.HardwareInfoScraper;
 
 public class GameInfoScraper {
+	private static final String TAG = "GameInfoScraper";
 	private static GameInfo lastGame = null;
 	
 	public static GameInfo getGameInfo(String rfgid) throws Exception {
@@ -21,6 +24,7 @@ public class GameInfoScraper {
 			lastGame = new GameInfo();
 		
 		if(lastGame.getRFGID() != null && lastGame.getRFGID().equals(rfgid)) {
+			Log.i(TAG, "Returning cached result for " + rfgid + ".");
 			return lastGame;
 		} else {
 			GameInfo newGame = scrapeGameInfo(rfgid);
@@ -34,11 +38,16 @@ public class GameInfoScraper {
 		gameInfo.setRFGID(rfgid);
 		
 		URL url = new URL("http://www.rfgeneration.com/cgi-bin/getinfo.pl?ID=" + rfgid);
+		Log.i(TAG, "Target URL: " + url.toString());
 		Document document = Jsoup.parse(url, 30000);
+		Log.i(TAG, "Retrieved URL: " + document.baseUri());
 		
 		Elements tables = document.select("table tr:eq(3) td:eq(1) table.bordercolor tr td table.windowbg2 tr:eq(3) td table");
 		if(tables.size() <= 4)
+		{
+			Log.w(TAG, "Unexpected results for " + rfgid + ", switching to HardwareInfoScraper.");
 			return HardwareInfoScraper.scrapeHardwareInfo(rfgid);
+		}
 		
 		Element table = tables.get(4);
 		Elements tableRows = table.select("tr");
@@ -106,6 +115,7 @@ public class GameInfoScraper {
 		{
 			names.add("");
 			credits.add("Error while loading credits.");
+			Log.e(TAG, "Error while loading credits.");
 		}
 		 
 		gameInfo.setNameList(names);

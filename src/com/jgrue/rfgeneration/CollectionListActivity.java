@@ -13,6 +13,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -28,19 +29,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class CollectionListActivity extends ListActivity implements OnClickListener {
-    private ProgressDialog m_ProgressDialog = null;
+	private static final String TAG = "CollectionListActivity";
     private ArrayList<Game> gameList = null;
     private GameAdapter gameAdapter;
-    private Runnable viewOrders;
     private String userName;
     private int page = 1;
     private int totalPages = 0;
-    private PopupWindow pw;
     private ArrayList<String> folderList = null;
     private ArrayList<String> consoleList = null;
     private ArrayList<String> typeList = null;
@@ -50,13 +50,21 @@ public class CollectionListActivity extends ListActivity implements OnClickListe
     private String console = "";
     private boolean refresh = false;
     
+    private ProgressBar bar = null;
+    private CollectionListTask task = null;
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.collectionlist);
         
-        findViewById(R.id.collection_progress).setVisibility(View.GONE);
+        findViewById(R.id.NextPage2).setOnClickListener(this);
+        findViewById(R.id.PrevPage2).setOnClickListener(this);
+        findViewById(R.id.CurrentPage).setOnClickListener(this);
+        
+        bar = (ProgressBar)findViewById(R.id.collection_progress);
+        task = (CollectionListTask)getLastNonConfigurationInstance();
         
         Intent myIntent = getIntent(); // this is just for example purpose
         userName = myIntent.getStringExtra("COLLECTION_USERNAME");
@@ -68,72 +76,124 @@ public class CollectionListActivity extends ListActivity implements OnClickListe
         if(myIntent.getStringExtra("COLLECTION_CONSOLE") != null)
         	console = myIntent.getStringExtra("COLLECTION_CONSOLE");
         refresh = myIntent.getBooleanExtra("COLLECTION_REFRESH", false);
-        
-        ((TextView)findViewById(R.id.NextPage2)).setOnClickListener(this);
-        ((TextView)findViewById(R.id.PrevPage2)).setOnClickListener(this);
-        ((TextView)findViewById(R.id.CurrentPage)).setOnClickListener(this);
+        totalPages = myIntent.getIntExtra("COLLECTION_TOTALPAGES", 0);
+        if(totalPages > 0)
+        	setPagingInfo();
         
         gameList = new ArrayList<Game>();
         this.gameAdapter = new GameAdapter(this, R.layout.gamerow, gameList);
         setListAdapter(this.gameAdapter);
-
-		viewOrders = new Runnable(){
-		    public void run() {
-		        getOrders();
-		    }
-		};
-		Thread thread =  new Thread(null, viewOrders, "MagentoBackground");
-		thread.start();
-		m_ProgressDialog = ProgressDialog.show(CollectionListActivity.this,    
-		      "", "Now loading...", true);
+        
+        if (task == null) {
+            task = new CollectionListTask(this);
+            task.execute(userName, folder, console, type, Integer.toString(page), Boolean.toString(refresh));
+        } else {
+        	task.attach(this);
+            if (task.getProgress())
+            	setGameAdapter(task.getCollectionPage());
+        }
     }
     
-    private void getOrders(){
-        try{
-        	if (refresh)
-        		CollectionScraper.refresh();
-        	CollectionPage collectionPage = CollectionScraper.getCollectionPage(userName, folder, console, type, page);
-        	gameList = collectionPage.getList();
-        	totalPages = collectionPage.getTotalPages();
-        	folderList = collectionPage.getFolderList();
-        	typeList = collectionPage.getTypeList();
-        	consoleList = new ArrayList<String>();
-        	for(int i = 0; i < collectionPage.getConsoleList().size(); i++)
-        		consoleList.add(collectionPage.getConsoleList().get(i).getName());
-        	consoleIdList = new ArrayList<String>();
-        	for(int i = 0; i < collectionPage.getConsoleList().size(); i++)
-        		consoleIdList.add(collectionPage.getConsoleList().get(i).getId());
-               //Thread.sleep(2000);
-            //Log.i("ARRAY", ""+ gameList.size());
-          } catch (Exception e) {
-            Log.e("BACKGROUND_PROC", e.getMessage());
-          }
-          runOnUiThread(returnRes);
-      }
+    @Override
+    public Object onRetainNonConfigurationInstance() {
+		task.detach();
+		return(task);
+    }
     
-    private Runnable returnRes = new Runnable() {
-        public void run() {
-            if(gameList != null && gameList.size() > 0){
-                gameAdapter.notifyDataSetChanged();
-                for(int i=0;i<gameList.size();i++)
-                gameAdapter.add(gameList.get(i));
-            }
-            m_ProgressDialog.dismiss();
+    void setGameAdapter(CollectionPage collectionPage) {
+    	gameList = collectionPage.getList();
+		totalPages = collectionPage.getTotalPages();
+		folderList = collectionPage.getFolderList();
+		typeList = collectionPage.getTypeList();
+		consoleList = new ArrayList<String>();
+    	for(int i = 0; i < collectionPage.getConsoleList().size(); i++)
+    		consoleList.add(collectionPage.getConsoleList().get(i).getName());
+    	consoleIdList = new ArrayList<String>();
+    	for(int i = 0; i < collectionPage.getConsoleList().size(); i++)
+    		consoleIdList.add(collectionPage.getConsoleList().get(i).getId());
+    	
+    	if(gameList != null && gameList.size() > 0){
             gameAdapter.notifyDataSetChanged();
-            
-            TextView currentPage = (TextView) findViewById(R.id.CurrentPage);
-            currentPage.setText("Page " + page + "/" + totalPages);
-            if(totalPages <= 1) {
-            	currentPage.setEnabled(false);
-            	((TextView)findViewById(R.id.NextPage2)).setVisibility(View.GONE);
-                ((TextView)findViewById(R.id.PrevPage2)).setVisibility(View.GONE);
-            } else {
-            	currentPage.setEnabled(true);
-            	((TextView)findViewById(R.id.NextPage2)).setVisibility(View.VISIBLE);
-                ((TextView)findViewById(R.id.PrevPage2)).setVisibility(View.VISIBLE);
-            }
+            for(int i=0;i<gameList.size();i++)
+            gameAdapter.add(gameList.get(i));
         }
-      };
+        gameAdapter.notifyDataSetChanged();
+        
+        setPagingInfo();
+        
+        bar.setVisibility(View.GONE);
+    }
+    
+    private void setPagingInfo() {
+    	TextView currentPage = (TextView) findViewById(R.id.CurrentPage);
+        currentPage.setText("Page " + page + "/" + totalPages);
+        if(totalPages <= 1) {
+        	currentPage.setEnabled(false);
+        	findViewById(R.id.NextPage2).setVisibility(View.GONE);
+            findViewById(R.id.PrevPage2).setVisibility(View.GONE);
+        } else {
+        	currentPage.setEnabled(true);
+        	findViewById(R.id.NextPage2).setVisibility(View.VISIBLE);
+            findViewById(R.id.PrevPage2).setVisibility(View.VISIBLE);
+        }
+    }
+    
+    static class CollectionListTask extends AsyncTask<String, Void, CollectionPage> {
+    	CollectionListActivity activity = null;
+    	CollectionPage collectionPage;
+    	boolean done = false;
+    	
+    	CollectionListTask(CollectionListActivity activity) {
+    		attach(activity);
+	    }
+
+		@Override
+		protected CollectionPage doInBackground(String... params) {
+			CollectionPage page = new CollectionPage();
+			
+			try {
+				if (Boolean.parseBoolean(params[5]))
+	        		CollectionScraper.refresh();
+				page = CollectionScraper.getCollectionPage(params[0], params[1], params[2], params[3], Integer.parseInt(params[4]));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return page;
+		}
+		
+		@Override
+		protected void onPostExecute(CollectionPage collectionPage) {
+			if (activity == null) {
+				Log.w(TAG, "onPostExecute() skipped -- no activity");
+		    } else {
+		    	this.collectionPage = collectionPage;
+		    	done = true;
+		    	
+				activity.setGameAdapter(collectionPage);
+		    }
+		}
+    	
+		void detach() {
+			activity = null;
+	    }
+		    
+		void attach(CollectionListActivity activity) {
+	    	this.activity = activity;
+	    }
+		
+		boolean getProgress() {
+			return done;
+		}
+		
+		CollectionPage getCollectionPage() {
+			return this.collectionPage;
+		}
+    }
     
     private class GameAdapter extends ArrayAdapter<Game> {
 
@@ -218,16 +278,6 @@ public class CollectionListActivity extends ListActivity implements OnClickListe
 
 	public void onClick(View v) {
 		if(v.getId() == R.id.CurrentPage) {
-			/*Dialog dialog = new Dialog(v.getContext());
-			
-            dialog.setContentView(R.layout.jumptopage);
-
-            dialog.setTitle("Jump to Page");
-            
-            dialog.setCancelable(true);
-
-            dialog.show();*/
-			
 			final NumberPicker numPicker = new NumberPicker(v.getContext());
 			numPicker.setLayoutParams(new LayoutParams(
                     android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -242,7 +292,6 @@ public class CollectionListActivity extends ListActivity implements OnClickListe
 			       .setCancelable(true)
 			       .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
-			                //MyActivity.this.finish();
 			        	   Intent myIntent = new Intent(getBaseContext(), CollectionListActivity.class);
 							myIntent.putExtra("COLLECTION_USERNAME", userName);
 							myIntent.putExtra("COLLECTION_PAGE", numPicker.getCurrent());
@@ -250,6 +299,7 @@ public class CollectionListActivity extends ListActivity implements OnClickListe
 							myIntent.putExtra("COLLECTION_CONSOLE", console);
 							myIntent.putExtra("COLLECTION_TYPE", type);
 							startActivityForResult(myIntent, 0);
+							finish();
 			           }
 			       })
 			       .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -274,7 +324,9 @@ public class CollectionListActivity extends ListActivity implements OnClickListe
 				myIntent.putExtra("COLLECTION_FOLDER", folder);
 				myIntent.putExtra("COLLECTION_CONSOLE", console);
 				myIntent.putExtra("COLLECTION_TYPE", type);
+				myIntent.putExtra("COLLECTION_TOTALPAGES", totalPages);
 				startActivityForResult(myIntent, 0);
+				finish();
 			}
 		}
 	}
@@ -312,15 +364,6 @@ public class CollectionListActivity extends ListActivity implements OnClickListe
 	    	folderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	    	folderSpinner.setAdapter(folderAdapter);
 	    	folderSpinner.setSelection(folderAdapter.getPosition(folder));
-	    	
-	    	/*
-	    	for(int i = 0; i < folderList.size(); i++) {
-	    		if (folderList.get(i).equals(folder)) {
-	    			folderSpinner.setSelection(i);
-	    			break;
-	    		}
-	    	}
-	    	*/
 	    	
 	    	final Spinner consoleSpinner = (Spinner) collectionFilter.findViewById(R.id.consoleSpinner);
 	    	ArrayAdapter<String> consoleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, consoleList);

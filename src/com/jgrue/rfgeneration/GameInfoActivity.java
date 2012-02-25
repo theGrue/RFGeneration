@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.xmlpull.v1.XmlPullParserException;
 
+import com.jgrue.rfgeneration.CollectionListActivity.CollectionListTask;
+import com.jgrue.rfgeneration.objects.CollectionPage;
 import com.jgrue.rfgeneration.objects.GameInfo;
 import com.jgrue.rfgeneration.scrapers.GameInfoScraper;
 import com.jgrue.rfgeneration.R;
@@ -16,6 +18,7 @@ import android.content.res.XmlResourceParser;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -25,6 +28,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -32,45 +36,84 @@ import android.widget.LinearLayout;
 import android.widget.TableRow.LayoutParams;
 
 public class GameInfoActivity extends Activity implements OnClickListener {
-	private ProgressDialog m_ProgressDialog = null;
-	 private Runnable viewOrders;
-	 private GameInfo gameInfo;
-	 private int imageIndex = 0;
-	 private boolean firstLoad = true;
+	private static final String TAG = "GameInfoActivity";
+	private GameInfo gameInfo;
+	private int imageIndex = 0;
+	private boolean firstLoad = true;
+	 
+	private ProgressBar bar = null;
+	private GameInfoTask task = null;
 	 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gamedetail);
         
-        findViewById(R.id.game_progress).setVisibility(View.GONE);
+        bar = (ProgressBar)findViewById(R.id.collection_progress);
+        task = (GameInfoTask)getLastNonConfigurationInstance();
         
-        viewOrders = new Runnable(){
-		    public void run() {
-		        getOrders();
+        if (task == null) {
+            task = new GameInfoTask(this);
+            task.execute(getIntent().getStringExtra("GAMEINFO_RFGID"));
+        } else {
+        	task.attach(this);
+            if (task.getProgress())
+            	run();
+        }
+    }
+    
+    @Override
+    public Object onRetainNonConfigurationInstance() {
+		task.detach();
+		return(task);
+    }
+    
+    static class GameInfoTask extends AsyncTask<String, Void, GameInfo> {
+    	GameInfoActivity activity = null;
+    	boolean done = false;
+    	
+    	GameInfoTask(GameInfoActivity activity) {
+    		attach(activity);
+	    }
+    	
+		@Override
+		protected GameInfo doInBackground(String... params) {
+			GameInfo gameInfo = new GameInfo();
+			
+			try {
+				gameInfo = GameInfoScraper.getGameInfo(params[0]);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return gameInfo;
+		}
+		
+		@Override
+		protected void onPostExecute(GameInfo gameInfo) {
+			if (activity == null) {
+				Log.w(TAG, "onPostExecute() skipped -- no activity");
+		    } else {
+		    	done = true;
+				activity.run();
 		    }
-		};
-		Thread thread =  new Thread(null, viewOrders, "MagentoBackground");
-		thread.start();
-		m_ProgressDialog = ProgressDialog.show(GameInfoActivity.this,    
-		      "", "Now loading...", true);
+		}
+		
+		void detach() {
+			activity = null;
+	    }
+		    
+		void attach(GameInfoActivity activity) {
+	    	this.activity = activity;
+	    }
+		
+		boolean getProgress() {
+			return done;
+		}
     }
 
-	 private void getOrders(){
-        try{
-        	gameInfo = GameInfoScraper.getGameInfo(getIntent().getStringExtra("GAMEINFO_RFGID"));
-               //Thread.sleep(2000);
-            //Log.i("ARRAY", ""+ gameList.size());
-          } catch (Exception e) {
-            Log.e("BACKGROUND_PROC", e.getMessage());
-          }
-          runOnUiThread(returnRes);
-      }
-	 
-	 private Runnable returnRes = new Runnable() {
 	        public void run() {
-	            
-	            m_ProgressDialog.dismiss();
 	            
 	            try {
 	    			gameInfo = GameInfoScraper.getGameInfo(getIntent().getStringExtra("GAMEINFO_RFGID"));
@@ -201,8 +244,9 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 	    			((LinearLayout) findViewById(R.id.gameCreditsLayout)).setVisibility(View.GONE);
 	    			((LinearLayout) findViewById(R.id.gameErrorLayout)).setVisibility(View.VISIBLE);
 	    		}
+	            
+	            findViewById(R.id.game_progress).setVisibility(View.GONE);
 	        }
-	      };
 
 	public void onClick(View v) {
 		if(v.getId() == R.id.gameImagesLeft || v.getId() == R.id.gameImagesRight) {

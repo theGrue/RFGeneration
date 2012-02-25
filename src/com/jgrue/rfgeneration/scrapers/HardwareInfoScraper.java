@@ -10,15 +10,21 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.util.Log;
+
 import com.jgrue.rfgeneration.objects.GameInfo;
 
 public class HardwareInfoScraper {
+	private static final String TAG = "HardwareInfoScraper";
+	
 	public static GameInfo scrapeHardwareInfo(String rfgid) throws Exception {
 		GameInfo gameInfo = new GameInfo();
 		gameInfo.setRFGID(rfgid);
 		
 		URL url = new URL("http://www.rfgeneration.com/PHP/gethwinfo.php?ID=" + rfgid);
+		Log.i(TAG, "Target URL: " + url.toString());
 		Document document = Jsoup.parse(url, 30000);
+		Log.i(TAG, "Retrieved URL: " + document.baseUri());
 		
 		Elements tables = document.select("table tr:eq(3) td:eq(0) table.bordercolor tr td table.windowbg2 tr:eq(3) td table");
 		
@@ -91,6 +97,7 @@ public class HardwareInfoScraper {
 		{
 			names.add("");
 			credits.add("Error while loading credits.");
+			Log.e(TAG, "Error while loading credits.");
 		}
 		 
 		gameInfo.setNameList(names);

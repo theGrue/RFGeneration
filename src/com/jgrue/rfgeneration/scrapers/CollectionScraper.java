@@ -12,21 +12,26 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.util.Log;
+
 import com.jgrue.rfgeneration.objects.CollectionPage;
 import com.jgrue.rfgeneration.objects.Console;
 import com.jgrue.rfgeneration.objects.Game;
 
 public class CollectionScraper {
+	private static final String TAG = "CollectionScraper";
 	private static HashMap<String, CollectionPage> collectionPages = null;
 	
 	public static CollectionPage getCollectionPage(String userName, String folder, String console, String type, int page) throws Exception {
 		if(collectionPages == null) {
+			Log.v(TAG, "Creating collection page cache.");
 			collectionPages = new HashMap<String, CollectionPage>();
 		}
 		
 		String threadMapKey = userName + "|" + folder + "|" + console + "|" + type + "|" + page;
 		
 		if(collectionPages.containsKey(threadMapKey)) {
+			Log.i(TAG, "Retrieving " + threadMapKey + " from cache.");
 			return collectionPages.get(threadMapKey);
 		} else {
 			CollectionPage newPage = scrapeCollectionPage(userName, folder, console, type, page);
@@ -41,7 +46,9 @@ public class CollectionScraper {
 		 
 		 // Get the HTML page and parse it with jsoup.
 		 URL url = new URL("http://www.rfgeneration.com/cgi-bin/collection.pl?name=" + URLEncoder.encode(userName, "ISO-8859-1") + "&folder=" + URLEncoder.encode(folder, "ISO-8859-1") + "&firstresult=" + getFirstResult(page) + "&console=" + console + "&type=" + type);
+		 Log.i(TAG, "Target URL: " + url.toString());
 		 Document document = Jsoup.parse(url, 30000);
+		 Log.i(TAG, "Retrieved URL: " + document.baseUri());
 		 
 		 // Create the CollectionPage object and set some key info.
 		 CollectionPage collectionPage = new CollectionPage();
@@ -132,6 +139,7 @@ public class CollectionScraper {
 	}
 	
 	public static void refresh() {
+		Log.i(TAG, "Clearing collection page cache.");
 		collectionPages = new HashMap<String, CollectionPage>();
 	}
 }
