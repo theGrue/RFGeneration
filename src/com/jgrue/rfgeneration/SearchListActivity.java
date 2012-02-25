@@ -20,8 +20,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -52,22 +50,13 @@ public class SearchListActivity extends ListActivity {
 
 	private class SearchAdapter extends EndlessAdapter {
 
-		private RotateAnimation rotate=null;
 		private ArrayList<Game> gameListToLoad = new ArrayList<Game>();
 		
 		public SearchAdapter(ArrayList<Game> list) {
-			// TODO Auto-generated constructor stub
 			super(new ArrayAdapter<Game>(SearchListActivity.this,
 					R.layout.pending,
 					android.R.id.text1,
 					list));
-
-					rotate=new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF,
-					0.5f, Animation.RELATIVE_TO_SELF,
-					0.5f);
-					rotate.setDuration(600);
-					rotate.setRepeatMode(Animation.RESTART);
-					rotate.setRepeatCount(Animation.INFINITE);
 					
 			items = list;
 		}

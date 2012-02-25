@@ -1,12 +1,17 @@
 package com.jgrue.rfgeneration.objects;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.jgrue.rfgeneration.R;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 public class Game {
+	private final static String TAG = "Game";
 	private String rfgid;
 	private Console console;
 	private String region;
@@ -19,6 +24,7 @@ public class Game {
 	private int qty;
 	private int box;
 	private int man;
+	private static Map<String, Drawable> regionMap;
 	
 	public void setRFGID(String rfgid) {
 		this.rfgid = rfgid;
@@ -119,89 +125,57 @@ public class Game {
 		return getRegionDrawable(context, region);
 	}
 	
-	private Drawable getRegionDrawable(Context context, String region) {
-		if(region.toUpperCase().equals("U"))
-			return context.getResources().getDrawable(R.drawable.regions_u);
-		else if(region.toUpperCase().equals("US"))
-			return context.getResources().getDrawable(R.drawable.regions_us);
-		else if(region.toUpperCase().equals("J"))
-			return context.getResources().getDrawable(R.drawable.regions_j);
-		else if(region.toUpperCase().equals("GB"))
-			return context.getResources().getDrawable(R.drawable.regions_gb);
-		else if(region.toUpperCase().equals("A"))
-			return context.getResources().getDrawable(R.drawable.regions_a);
-		else if(region.toUpperCase().equals("AR"))
-			return context.getResources().getDrawable(R.drawable.regions_ar);
-		else if(region.toUpperCase().equals("AT"))
-			return context.getResources().getDrawable(R.drawable.regions_at);
-		else if(region.toUpperCase().equals("AU"))
-			return context.getResources().getDrawable(R.drawable.regions_au);
-		else if(region.toUpperCase().equals("B"))
-			return context.getResources().getDrawable(R.drawable.regions_b);
-		else if(region.toUpperCase().equals("BE"))
-			return context.getResources().getDrawable(R.drawable.regions_be);
-		else if(region.toUpperCase().equals("BR"))
-			return context.getResources().getDrawable(R.drawable.regions_br);
-		else if(region.toUpperCase().equals("C"))
-			return context.getResources().getDrawable(R.drawable.regions_c);
-		else if(region.toUpperCase().equals("CA"))
-			return context.getResources().getDrawable(R.drawable.regions_ca);
-		else if(region.toUpperCase().equals("CH"))
-			return context.getResources().getDrawable(R.drawable.regions_ch);
-		else if(region.toUpperCase().equals("CN"))
-			return context.getResources().getDrawable(R.drawable.regions_cn);
-		else if(region.toUpperCase().equals("DE"))
-			return context.getResources().getDrawable(R.drawable.regions_de);
-		else if(region.toUpperCase().equals("DK"))
-			return context.getResources().getDrawable(R.drawable.regions_dk);
-		else if(region.toUpperCase().equals("E"))
-			return context.getResources().getDrawable(R.drawable.regions_e);
-		else if(region.toUpperCase().equals("ES"))
-			return context.getResources().getDrawable(R.drawable.regions_es);
-		else if(region.toUpperCase().equals("FI"))
-			return context.getResources().getDrawable(R.drawable.regions_fi);
-		else if(region.toUpperCase().equals("FR"))
-			return context.getResources().getDrawable(R.drawable.regions_fr);
-		else if(region.toUpperCase().equals("H"))
-			return context.getResources().getDrawable(R.drawable.regions_h);
-		else if(region.toUpperCase().equals("HK"))
-			return context.getResources().getDrawable(R.drawable.regions_hk);
-		else if(region.toUpperCase().equals("IE"))
-			return context.getResources().getDrawable(R.drawable.regions_ie);
-		else if(region.toUpperCase().equals("IL"))
-			return context.getResources().getDrawable(R.drawable.regions_il);
-		else if(region.toUpperCase().equals("IN"))
-			return context.getResources().getDrawable(R.drawable.regions_in);
-		else if(region.toUpperCase().equals("IT"))
-			return context.getResources().getDrawable(R.drawable.regions_it);
-		else if(region.toUpperCase().equals("K"))
-			return context.getResources().getDrawable(R.drawable.regions_k);
-		else if(region.toUpperCase().equals("KR"))
-			return context.getResources().getDrawable(R.drawable.regions_kr);
-		else if(region.toUpperCase().equals("LU"))
-			return context.getResources().getDrawable(R.drawable.regions_lu);
-		else if(region.toUpperCase().equals("M"))
-			return context.getResources().getDrawable(R.drawable.regions_m);
-		else if(region.toUpperCase().equals("NL"))
-			return context.getResources().getDrawable(R.drawable.regions_nl);
-		else if(region.toUpperCase().equals("NO"))
-			return context.getResources().getDrawable(R.drawable.regions_no);
-		else if(region.toUpperCase().equals("NZ"))
-			return context.getResources().getDrawable(R.drawable.regions_nz);
-		else if(region.toUpperCase().equals("PH"))
-			return context.getResources().getDrawable(R.drawable.regions_ph);
-		else if(region.toUpperCase().equals("PL"))
-			return context.getResources().getDrawable(R.drawable.regions_pl);
-		else if(region.toUpperCase().equals("PT"))
-			return context.getResources().getDrawable(R.drawable.regions_pt);
-		else if(region.toUpperCase().equals("SE"))
-			return context.getResources().getDrawable(R.drawable.regions_se);
-		else if(region.toUpperCase().equals("TW"))
-			return context.getResources().getDrawable(R.drawable.regions_tw);
-		else if(region.toUpperCase().equals("W"))
-			return context.getResources().getDrawable(R.drawable.regions_w);
+	private Drawable getRegionDrawable(Context context, String region) {	
+		if(regionMap == null) {
+			Log.v(TAG, "Creating region drawable map.");
+			regionMap = new HashMap<String, Drawable>();
+			regionMap.put("U", context.getResources().getDrawable(R.drawable.regions_u));
+			regionMap.put("US", context.getResources().getDrawable(R.drawable.regions_us));
+			regionMap.put("J", context.getResources().getDrawable(R.drawable.regions_j));
+			regionMap.put("GB", context.getResources().getDrawable(R.drawable.regions_gb));
+			regionMap.put("A", context.getResources().getDrawable(R.drawable.regions_a));
+			regionMap.put("AR", context.getResources().getDrawable(R.drawable.regions_ar));
+			regionMap.put("AT", context.getResources().getDrawable(R.drawable.regions_at));
+			regionMap.put("AU", context.getResources().getDrawable(R.drawable.regions_au));
+			regionMap.put("B", context.getResources().getDrawable(R.drawable.regions_b));
+			regionMap.put("BE", context.getResources().getDrawable(R.drawable.regions_be));
+			regionMap.put("BR", context.getResources().getDrawable(R.drawable.regions_br));
+			regionMap.put("C", context.getResources().getDrawable(R.drawable.regions_c));
+			regionMap.put("CA", context.getResources().getDrawable(R.drawable.regions_ca));
+			regionMap.put("CH", context.getResources().getDrawable(R.drawable.regions_ch));
+			regionMap.put("CN", context.getResources().getDrawable(R.drawable.regions_cn));
+			regionMap.put("DE", context.getResources().getDrawable(R.drawable.regions_de));
+			regionMap.put("DK", context.getResources().getDrawable(R.drawable.regions_dk));
+			regionMap.put("E", context.getResources().getDrawable(R.drawable.regions_e));
+			regionMap.put("ES", context.getResources().getDrawable(R.drawable.regions_es));
+			regionMap.put("FI", context.getResources().getDrawable(R.drawable.regions_fi));
+			regionMap.put("FR", context.getResources().getDrawable(R.drawable.regions_fr));
+			regionMap.put("H", context.getResources().getDrawable(R.drawable.regions_h));
+			regionMap.put("HK", context.getResources().getDrawable(R.drawable.regions_hk));
+			regionMap.put("IE", context.getResources().getDrawable(R.drawable.regions_ie));
+			regionMap.put("IL", context.getResources().getDrawable(R.drawable.regions_il));
+			regionMap.put("IN", context.getResources().getDrawable(R.drawable.regions_in));
+			regionMap.put("IT", context.getResources().getDrawable(R.drawable.regions_it));
+			regionMap.put("K", context.getResources().getDrawable(R.drawable.regions_k));
+			regionMap.put("KR", context.getResources().getDrawable(R.drawable.regions_kr));
+			regionMap.put("LU", context.getResources().getDrawable(R.drawable.regions_lu));
+			regionMap.put("M", context.getResources().getDrawable(R.drawable.regions_m));
+			regionMap.put("NL", context.getResources().getDrawable(R.drawable.regions_nl));
+			regionMap.put("NO", context.getResources().getDrawable(R.drawable.regions_no));
+			regionMap.put("NZ", context.getResources().getDrawable(R.drawable.regions_nz));
+			regionMap.put("PH", context.getResources().getDrawable(R.drawable.regions_ph));
+			regionMap.put("PL", context.getResources().getDrawable(R.drawable.regions_pl));
+			regionMap.put("PT", context.getResources().getDrawable(R.drawable.regions_pt));
+			regionMap.put("SE", context.getResources().getDrawable(R.drawable.regions_se));
+			regionMap.put("TW", context.getResources().getDrawable(R.drawable.regions_tw));
+			regionMap.put("W", context.getResources().getDrawable(R.drawable.regions_w));
+		}
+		
+		Drawable regionDrawable = regionMap.get(region);
+		if(regionDrawable == null)
+			regionDrawable = context.getResources().getDrawable(R.drawable.regions_unknown);
 	
-		return context.getResources().getDrawable(R.drawable.regions_unknown);
+		return regionDrawable;
 	}
 	
 	public AnimationDrawable getRegionAnimation(Context context) {

@@ -2,6 +2,7 @@ package com.jgrue.rfgeneration;
 
 import java.util.ArrayList;
 
+import com.commonsware.cwac.endless.EndlessAdapter;
 import com.jgrue.rfgeneration.objects.CollectionPage;
 import com.jgrue.rfgeneration.objects.Game;
 import com.jgrue.rfgeneration.scrapers.CollectionScraper;
@@ -12,10 +13,8 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,6 +34,7 @@ import android.widget.TextView;
 public class CollectionListActivity extends ListActivity implements OnClickListener {
 	private static final String TAG = "CollectionListActivity";
     private ArrayList<Game> gameList = null;
+    private ArrayList<Game> items;
     private GameAdapter gameAdapter;
     private String userName;
     private int page = 1;
@@ -49,7 +49,6 @@ public class CollectionListActivity extends ListActivity implements OnClickListe
     private boolean refresh = false;
     
     private ProgressBar bar = null;
-    private CollectionListTask task = null;
     
     /** Called when the activity is first created. */
     @Override
@@ -62,7 +61,6 @@ public class CollectionListActivity extends ListActivity implements OnClickListe
         findViewById(R.id.CurrentPage).setOnClickListener(this);
         
         bar = (ProgressBar)findViewById(R.id.collection_progress);
-        task = (CollectionListTask)getLastNonConfigurationInstance();
         
         Intent myIntent = getIntent(); // this is just for example purpose
         userName = myIntent.getStringExtra("COLLECTION_USERNAME");
@@ -79,47 +77,7 @@ public class CollectionListActivity extends ListActivity implements OnClickListe
         	setPagingInfo();
         
         gameList = new ArrayList<Game>();
-        this.gameAdapter = new GameAdapter(this, R.layout.gamerow, gameList);
-        setListAdapter(this.gameAdapter);
-        
-        if (task == null) {
-            task = new CollectionListTask(this);
-            task.execute(userName, folder, console, type, Integer.toString(page), Boolean.toString(refresh));
-        } else {
-        	task.attach(this);
-            if (task.getProgress())
-            	setGameAdapter(task.getCollectionPage());
-        }
-    }
-    
-    @Override
-    public Object onRetainNonConfigurationInstance() {
-		task.detach();
-		return(task);
-    }
-    
-    void setGameAdapter(CollectionPage collectionPage) {
-    	gameList = collectionPage.getList();
-		totalPages = collectionPage.getTotalPages();
-		folderList = collectionPage.getFolderList();
-		typeList = collectionPage.getTypeList();
-		consoleList = new ArrayList<String>();
-    	for(int i = 0; i < collectionPage.getConsoleList().size(); i++)
-    		consoleList.add(collectionPage.getConsoleList().get(i).getName());
-    	consoleIdList = new ArrayList<String>();
-    	for(int i = 0; i < collectionPage.getConsoleList().size(); i++)
-    		consoleIdList.add(collectionPage.getConsoleList().get(i).getId());
-    	
-    	if(gameList != null && gameList.size() > 0){
-            gameAdapter.notifyDataSetChanged();
-            for(int i=0;i<gameList.size();i++)
-            gameAdapter.add(gameList.get(i));
-        }
-        gameAdapter.notifyDataSetChanged();
-        
-        setPagingInfo();
-        
-        bar.setVisibility(View.GONE);
+        setListAdapter(new GameAdapter(gameList));
     }
     
     private void setPagingInfo() {
@@ -136,71 +94,17 @@ public class CollectionListActivity extends ListActivity implements OnClickListe
         }
     }
     
-    static class CollectionListTask extends AsyncTask<String, Void, CollectionPage> {
-    	CollectionListActivity activity = null;
-    	CollectionPage collectionPage;
-    	boolean done = false;
-    	
-    	CollectionListTask(CollectionListActivity activity) {
-    		attach(activity);
-	    }
-
-		@Override
-		protected CollectionPage doInBackground(String... params) {
-			CollectionPage page = new CollectionPage();
-			
-			try {
-				if (Boolean.parseBoolean(params[5]))
-	        		CollectionScraper.refresh();
-				page = CollectionScraper.getCollectionPage(params[0], params[1], params[2], params[3], Integer.parseInt(params[4]));
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			return page;
+    private class GameAdapter extends EndlessAdapter {
+    	private CollectionPage collectionPageToLoad;
+        
+        public GameAdapter(ArrayList<Game> list) {
+			super(new ArrayAdapter<Game>(CollectionListActivity.this,
+					R.layout.pending,
+					android.R.id.text1,
+					list));
+					
+			items = list;
 		}
-		
-		@Override
-		protected void onPostExecute(CollectionPage collectionPage) {
-			if (activity == null) {
-				Log.w(TAG, "onPostExecute() skipped -- no activity");
-		    } else {
-		    	this.collectionPage = collectionPage;
-		    	done = true;
-		    	
-				activity.setGameAdapter(collectionPage);
-		    }
-		}
-    	
-		void detach() {
-			activity = null;
-	    }
-		    
-		void attach(CollectionListActivity activity) {
-	    	this.activity = activity;
-	    }
-		
-		boolean getProgress() {
-			return done;
-		}
-		
-		CollectionPage getCollectionPage() {
-			return this.collectionPage;
-		}
-    }
-    
-    private class GameAdapter extends ArrayAdapter<Game> {
-
-        private ArrayList<Game> items;
-
-        public GameAdapter(Context context, int textViewResourceId, ArrayList<Game> items) {
-                super(context, textViewResourceId, items);
-                this.items = items;
-        }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -209,7 +113,10 @@ public class CollectionListActivity extends ListActivity implements OnClickListe
                     LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     v = vi.inflate(R.layout.gamerow, null);
                 }
-                Game o = items.get(position);
+                Game o = null;
+                if(position < items.size())
+    				o = items.get(position);
+                
                 if (o != null) {
                         TextView console = (TextView) v.findViewById(R.id.console);
                         if (console != null)
@@ -261,6 +168,8 @@ public class CollectionListActivity extends ListActivity implements OnClickListe
                         		regionLayout.addView(regionAnim, layoutParams);
                         	}
                         }
+                } else {
+                	v = super.getView(position, convertView, parent);
                 }
                 
                 // http://stackoverflow.com/questions/2050533/list-items-with-alternating-colors
@@ -272,6 +181,43 @@ public class CollectionListActivity extends ListActivity implements OnClickListe
                 
                 return v;
         }
+
+		@Override
+		protected boolean cacheInBackground() throws Exception {
+			if (refresh)
+        		CollectionScraper.refresh();
+			collectionPageToLoad = CollectionScraper.getCollectionPage(userName, folder, console, type, page);
+			return false;
+		}
+
+		@Override
+		protected void appendCachedData() {
+			gameList = collectionPageToLoad.getList();
+			totalPages = collectionPageToLoad.getTotalPages();
+			folderList = collectionPageToLoad.getFolderList();
+			typeList = collectionPageToLoad.getTypeList();
+			consoleList = new ArrayList<String>();
+	    	for(int i = 0; i < collectionPageToLoad.getConsoleList().size(); i++)
+	    		consoleList.add(collectionPageToLoad.getConsoleList().get(i).getName());
+	    	consoleIdList = new ArrayList<String>();
+	    	for(int i = 0; i < collectionPageToLoad.getConsoleList().size(); i++)
+	    		consoleIdList.add(collectionPageToLoad.getConsoleList().get(i).getId());
+	    	
+	    	if(gameList != null && gameList.size() > 0){
+	    		@SuppressWarnings("unchecked")
+				ArrayAdapter<Game> a=(ArrayAdapter<Game>)getWrappedAdapter();
+				for (int i=0;i<gameList.size();i++) { a.add(gameList.get(i)); }
+	        }
+	        
+	        setPagingInfo();
+	        
+	        bar.setVisibility(View.GONE);
+		}
+		
+		@Override
+		protected View getPendingView(ViewGroup parent) {
+			return getLayoutInflater().inflate(R.layout.pending, null);
+		}
     }
 
 	public void onClick(View v) {
@@ -296,6 +242,7 @@ public class CollectionListActivity extends ListActivity implements OnClickListe
 							myIntent.putExtra("COLLECTION_FOLDER", folder);
 							myIntent.putExtra("COLLECTION_CONSOLE", console);
 							myIntent.putExtra("COLLECTION_TYPE", type);
+							myIntent.putExtra("COLLECTION_TOTALPAGES", totalPages);
 							startActivityForResult(myIntent, 0);
 							finish();
 			           }
