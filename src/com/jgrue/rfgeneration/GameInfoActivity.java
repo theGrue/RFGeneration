@@ -4,14 +4,11 @@ import java.io.IOException;
 
 import org.xmlpull.v1.XmlPullParserException;
 
-import com.jgrue.rfgeneration.CollectionListActivity.CollectionListTask;
-import com.jgrue.rfgeneration.objects.CollectionPage;
 import com.jgrue.rfgeneration.objects.GameInfo;
 import com.jgrue.rfgeneration.scrapers.GameInfoScraper;
 import com.jgrue.rfgeneration.R;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
@@ -21,7 +18,6 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
