@@ -267,7 +267,7 @@ public class Console {
 			abbvMap.put("Microsoft Xbox Live Indie Games", "XBLI");
 			abbvMap.put("Thomson MO5", "MO5");
 			abbvMap.put("Philips VG-5000", "VG5K");
-			abbvMap.put("Nintendo eShop", "eShop");
+			abbvMap.put("Sony PlayStation Vita", "Vita");
 		}
 		
 		String abbv = abbvMap.get(console);
