@@ -1,6 +1,8 @@
 package com.jgrue.rfgeneration.objects;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.jgrue.rfgeneration.R;
@@ -12,22 +14,42 @@ import android.util.Log;
 
 public class Game {
 	private final static String TAG = "Game";
+	private long id;
 	private String rfgid;
 	private Console console;
+	private String regionId;
 	private String region;
 	private String type;
 	private String title;
-	private String variationTitle;
 	private String publisher;
 	private int year;
 	private String genre;
 	private int qty;
 	private int box;
 	private int man;
+	private List<Collection> collections;
 	private static Map<String, Drawable> regionMap;
 	
+	@Override
+	public String toString() {
+		return rfgid + ", " + console.getName() + ", " + region + ", " + type + ", " + title + ", " + 
+			publisher + ", " + year + ", " + genre + ", " + qty + ", " + box + ", " + man;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public long getId() {
+		return id;
+	}
 	public void setRFGID(String rfgid) {
 		this.rfgid = rfgid;
+		
+		if(this.console == null)
+			this.console = new Console();
+		
+		String[] splitId = rfgid.split("-");
+		regionId = splitId[0];
+		this.console.setId(splitId[1]);
 	}
 	public String getRFGID() {
 		return rfgid;
@@ -43,6 +65,27 @@ public class Game {
 			this.console = new Console();
 		
 		return console.getName();
+	}
+	public int getConsoleId() {
+		if(this.console == null)
+			this.console = new Console();
+		
+		return console.getId();
+	}
+	public void setConsoleAbbv(String consoleAbbv) {
+		if(this.console == null)
+			this.console = new Console();
+		
+		this.console.setAbbreviation(consoleAbbv);
+	}
+	public String getConsoleAbbv() {
+		if(this.console == null)
+			this.console = new Console();
+		
+		return console.getAbbreviation();
+	}
+	public String getRegionId() {
+		return regionId;
 	}
 	public void setRegion(String region) {
 		this.region = region;
@@ -61,12 +104,6 @@ public class Game {
 	}
 	public String getTitle() {
 		return title;
-	}
-	public void setVariationTitle(String variationTitle) {
-		this.variationTitle = variationTitle;
-	}
-	public String getVariationTitle() {
-		return variationTitle;
 	}
 	public void setPublisher(String publisher) {
 		this.publisher = publisher;
@@ -104,6 +141,15 @@ public class Game {
 	public int getManualQuantity() {
 		return man;
 	}
+	public void setCollections(List<Collection> collections) {
+		this.collections = collections;
+	}
+	public List<Collection> getCollections() {
+		if(this.collections == null)
+			collections = new ArrayList<Collection>();
+		
+		return collections;
+	}
 	
 	public boolean hasGame() {
 		return qty > 0;
@@ -114,18 +160,12 @@ public class Game {
 	public boolean hasManual() {
 		return man > 0;
 	}
-	public String getConsoleAbbv() {
-		if(this.console == null)
-			this.console = new Console();
-		
-		return console.getAbbreviation();
-	}
 	
 	public Drawable getRegionDrawable(Context context) {
 		return getRegionDrawable(context, region);
 	}
 	
-	private Drawable getRegionDrawable(Context context, String region) {	
+	private Drawable getRegionDrawable(Context context, String region) {
 		if(regionMap == null) {
 			Log.v(TAG, "Creating region drawable map.");
 			regionMap = new HashMap<String, Drawable>();
@@ -180,7 +220,7 @@ public class Game {
 	
 	public AnimationDrawable getRegionAnimation(Context context) {
 		AnimationDrawable animation = new AnimationDrawable();
-		String[] regions = region.split(", ");
+		String[] regions = region.split(" - ");
 		
 		for(int i = 0; i < regions.length; i++) {
 			animation.addFrame(getRegionDrawable(context, regions[i]), 1000);

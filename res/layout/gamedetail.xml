@@ -2,25 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
-  android:background="#eeeeee"
+  android:background="@drawable/body"
   android:orientation="vertical">
-<LinearLayout 
+<RelativeLayout 
     android:layout_width="fill_parent" 
     android:background="@drawable/bg" 
     android:layout_height="wrap_content" android:layout_gravity="top">
     <ImageView 
       android:src="@drawable/left"
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content"/>
+      android:layout_height="wrap_content"
+      android:contentDescription="@string/app_name" />
     <ProgressBar
 		    android:id="@+id/game_progress"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:layout_gravity="center_vertical"/>
-  </LinearLayout>
+		    android:layout_alignParentRight="true"
+		    android:layout_centerVertical="true"
+		    android:layout_marginRight="5dp" />
+  </RelativeLayout>
   
   <LinearLayout android:layout_width="fill_parent" 
-    android:background="#ff808080" 
+    android:background="@drawable/body" 
     android:id="@+id/HeaderLayout" android:layout_height="wrap_content">
 
     <TextView android:id="@+id/DetailDetail" 
@@ -28,11 +31,11 @@
     android:layout_width="fill_parent" 
     android:background="@drawable/text_bg_color" android:textColor="@drawable/text_color" 
     android:textStyle="bold"
-    android:layout_margin="1dp" android:layout_weight="1"
+    android:layout_marginTop="1dp" android:layout_marginBottom="1dp" android:layout_marginRight="1dp" android:layout_weight="1"
     android:padding="5dip" android:gravity="center" 
     android:clickable="true" android:layout_gravity="center_vertical"></TextView>
 <!--     <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
-     android:layout_gravity="center_vertical" android:background="#ffcc0000" 
+     android:layout_gravity="center_vertical" android:background="@drawable/splash" 
      android:layout_marginTop="1dp" android:layout_marginBottom="1dp" > -->
     <TextView android:id="@+id/DetailImages" android:text="Images" 
     android:layout_height="wrap_content"
@@ -47,7 +50,7 @@
     android:text="Credits" android:layout_width="fill_parent"
     android:background="@drawable/text_bg_color" android:textColor="@drawable/text_color" 
     android:textStyle="bold"
-    android:layout_margin="1dp" android:layout_weight="1"
+    android:layout_marginTop="1dp" android:layout_marginBottom="1dp" android:layout_marginLeft="1dp"  android:layout_weight="1"
     android:padding="5dip" android:gravity="center" 
     android:clickable="true" android:layout_gravity="center_vertical"></TextView>
 
@@ -76,7 +79,7 @@
 	      android:id="@+id/gameDetailTitle" 
 	      android:layout_width="wrap_content" 
 	      android:layout_height="wrap_content"
-	      android:textColor="#ffcc0000" android:paddingRight="10dip"
+	      android:textColor="@drawable/splash" android:paddingRight="10dip"
 	      android:textSize="25sp"
 	      android:layout_marginLeft="5dip" android:layout_marginBottom="2dip" android:layout_marginRight="5dip"
 	      ></TextView>
@@ -84,7 +87,7 @@
 	    <View
 	      android:layout_width="fill_parent"
 	      android:layout_height="1dp"
-	      android:background="#ff808080"
+	      android:background="@drawable/border"
 	      android:layout_marginBottom="10dip"
 	      android:layout_marginLeft="5dip"
 	      android:layout_marginRight="5dip"
@@ -101,14 +104,14 @@
 		      android:text="Alternate Title:" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
 		      ></TextView>
 		    <TextView 
 		      android:text="AlternateTitle" 
 		      android:id="@+id/gameDetailAlternateTitle" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ff000000"
+		      android:textColor="@drawable/text"
 		      ></TextView>
 	      </TableRow>
 	      <TableRow>
@@ -116,14 +119,14 @@
 		      android:text="Console:" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
 		      ></TextView>
 		    <TextView 
 		      android:text="Console" 
 		      android:id="@+id/gameDetailConsole" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ff000000"
+		      android:textColor="@drawable/text"
 		      ></TextView>
 	      </TableRow>
 	      <TableRow>
@@ -131,7 +134,7 @@
 		      android:text="Region:" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
 		      ></TextView>
 	        <ImageView
 	          android:id="@+id/gameDetailRegion"
@@ -144,14 +147,14 @@
 		      android:text="Year:" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
 		      ></TextView>
 		    <TextView 
 		      android:text="Year" 
 		      android:id="@+id/gameDetailYear" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ff000000"
+		      android:textColor="@drawable/text"
 		      ></TextView>
 	      </TableRow>
 	      <TableRow>
@@ -159,14 +162,14 @@
 		      android:text="RFG ID #:" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
 		      ></TextView>
 		    <TextView 
 		      android:text="RFGID" 
 		      android:id="@+id/gameDetailRFGID" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ff000000"
+		      android:textColor="@drawable/text"
 		      ></TextView>
 	      </TableRow>
 	      <TableRow>
@@ -174,14 +177,14 @@
 		      android:text="Part #:" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
 		      ></TextView>
 		    <TextView 
 		      android:text="Part" 
 		      android:id="@+id/gameDetailPart" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ff000000"
+		      android:textColor="@drawable/text"
 		      ></TextView>
 	      </TableRow>
 	      <TableRow>
@@ -189,14 +192,14 @@
 		      android:text="UPC:" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
 		      ></TextView>
 		    <TextView 
 		      android:text="UPC" 
 		      android:id="@+id/gameDetailUPC" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ff000000"
+		      android:textColor="@drawable/text"
 		      ></TextView>
 	      </TableRow>
 	      <TableRow>
@@ -204,14 +207,14 @@
 		      android:text="Publisher:" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
 		      ></TextView>
 		    <TextView 
 		      android:text="Publisher" 
 		      android:id="@+id/gameDetailPublisher" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ff000000"
+		      android:textColor="@drawable/text"
 		      ></TextView>
 	      </TableRow>
 	      <TableRow>
@@ -219,14 +222,14 @@
 		      android:text="Developer:" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
 		      ></TextView>
 		    <TextView 
 		      android:text="Developer" 
 		      android:id="@+id/gameDetailDeveloper" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ff000000"
+		      android:textColor="@drawable/text"
 		      ></TextView>
 	      </TableRow>
 	      <TableRow>
@@ -234,14 +237,14 @@
 		      android:text="Rating:" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
 		      ></TextView>
 		    <TextView 
 		      android:text="Rating" 
 		      android:id="@+id/gameDetailRating" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ff000000"
+		      android:textColor="@drawable/text"
 		      ></TextView>
 	      </TableRow>
 	      <TableRow>
@@ -249,14 +252,14 @@
 		      android:text="Genre:" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
 		      ></TextView>
 		    <TextView 
 		      android:text="Genre" 
 		      android:id="@+id/gameDetailGenre" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ff000000"
+		      android:textColor="@drawable/text"
 		      ></TextView>
 	      </TableRow>
 	      <TableRow>
@@ -264,14 +267,14 @@
 		      android:text="Sub-genre:" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
 		      ></TextView>
 		    <TextView 
 		      android:text="Sub-genre" 
 		      android:id="@+id/gameDetailSubgenre" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ff000000"
+		      android:textColor="@drawable/text"
 		      ></TextView>
 	      </TableRow>
 	      <TableRow>
@@ -279,14 +282,14 @@
 		      android:text="Players:" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
 		      ></TextView>
 		    <TextView 
 		      android:text="Players" 
 		      android:id="@+id/gameDetailPlayers" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ff000000"
+		      android:textColor="@drawable/text"
 		      ></TextView>
 	      </TableRow>
 	      <TableRow>
@@ -294,14 +297,14 @@
 		      android:text="Controller:" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
 		      ></TextView>
 		    <TextView 
 		      android:text="Controller" 
 		      android:id="@+id/gameDetailController" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ff000000"
+		      android:textColor="@drawable/text"
 		      ></TextView>
 	      </TableRow>
 	      <TableRow>
@@ -309,14 +312,14 @@
 		      android:text="Media Format:" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ffcc0000" android:textStyle="bold" android:paddingRight="10dip"
+		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
 		      ></TextView>
 		    <TextView 
 		      android:text="MediaFormat" 
 		      android:id="@+id/gameDetailMediaFormat" 
 		      android:layout_width="wrap_content" 
 		      android:layout_height="wrap_content"
-		      android:textColor="#ff000000"
+		      android:textColor="@drawable/text"
 		      ></TextView>
 	      </TableRow>
 	    </TableLayout>
@@ -350,7 +353,7 @@
    	    android:stretchColumns="1" android:shrinkColumns="1" android:layout_marginBottom="20dip">
 	        <TableRow android:layout_weight="1" android:id="@+id/tableRow1" android:layout_width="fill_parent" android:layout_height="fill_parent">
 		        <ImageButton android:src="@drawable/ic_media_play_flip" android:layout_width="wrap_content" android:id="@+id/gameImagesLeft" android:layout_height="wrap_content" android:background="#00000000" android:layout_gravity="center_horizontal|center_vertical"></ImageButton>
-		            <com.jgrue.rfgeneration.LoaderImageView
+		            <com.blundell.tut.LoaderImageView
 				       android:id="@+id/gameImagesImage"
 				       android:layout_width="wrap_content"
 				       android:layout_height="wrap_content"
@@ -365,7 +368,7 @@
 	    	android:layout_height="wrap_content"
 	    	android:id="@+id/gameImagesText"
 	    	android:gravity="center"
-	    	android:textColor="#ff000000" android:layout_gravity="bottom" android:layout_alignParentBottom="true" ></TextView>
+	    	android:textColor="@drawable/text" android:layout_gravity="bottom" android:layout_alignParentBottom="true" ></TextView>
 	   
 	</RelativeLayout>
 	
@@ -380,7 +383,7 @@
 	    android:layout_height="wrap_content" android:gravity="center"></ImageView>
 	    <TextView android:id="@+id/gameDetailError" android:layout_width="fill_parent"
 	    android:layout_height="wrap_content" android:gravity="center"
-	    android:textColor="#ff000000" ></TextView>
+	    android:textColor="@drawable/text" ></TextView>
 	    <EditText android:id="@+id/gameDetailErrorRFGID" android:layout_width="fill_parent"
 	    android:layout_height="wrap_content" android:gravity="center"></EditText>
     </LinearLayout>

@@ -1,279 +1,44 @@
 package com.jgrue.rfgeneration.objects;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import android.util.Log;
-
 public class Console {
-	private final static String TAG = "Console";
+	private int id;
 	private String console;
-	private String id;
-	private static Map<String, String> abbvMap;
+	private String abbv = "";
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+	public void setId(String id) {
+		if(id.endsWith("D"))
+			this.id = 1000;
+		else if(id.endsWith("G"))
+			this.id = 1001;
+		else if(id.endsWith("H"))
+			this.id = 1002;
+		else if(id.endsWith("J"))
+			this.id = 1003;
+		else if(id.endsWith("P"))
+			this.id = 1004;
+		else if(id.endsWith("T"))
+			this.id = 1005;
+		else if(id.equals("VHS"))
+			this.id = 1006;
+		else
+			try { this.id = Integer.parseInt(id); } catch (Exception e) { }
+	}
+	public int getId() {
+		return id;
+	}
 	public void setName(String name) {
 		this.console = name;
 	}
 	public String getName() {
 		return console;
 	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public String getId() {
-		return id;
+	public void setAbbreviation(String abbv) {
+		this.abbv = abbv;
 	}
 	public String getAbbreviation() {
-		if(abbvMap == null) {
-			Log.v(TAG, "Creating abbreviation map.");
-			abbvMap = new HashMap<String, String>();
-			abbvMap.put("3DO", "3DO");
-			abbvMap.put("Amstrad CPC 464", "CPC");
-			abbvMap.put("APF M1000 / MP1000", "APF");
-			abbvMap.put("Apple II", "AII");
-			abbvMap.put("Apple II / Apple III", "AIIe");
-			abbvMap.put("Atari 2600", "2600");
-			abbvMap.put("Atari 2600 / 2800", "2600");
-			abbvMap.put("Atari 5200", "5200");
-			abbvMap.put("Atari 7800", "7800");
-			abbvMap.put("Atari 8-bit Family", "AT8F");
-			abbvMap.put("Atari Jaguar", "Jag");
-			abbvMap.put("Atari Jaguar CD", "JgCD");
-			abbvMap.put("Atari Jaguar CD", "JgCD");
-			abbvMap.put("Atari Lynx", "Lynx");
-			abbvMap.put("Atari ST / TT / Falcon", "AST");
-			abbvMap.put("Bally Professional Arcade / Astrocade", "Astr");
-			abbvMap.put("Bandai Arcadia", "Arcd");
-			abbvMap.put("Bandai Intellivision", "INTV");
-			abbvMap.put("Bandai Kousokusen", "Vec");
-			abbvMap.put("Bandai Pippin ATMARK / @WORLD", "Pip");
-			abbvMap.put("Bandai Pippin ATMARK", "Pip");
-			abbvMap.put("Bandai Playdia", "Pld");
-			abbvMap.put("Bandai SuFami Turbo", "SfTb");
-			abbvMap.put("Bandai Super Vision 8000", "SV8K");
-			abbvMap.put("Bandai WonderSwan", "WS");
-			abbvMap.put("Bandai WonderSwan Color / SwanCrystal", "WSC");
-			abbvMap.put("BBC Micro", "BBC");
-			abbvMap.put("Betamax / VHS", "BVHS");
-			abbvMap.put("BIT Gamate", "Gmte");
-			abbvMap.put("Black Point System", "BPS");
-			abbvMap.put("Buzztime Home Trivia System", "BUZZ");
-			abbvMap.put("Camerica Aladdin", "Aldn");
-			abbvMap.put("Capcom CPS Changer", "CPS");
-			abbvMap.put("Casio Loopy", "CSOLO");
-			abbvMap.put("Casio PV-1000", "CPV");
-			abbvMap.put("Casio PV-2000", "CPV2");
-			abbvMap.put("CBS ColecoVision", "CV");
-			abbvMap.put("Channel F", "ChF");
-			abbvMap.put("Coleco ADAM", "ADAM");
-			abbvMap.put("Coleco ColecoVision", "CV");
-			abbvMap.put("Coleco Telstar Arcade", "Tlst");
-			abbvMap.put("Commodore 16 / Plus 4 / 116", "C16");
-			abbvMap.put("Commodore 64", "C64");
-			abbvMap.put("Commodore 64 / MAX Machine", "C64");
-			abbvMap.put("Commodore Amiga", "Amig");
-			abbvMap.put("Commodore Amiga CD32", "CD32");
-			abbvMap.put("Commodore Amiga CDTV", "CDTV");
-			abbvMap.put("Commodore VIC-1001", "V1001");
-			abbvMap.put("Commodore VIC-20", "VIC");
-			abbvMap.put("Cougar Boy", "CB");
-			abbvMap.put("Cybiko Classic / Extreme", "Cybi");
-			abbvMap.put("Dragon 32 / 64", "D32");
-			abbvMap.put("DVD", "DVD");
-			abbvMap.put("EACA EG2000 Colour Genie", "EG2K");
-			abbvMap.put("Emerson Arcadia 2001", "Arcd");
-			abbvMap.put("Enterprise 64 / 128", "E64");
-			abbvMap.put("Entex Adventure Vision", "AV");
-			abbvMap.put("Entex Select-A-Game Machine", "SaG");
-			abbvMap.put("EPOCH Cassette Vision", "EpCV");
-			abbvMap.put("EPOCH Game Pocket Computer", "EpGP");
-			abbvMap.put("EPOCH Super Cassette Vision", "EpSC");
-			abbvMap.put("Exidy Sorcerer", "Sorc");
-			abbvMap.put("Fairchild Channel F", "ChF");
-			abbvMap.put("Fisher Price Pixter", "Pixter");
-			abbvMap.put("FM Towns/Marty/Marty 2", "FMT");
-			abbvMap.put("Fujitsu FM-7", "FM7");
-			abbvMap.put("Funtech Super A Can", "FSAC");
-			abbvMap.put("Gakken Compact Vision", "GCV");
-			abbvMap.put("Game & Watch Handhelds", "G&W");
-			abbvMap.put("Game Park GP32", "GP32");
-			abbvMap.put("GCE Vectrex", "Vec");
-			abbvMap.put("GoGo TV Video Vision", "GoTV");
-			abbvMap.put("GrandStand Tutor / Dick Smith Wizzard", "Tomy");
-			abbvMap.put("Hartung GameMaster", "GMst");
-			abbvMap.put("Hasbro Net Jet", "NJET");
-			abbvMap.put("Hyundai Comboy", "HCB");
-			abbvMap.put("Hyundai Super Comboy", "HSC");
-			abbvMap.put("IBM JX", "JX");
-			abbvMap.put("IBM PC", "PC");
-			abbvMap.put("IBM PC Jr.", "PCJr");
-			abbvMap.put("Interton VC 4000", "IV4K");
-			abbvMap.put("Interton Video 2000", "IV2K");
-			abbvMap.put("Jazwares Disney Dream Sketcher", "JDDS");
-			abbvMap.put("LeapFrog Didj", "Didj");
-			abbvMap.put("Leapfrog Fly", "Fly");
-			abbvMap.put("Leapfrog iQuest", "Quest");
-			abbvMap.put("Leapfrog Leapster", "Leap");
-			abbvMap.put("LJN Video Art", "VArt");
-			abbvMap.put("Macintosh", "Mac");
-			abbvMap.put("Magnavox Odyssey", "OD");
-			abbvMap.put("Magnavox Odyssey^2", "O2");
-			abbvMap.put("Magnavox VideoPac", "O2");
-			abbvMap.put("Mattel Aquarius", "AQ");
-			abbvMap.put("Mattel Captain Power", "CPwr");
-			abbvMap.put("Mattel Children's Discovery System", "CDS");
-			abbvMap.put("Mattel Hyperscan", "MHYP");
-			abbvMap.put("Mattel Intellivision", "INTV");
-			abbvMap.put("MegaDuck", "DucK");
-			abbvMap.put("Memorex VIS", "VIS");
-			abbvMap.put("Microsoft Xbox", "Xbox");
-			abbvMap.put("Microsoft Xbox 360", "X360");
-			abbvMap.put("Microsoft Xbox Live Arcade", "XBLA");
-			abbvMap.put("Milton Bradley MicroVision", "MV");
-			abbvMap.put("MPT-02", "MPT02");
-			abbvMap.put("MSX", "MSX");
-			abbvMap.put("MSX / MSX2", "MSX");
-			abbvMap.put("MSX / MSX2 / Zemmix", "MSX");
-			abbvMap.put("Multiple Consoles", "MULTI");
-			abbvMap.put("NEC PC Engine", "PCE");
-			abbvMap.put("NEC PC Engine CD", "PCED");
-			abbvMap.put("NEC PC-6001", "PC6001");
-			abbvMap.put("NEC PC-8001", "PC8001");
-			abbvMap.put("NEC PC-88", "PC88");
-			abbvMap.put("NEC PC-98", "PC98");
-			abbvMap.put("NEC PC-FX", "PCFX");
-			abbvMap.put("NEC SuperGrafx", "SGfx");
-			abbvMap.put("NEC TG-CD", "TGCD");
-			abbvMap.put("NEC Trek", "Trek");
-			abbvMap.put("NEC TurboGrafx-16", "TG16");
-			abbvMap.put("NEC TurboGrafx-CD", "TGCD");
-			abbvMap.put("Nichibutsu My Vision", "NMV");
-			abbvMap.put("Nikko digiBlast", "digB");
-			abbvMap.put("Nintendo 3DS", "3DS");
-			abbvMap.put("Nintendo 64", "N64");
-			abbvMap.put("Nintendo 64DD", "64DD");
-			abbvMap.put("Nintendo DS", "DS");
-			abbvMap.put("Nintendo DSi", "DSi");
-			abbvMap.put("Nintendo DSiWare", "DSiW");
-			abbvMap.put("Nintendo e-Reader", "eRdr");
-			abbvMap.put("Nintendo eShop", "eShop");
-			abbvMap.put("Nintendo Famicom", "FC");
-			abbvMap.put("Nintendo Famicom Disk System", "FCD");
-			abbvMap.put("Nintendo Game Boy", "GB");
-			abbvMap.put("Nintendo Game Boy Advance", "GBA");
-			abbvMap.put("Nintendo Game Boy Color", "GBC");
-			abbvMap.put("Nintendo GameCube", "GC");
-			abbvMap.put("Nintendo iQue", "iQue");
-			abbvMap.put("Nintendo NES", "NES");
-			abbvMap.put("Nintendo Pokémon Mini", "PKMN");
-			abbvMap.put("Nintendo SNES", "SNES");
-			abbvMap.put("Nintendo Super Famicom", "SFC");
-			abbvMap.put("Nintendo Virtual Boy", "VB");
-			abbvMap.put("Nintendo Virtual Console / WiiWare", "NVC");
-			abbvMap.put("Nintendo Watch & Game", "NW&G");
-			abbvMap.put("Nintendo Wii", "Wii");
-			abbvMap.put("Nokia N-Gage", "Nge");
-			abbvMap.put("Nuon Technology", "Nuon");
-			abbvMap.put("Odyssey", "OD");
-			abbvMap.put("Ohio Arts Etch-A-Sketch Animator 2000", "An2K");
-			abbvMap.put("Olivetti Envision", "OVE");
-			abbvMap.put("Palm OS", "PaOS");
-			abbvMap.put("PC-50X Family", "PC50X");
-			abbvMap.put("Philips CD-i", "CD-i");
-			abbvMap.put("Philips Tele-spiel ES-2201", "2201");
-			abbvMap.put("Philips Videopac", "VidP");
-			abbvMap.put("Pioneer LaserActive", "LAct");
-			abbvMap.put("Plug & Play TV Games", "TV");
-			abbvMap.put("Plug & Play TV Games", "PNP");
-			abbvMap.put("Pong Consoles", "Pong");
-			abbvMap.put("RCA Studio II", "StII");
-			abbvMap.put("RDI Halcyon", "Halc");
-			abbvMap.put("Robotron KC 85", "KC85");
-			abbvMap.put("Robotron KC 87", "KC87");
-			abbvMap.put("Romtec ColorVision", "ClrV");
-			abbvMap.put("Sammy Atomiswave", "ATW");
-			abbvMap.put("Samsung Saturn", "Sat");
-			abbvMap.put("Sears Talking Computron", "STC");
-			abbvMap.put("Sega 32X", "32X");
-			abbvMap.put("Sega CD", "SCD");
-			abbvMap.put("Sega Dreamcast", "DC");
-			abbvMap.put("Sega Game Gear", "GG");
-			abbvMap.put("Sega Genesis", "Gen");
-			abbvMap.put("Sega Genesis / Mega Drive", "GEN/MD");
-			abbvMap.put("Sega Genesis 32X", "32X");
-			abbvMap.put("Sega Master System", "SMS");
-			abbvMap.put("Sega Master System / Mark III", "SMS");
-			abbvMap.put("Sega Mega CD", "MCD");
-			abbvMap.put("Sega Mega Drive", "MD");
-			abbvMap.put("Sega Mega Drive 32X", "32X");
-			abbvMap.put("Sega Pico", "Pico");
-			abbvMap.put("Sega Saturn", "Sat");
-			abbvMap.put("Sega SC-3000 / SF-7000", "SSG");
-			abbvMap.put("Sega SG-1000", "SSG");
-			abbvMap.put("Sega SG-1000 / SC-3000 / SF-7000", "SSG");
-			abbvMap.put("Sega SG-1000 / SC-3000 / SF-7000", "SSG");
-			abbvMap.put("Sega Super 32X", "32X");
-			abbvMap.put("Sharp MZ Family", "SMZ");
-			abbvMap.put("Sharp X1", "X1");
-			abbvMap.put("Sharp X68000", "X68k");
-			abbvMap.put("Sinclair ZX Spectrum", "SZX");
-			abbvMap.put("Sinclair Spectrum ZX", "SZX");
-			abbvMap.put("Sinclair ZX80 / ZX81", "ZX81");
-			abbvMap.put("SNK Hyper Neo Geo 64", "HNG");
-			abbvMap.put("SNK Neo Geo AES", "AES");
-			abbvMap.put("SNK Neo Geo CD", "NGCD");
-			abbvMap.put("SNK Neo Geo MVS", "MVS");
-			abbvMap.put("SNK Neo Geo Pocket", "NGP");
-			abbvMap.put("SNK Neo Geo Pocket Color", "NGPC");
-			abbvMap.put("Sony Playstation", "PSX");
-			abbvMap.put("Sony PlayStation", "PSX");
-			abbvMap.put("Sony PlayStation 2", "PS2");
-			abbvMap.put("Sony PlayStation 3", "PS3");
-			abbvMap.put("Sony PlayStation Network", "PSN");
-			abbvMap.put("Sony PSP", "PSP");
-			abbvMap.put("Stand-Alone Handhelds", "Hand");
-			abbvMap.put("Starpath Supercharger", "SSC");
-			abbvMap.put("Taito Cybercore System", "TCC");
-			abbvMap.put("Taito F3 System", "F3");
-			abbvMap.put("Tandy TRS-80 / Color Computer", "TRS");
-			abbvMap.put("Tapwave Zodiac", "Zod");
-			abbvMap.put("Tec Toy Zeebo", "TTZ");
-			abbvMap.put("Texas Instruments TI-99/4A", "TI99");
-			abbvMap.put("Tiger Game.com", "Gcom");
-			abbvMap.put("Tiger Gizmondo", "Giz");
-			abbvMap.put("Tiger Handhelds", "TigH");
-			abbvMap.put("Tiger R-Zone", "RZn");
-			abbvMap.put("TimeTop GameKing I / II / III", "GK");
-			abbvMap.put("Timex Sinclair 1000", "TS1000");
-			abbvMap.put("Timex Sinclair 2068", "TS2068");
-			abbvMap.put("Tomy Pyuuta / Pyuuta Jr", "Tomy");
-			abbvMap.put("Tomy Tutor", "Tomy");
-			abbvMap.put("Toshiba Visicom", "StII");
-			abbvMap.put("Toymax Arcadia II", "ArcaII");
-			abbvMap.put("VideoBrain Family Computer", "VBrn");
-			abbvMap.put("View-Master Interactive Vision", "VMIV");
-			abbvMap.put("VTech CreatiVision", "VTCV");
-			abbvMap.put("VTech Learning Pad, The", "Learning Pad");
-			abbvMap.put("VTech Socrates", "Soc");
-			abbvMap.put("VTech V.Flash", "V.Flash");
-			abbvMap.put("VTech V.Smile", "SMIL");
-			abbvMap.put("VTech V.Smile Baby", "VVSB");
-			abbvMap.put("Watara SuperVision", "SV");
-			abbvMap.put("Worlds of Wonder Action Max", "AMax");
-			abbvMap.put("XaviX XaviXPORT", "Xav");
-			abbvMap.put("YENO Prof. Weiss-Alles", "W-A");
-			abbvMap.put("Yeno Super Cassette Vision", "YnSC");
-			abbvMap.put("ZAPiT Game Wave", "ZGW");
-			abbvMap.put("Microsoft Xbox Live Indie Games", "XBLI");
-			abbvMap.put("Thomson MO5", "MO5");
-			abbvMap.put("Philips VG-5000", "VG5K");
-			abbvMap.put("Sony PlayStation Vita", "Vita");
-		}
-		
-		String abbv = abbvMap.get(console);
-		if(abbv == null)
-			abbv = "???";
-		
 		return abbv;
 	}
 }

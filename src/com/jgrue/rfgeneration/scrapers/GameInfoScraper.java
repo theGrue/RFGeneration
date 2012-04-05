@@ -2,9 +2,6 @@ package com.jgrue.rfgeneration.scrapers;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -56,13 +53,13 @@ public class GameInfoScraper {
 		gameInfo.setTitle(title.text());
 		
 		// Check for a variation title
-		Pattern variantRegex = Pattern.compile(" \\[.*\\]$");
+		/*Pattern variantRegex = Pattern.compile(" \\[.*\\]$");
 		Matcher matcher = variantRegex.matcher(gameInfo.getTitle());
 		if(matcher.find())
 		{
 			gameInfo.setVariationTitle(matcher.group().substring(2, matcher.group().length() - 1));
 			gameInfo.setTitle(gameInfo.getTitle().substring(0, gameInfo.getTitle().length() - gameInfo.getVariationTitle().length() - 3));
-		}
+		}*/
 		 
 		for(int i = 0; i < tableRows.size(); i++) {
 			 Elements tableData = tableRows.get(i).select("td");

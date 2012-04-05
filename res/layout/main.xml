@@ -1,172 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-  <ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ScrollView01" 
-    android:layout_height="fill_parent" android:layout_width="fill_parent" android:fillViewport="true">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:background="@drawable/background" >
 
-<LinearLayout
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent" 
-  android:background="#cccccc"
-  android:orientation="vertical">
-  
-    <LinearLayout 
-    android:layout_width="fill_parent" 
-    android:background="@drawable/bg" 
-    android:id="@+id/HeaderLayout" android:layout_height="wrap_content" android:layout_gravity="top">
-    <ImageView 
-      android:id="@+id/header"
-      android:src="@drawable/left"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"/>
-  </LinearLayout>
+    <!-- Header -->
+    <RelativeLayout 
+	    android:id="@+id/main_header"
+	    android:layout_width="fill_parent" 
+	    android:background="@drawable/bg" 
+	    android:layout_height="wrap_content" 
+	    android:layout_gravity="top">
     
-	<LinearLayout android:id="@+id/MainLayout" 
-	  android:layout_width="fill_parent" 
-	  android:orientation="vertical" android:layout_gravity="center_vertical" android:gravity="center_vertical" android:layout_height="wrap_content">
-  	  
-	  <!-- Use two LinearLayouts to create a border. -->
-	  <LinearLayout 
-	    android:id="@+id/collectionLayout" 
+		<ImageView 
+			android:src="@drawable/left"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:contentDescription="@string/app_name" />	 
+			
+		<ProgressBar
+		    android:id="@+id/main_progress"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:layout_centerVertical="true"
+		    android:layout_marginRight="5dp"  />
+			
+	</RelativeLayout>
+	
+	<LinearLayout 
 	    android:layout_width="fill_parent" 
-	    android:layout_height="wrap_content" 
-	    android:background="#808080" 
-	    android:layout_margin="25dip">
-	  <LinearLayout 
-	    android:layout_width="fill_parent" 
-	    android:layout_height="fill_parent" 
-	    android:background="#eeeeee"
-	  	android:layout_margin="1dip" 
-	  	android:orientation="vertical">
-	  	
-		<TextView
-		  android:text="@string/collection"
-		  android:textColor="#cc0000" 
-		  android:layout_width="wrap_content" 
-		  android:layout_height="wrap_content"
-		  android:id="@+id/textView0" 
-		  android:textStyle="bold" 
-		  android:layout_marginLeft="5dip" 
-		  android:layout_marginRight="5dip"
-		  android:textSize="20sp"/>
-		  
-		<View android:layout_width="fill_parent"
-	      android:layout_height="2dip"
-	      android:background="#cc0000" 
-	      android:layout_marginLeft="5dip" 
-	      android:layout_marginRight="5dip" />
-	      
-		<LinearLayout 
-		  android:layout_width="fill_parent" 
-		  android:layout_height="fill_parent"
-	  	  android:orientation="horizontal" 
-	  	  android:layout_marginTop="8dip" 
-	  	  android:layout_marginBottom="5dip"
-	  	  android:layout_marginLeft="5dip" 
-	      android:layout_marginRight="5dip"
-	      >
-		  <EditText android:layout_height="wrap_content" 
-		    android:id="@+id/collectionText" 
-		    android:layout_gravity="center_vertical" 
-		    android:layout_width="fill_parent" 
-		    android:layout_weight="1"></EditText>
-		  <Button android:layout_width="wrap_content" 
-		    android:text="Search" 
-		    android:layout_height="wrap_content" 
-		    android:id="@+id/collectionButton" 
-		    android:layout_gravity="center_vertical"></Button>
-		</LinearLayout>
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="top" 
+	    android:background="@drawable/splash" 
+	    android:layout_marginTop="1dp" 
+	    android:layout_marginBottom="1dp">
+        <TextView
+            android:id="@+id/collection_header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dip"
+            android:textColor="@drawable/body"
+            android:textStyle="bold" />
 
-	  </LinearLayout></LinearLayout>
-	  
-
-		
-	  <!-- Use two LinearLayouts to create a border. -->
-	  <LinearLayout 
-	    android:id="@+id/searchLayout" 
-	    android:layout_width="fill_parent" 
-	    android:layout_height="wrap_content" 
-	    android:background="#808080"
-	  	android:layout_marginTop="25dip"
-	  	android:layout_marginBottom="25dip"
-	  	android:layout_marginLeft="25dip"
-	  	android:layout_marginRight="25dip">
-	  <LinearLayout 
-	    android:id="@+id/searchLayout" 
-	    android:layout_width="fill_parent" 
-	    android:layout_height="fill_parent" 
-	    android:background="#eeeeee"
-	  	android:layout_margin="1dip"
-	  	android:orientation="vertical">
-	  	
-	  	<TextView android:text="@string/search" 
-	  	  android:id="@+id/textView1" 
-	  	  android:textColor="#cc0000" 
-	  	  android:textStyle="bold" 
-	  	  android:layout_width="wrap_content" 
-	  	  android:layout_height="wrap_content" 
-	  	  android:layout_marginLeft="5dip" 
-	  	  android:layout_marginRight="5dip" 
-	  	  android:textSize="20sp"/>
-	  	  
-	  	<View android:layout_width="fill_parent"
-		  android:layout_height="2dip"
-		  android:background="#cc0000" 
-		  android:layout_marginLeft="5dip" 
-		  android:layout_marginRight="5dip"/>
-		  
-	  	<LinearLayout android:layout_width="fill_parent" 
-	  	  android:layout_height="fill_parent"
-	  	  android:orientation="horizontal" 
-	  	  android:layout_marginTop="8dip" 
-	  	  android:layout_marginBottom="5dip"
-	  	  android:layout_marginLeft="5dip" 
-		  android:layout_marginRight="5dip">
-	  	  <EditText android:layout_width="fill_parent" 
-	  	    android:layout_height="wrap_content" 
-	  	    android:id="@+id/searchText" 
-	  	    android:layout_gravity="center_vertical" 
-	  	    android:layout_weight="1"/>
-	  	  <Button android:text="Search" 
-	  	    android:id="@+id/searchButton" 
-	  	    android:layout_width="wrap_content" 
-	  	    android:layout_height="wrap_content" 
-	  	    android:layout_gravity="center_vertical"/>
-	  	</LinearLayout>
-	  	
-	  </LinearLayout></LinearLayout>
-	  
-   	  <TextView 
-   	  	android:id="@+id/aboutrfg"
-  	  	android:text="@string/about"
-  	  	android:layout_width="fill_parent" 
-		  android:layout_height="wrap_content"
-		  android:gravity="center"
-		  android:textColor="#404040"
-		  android:textStyle="bold"
-		  android:layout_marginTop="25dip"
-		  android:textAppearance="?android:attr/textAppearanceMedium"/>
-	  
     </LinearLayout>
     
+    <!-- Content -->
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
+		
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	        
+	        <!-- Use two LinearLayouts to create a border. -->
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="5dip"
+	            android:background="@drawable/border" >
 
-  
+	            <LinearLayout
+	                android:layout_width="fill_parent"
+	                android:layout_height="fill_parent"
+	                android:layout_margin="1dip"
+	                android:background="@drawable/body"
+	                android:orientation="vertical" >
 
-  	<LinearLayout 
-	  android:layout_width="fill_parent" 
-	  android:orientation="vertical" android:layout_gravity="bottom" android:gravity="bottom" android:layout_height="fill_parent">
-  	  
-  <RelativeLayout android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:background="@drawable/bg" >
+	                <RelativeLayout
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content" >
+
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/quick_search_header"
+	                        android:textAppearance="?android:attr/textAppearanceLarge"
+	                        android:textColor="@drawable/splash"
+	                        android:textStyle="bold"
+	                        android:layout_marginLeft="5dp" />
+
+	                    <ImageView
+	                        android:id="@+id/search_settings_button"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_alignParentRight="true"
+	                        android:layout_centerVertical="true"
+	                        android:layout_marginRight="5dp"
+	                        android:clickable="true"
+	                        android:src="@drawable/cog"
+	                        android:visibility="gone" />
+
+	                </RelativeLayout>
+
+	                <View
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="2dip"
+	                    android:layout_marginBottom="5dip"
+	                    android:layout_marginLeft="5dip"
+	                    android:layout_marginRight="5dip"
+	                    android:background="@drawable/splash" />
+
+	                <LinearLayout
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content" >
+
+	                    <EditText
+	                        android:id="@+id/quick_search_text"
+	                        android:layout_width="0dip"
+	                        android:layout_height="wrap_content"
+	                        android:layout_gravity="center_vertical"
+	                        android:layout_marginLeft="5dip"
+	                        android:layout_weight="1" 
+	                        android:inputType="text">
+	                    </EditText>
+
+	                    <ImageView
+	                        android:id="@+id/quick_search_button"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_gravity="center_vertical"
+	                        android:layout_marginLeft="5dip"
+	                        android:layout_marginRight="5dip"
+	                        android:clickable="true"
+	                        android:src="@drawable/search" 
+	                        android:contentDescription="@string/quick_search_header" />"
+
+	                </LinearLayout>
+	                
+	            </LinearLayout>
+	            
+	        </LinearLayout>
+        
+        	<!-- Use two LinearLayouts to create a border. -->
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="5dip"
+	            android:background="@drawable/border" >
+
+	            <LinearLayout
+	                android:layout_width="fill_parent"
+	                android:layout_height="fill_parent"
+	                android:layout_margin="1dip"
+	                android:background="@drawable/body"
+	                android:orientation="vertical" >
+
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="5dip"
+	                    android:layout_marginRight="5dip"
+	                    android:text="@string/folders_header"
+	                    android:textAppearance="?android:attr/textAppearanceLarge"
+	                    android:textColor="@drawable/splash"
+	                    android:textStyle="bold" />
+
+	                <View
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="2dip"
+	                    android:layout_marginBottom="5dip"
+	                    android:layout_marginLeft="5dip"
+	                    android:layout_marginRight="5dip"
+	                    android:background="@drawable/splash" />
+
+	                <TableLayout
+	                    android:id="@+id/folder_table"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:stretchColumns="0" >
+
+	                </TableLayout>
+	                
+	            </LinearLayout>
+	            
+	        </LinearLayout>
+	        
+            <!-- Use two LinearLayouts to create a border. -->
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="5dip"
+	            android:background="@drawable/border" 
+	            android:visibility="gone" >
+
+	            <LinearLayout
+	                android:layout_width="fill_parent"
+	                android:layout_height="fill_parent"
+	                android:layout_margin="1dip"
+	                android:background="@drawable/body"
+	                android:orientation="vertical" >
+
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="5dip"
+	                    android:layout_marginRight="5dip"
+	                    android:text="@string/stats_header"
+	                    android:textAppearance="?android:attr/textAppearanceLarge"
+	                    android:textColor="@drawable/splash"
+	                    android:textStyle="bold" />
+
+	                <View
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="2dip"
+	                    android:layout_marginBottom="5dip"
+	                    android:layout_marginLeft="5dip"
+	                    android:layout_marginRight="5dip"
+	                    android:background="@drawable/splash" />
+	                
+	            </LinearLayout>
+	            
+	        </LinearLayout>
+        
+   		</LinearLayout>
     
-    <ImageView 
-      android:id="@+id/footer"
-      android:src="@drawable/right"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerHorizontal="true"/>
-      
-  </RelativeLayout>
-  </LinearLayout>
- </LinearLayout>
-  </ScrollView>
+    </ScrollView>
+    
+</LinearLayout>

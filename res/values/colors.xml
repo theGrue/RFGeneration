@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <drawable name="background">#ffcccccc</drawable>
+    <drawable name="body">#ffeeeeee</drawable>
+    <drawable name="border">#ff808080</drawable>
+    <drawable name="splash">#ffcc0000</drawable>
+    <drawable name="text">#ff000000</drawable>
+    <drawable name="textlight">#ff666666</drawable>
+    <drawable name="selected">#ffcc9999</drawable>
+    
+    <drawable name="qty">#ff9e0b0f</drawable>
+    <drawable name="box">#ff003471</drawable>
+    <drawable name="man">#ff007236</drawable>
+    
     <drawable name="transparent">#00ffffff</drawable>
     <drawable name="altercolor1">#ffeeeeee</drawable>
     <drawable name="altercolor2">#ffdddddd</drawable>

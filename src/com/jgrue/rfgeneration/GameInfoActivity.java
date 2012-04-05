@@ -4,17 +4,23 @@ import java.io.IOException;
 
 import org.xmlpull.v1.XmlPullParserException;
 
+import com.blundell.tut.LoaderImageView;
+import com.jgrue.rfgeneration.constants.Constants;
+import com.jgrue.rfgeneration.data.RFGenerationProvider;
 import com.jgrue.rfgeneration.objects.GameInfo;
 import com.jgrue.rfgeneration.scrapers.GameInfoScraper;
 import com.jgrue.rfgeneration.R;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -36,7 +42,7 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 	private GameInfo gameInfo;
 	private int imageIndex = 0;
 	private boolean firstLoad = true;
-	 
+	private String rfgId;
 	private ProgressBar bar = null;
 	private GameInfoTask task = null;
 	 
@@ -48,9 +54,21 @@ public class GameInfoActivity extends Activity implements OnClickListener {
         bar = (ProgressBar)findViewById(R.id.collection_progress);
         task = (GameInfoTask)getLastNonConfigurationInstance();
         
+        rfgId = getIntent().getStringExtra(Constants.INTENT_GAME_RFGID);
+        if(rfgId == null && getIntent().getLongExtra(Constants.INTENT_GAME_ID, 0) > 0) {
+        	// Look up the RFGID from the database.
+        	ContentResolver db = getContentResolver();
+        	Cursor cursor = db.query(Uri.withAppendedPath(RFGenerationProvider.GAMES_URI, Long.toString(getIntent().getLongExtra(Constants.INTENT_GAME_ID, 0))),
+        			new String[] { "rfgid" }, null, null, null);
+        	startManagingCursor(cursor);
+        	if(cursor.moveToNext()) {
+        		rfgId = cursor.getString(0);
+        	}
+        }
+        
         if (task == null) {
             task = new GameInfoTask(this);
-            task.execute(getIntent().getStringExtra("GAMEINFO_RFGID"));
+            task.execute(getIntent().getStringExtra(rfgId));
         } else {
         	task.attach(this);
             if (task.getProgress())
@@ -112,7 +130,7 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 	        public void run() {
 	            
 	            try {
-	    			gameInfo = GameInfoScraper.getGameInfo(getIntent().getStringExtra("GAMEINFO_RFGID"));
+	    			gameInfo = GameInfoScraper.getGameInfo(rfgId);
 	    		
 		    		// Detail
 		    		TextView console = (TextView) findViewById(R.id.gameDetailConsole);
@@ -123,8 +141,8 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 		            if(title != null)
 		            {
 		            	title.setText(Html.fromHtml("<b>" + gameInfo.getTitle() + "</b>"));
-		            	if(gameInfo.getVariationTitle() != null)
-		               		title.setText(Html.fromHtml("<b>" + gameInfo.getTitle() + "</b> [" + gameInfo.getVariationTitle() + "]"));
+		            	//if(gameInfo.getVariationTitle() != null)
+		               	//	title.setText(Html.fromHtml("<b>" + gameInfo.getTitle() + "</b> [" + gameInfo.getVariationTitle() + "]"));
 		            }
 		            
 		            TextView alternateTitle = (TextView) findViewById(R.id.gameDetailAlternateTitle);
@@ -222,7 +240,7 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 	            	} catch (Exception e) { }
 		            
 	            } catch (Exception e) {
-	    			Log.e("GameInfoActivity", "Error occurred while loading RFGID " + getIntent().getStringExtra("GAMEINFO_RFGID"));
+	    			Log.e("GameInfoActivity", "Error occurred while loading RFGID " + rfgId);
 	    			
 	    			TextView errorText = (TextView)findViewById(R.id.gameDetailError);
 	    			if(errorText != null)
@@ -232,7 +250,7 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 	    			
 	    			EditText errorRFGID = (EditText)findViewById(R.id.gameDetailErrorRFGID);
 	    			if(errorRFGID != null)
-	    				errorRFGID.setText(getIntent().getStringExtra("GAMEINFO_RFGID"));
+	    				errorRFGID.setText(rfgId);
 	    			
 	    			((ScrollView) findViewById(R.id.gameDetailScrollView)).setVisibility(View.GONE);
 	    			((LinearLayout) findViewById(R.id.gameDetailLayout)).setVisibility(View.GONE);
@@ -244,6 +262,7 @@ public class GameInfoActivity extends Activity implements OnClickListener {
 	            findViewById(R.id.game_progress).setVisibility(View.GONE);
 	        }
 
+	@Override
 	public void onClick(View v) {
 		if(v.getId() == R.id.gameImagesLeft || v.getId() == R.id.gameImagesRight) {
 			if (v.getId() == R.id.gameImagesRight)
