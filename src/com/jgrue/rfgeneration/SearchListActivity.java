@@ -82,6 +82,7 @@ public class SearchListActivity extends ListActivity {
     	private List<Game> gameListToLoad = new ArrayList<Game>();
     	private Set<String> collectionGames = new HashSet<String>();
     	private boolean collectionLoaded = false;
+    	private boolean searchResultsLoaded = false;
     	private SQLiteDatabase db;
     	private int numPages = -1;
     	private int nextPage = 0;
@@ -158,7 +159,7 @@ public class SearchListActivity extends ListActivity {
                     	if(regionLayout.getChildCount() > 0)
                 			regionLayout.removeViews(0, regionLayout.getChildCount());
                     	
-                    	if(o.getRegion().indexOf("-") == -1) {
+                    	if(!o.getRegion().contains(",") &&  !o.getRegion().contains("-")) {
                     		ImageView region = new ImageView(v.getContext());
                     		region.setImageDrawable(o.getRegionDrawable(v.getContext()));
                     		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
@@ -169,7 +170,9 @@ public class SearchListActivity extends ListActivity {
                     	} else {                       		
                     		AnimatedImageView regionAnim = new AnimatedImageView(v.getContext());
                     		regionAnim.setImageDrawable(o.getRegionAnimation(v.getContext()));
-                    		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(21, 15);
+                    		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams( 
+                					android.view.ViewGroup.LayoutParams.FILL_PARENT,
+                					android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
                     		layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
                     		regionLayout.addView(regionAnim, layoutParams);
                     	}
@@ -323,6 +326,7 @@ public class SearchListActivity extends ListActivity {
 				}
 				
 				nextPage++;
+				searchResultsLoaded = true;
 				returnMore = nextPage < numPages;
 			}
 			
@@ -338,7 +342,7 @@ public class SearchListActivity extends ListActivity {
 				for (int i = 0; i < gameListToLoad.size(); i++) { 
 					wrappedAdapter.add(gameListToLoad.get(i));
 				}
-			} else {
+			} else if (searchResultsLoaded) {
 				AlertDialog alertDialog = new AlertDialog.Builder(SearchListActivity.this).create();
 	        	alertDialog.setMessage("No results found.");
 	        	alertDialog.setButton("OK", new DialogInterface.OnClickListener() { @Override

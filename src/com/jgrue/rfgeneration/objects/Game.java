@@ -220,10 +220,14 @@ public class Game {
 	
 	public AnimationDrawable getRegionAnimation(Context context) {
 		AnimationDrawable animation = new AnimationDrawable();
-		String[] regions = region.split(" - ");
+		String[] regions;
+		if(region.contains(","))
+			regions = region.split(",");
+		else
+			regions = region.split("-");
 		
 		for(int i = 0; i < regions.length; i++) {
-			animation.addFrame(getRegionDrawable(context, regions[i]), 1000);
+			animation.addFrame(getRegionDrawable(context, regions[i].trim()), 1000);
 		}
 		
 		animation.setOneShot(false);
