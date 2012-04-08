@@ -224,7 +224,8 @@ public class CollectionListActivity extends FragmentActivity implements OnClickL
 			.setTitle("Collection Filters")
 		    .setCancelable(true)
 		    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-		    	public void onClick(DialogInterface dialog, int id) {     	   
+		    	@Override
+				public void onClick(DialogInterface dialog, int id) {     	   
 		    		Intent myIntent = new Intent(getBaseContext(), CollectionListActivity.class);
 		    		myIntent.putExtra(Constants.INTENT_FOLDER, folderIdList.get(folderSpinner.getSelectedItemPosition()));
 		    		myIntent.putExtra(Constants.INTENT_CONSOLE_ID, consoleIdList.get(consoleSpinner.getSelectedItemPosition()));
@@ -236,7 +237,8 @@ public class CollectionListActivity extends FragmentActivity implements OnClickL
 				}
 		    })
 		    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		    	public void onClick(DialogInterface dialog, int id) {
+		    	@Override
+				public void onClick(DialogInterface dialog, int id) {
 		    		dialog.cancel();
 		        }
 		    });

@@ -39,14 +39,6 @@
 
 			
 	        <!-- Content -->
-<!-- 	        <ScrollView -->
-<!-- 		        android:layout_width="fill_parent" -->
-<!-- 		        android:layout_height="fill_parent" -->
-<!-- 		        android:layout_above="@id/login_footer" -->
-<!-- 		        android:layout_below="@id/login_header" -->
-<!-- 		        android:layout_centerHorizontal="true"  -->
-<!-- 		        android:fillViewport="true"> -->
-				
 		    <RelativeLayout
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
@@ -132,8 +124,7 @@
 		        </LinearLayout>
 		        
 		    </RelativeLayout>
-<!-- 			</ScrollView> -->
-
+
 			<TextView
 			    android:id="@+id/about_text"
 			    android:layout_width="wrap_content"

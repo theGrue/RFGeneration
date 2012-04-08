@@ -8,16 +8,13 @@ import java.util.Date;
 import java.util.List;
 
 import com.jgrue.rfgeneration.constants.Constants;
-import com.jgrue.rfgeneration.data.RFGenerationData;
 import com.jgrue.rfgeneration.data.RFGenerationProvider;
 import com.jgrue.rfgeneration.objects.Folder;
 import com.jgrue.rfgeneration.service.RFGenerationService;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,7 +28,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,7 +38,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TableRow.LayoutParams;
-import android.widget.Toast;
 
 public class RFGenerationActivity extends FragmentActivity implements OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
 	private static final String TAG = "RFGenerationActivity";

@@ -58,6 +58,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 			ad.setTitle("What is RF Generation?");
 			ad.setView(LayoutInflater.from(this).inflate(R.layout.about, null));
 			ad.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					return;
 				} 
