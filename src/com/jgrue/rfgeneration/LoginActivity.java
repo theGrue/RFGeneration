@@ -3,12 +3,16 @@ package com.jgrue.rfgeneration;
 import com.jgrue.rfgeneration.constants.Constants;
 import com.jgrue.rfgeneration.scrapers.LoginScraper;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -30,6 +34,8 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
         ((EditText)findViewById(R.id.login_username)).setText(userName);
         
         findViewById(R.id.login_button).setOnClickListener(this);
+        findViewById(R.id.about_text).setOnClickListener(this);
+        findViewById(R.id.register_text).setOnClickListener(this);
     }
 
 	@Override
@@ -47,6 +53,20 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 		    ((Button)v).setEnabled(false);
 		    findViewById(R.id.login_progress).setVisibility(View.VISIBLE);
 			new LoginTask().execute(v.getContext(), userName, password);
+		} else if(v.getId() == R.id.about_text) {
+			AlertDialog ad = new AlertDialog.Builder(this).create();
+			ad.setTitle("What is RF Generation?");
+			ad.setView(LayoutInflater.from(this).inflate(R.layout.about, null));
+			ad.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					return;
+				} 
+			});
+			ad.show();
+		} else if(v.getId() == R.id.register_text) {
+			Uri uri = Uri.parse("http://www.rfgeneration.com/forum/index.php?action=register");
+			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+			startActivity(intent);
 		}
 	}
 	

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- <ScrollView xmlns:android="http://schemas.android.com/apk/res/android" -->
-<!--     android:layout_width="fill_parent" -->
-<!--     android:layout_height="fill_parent" -->
-<!--     android:orientation="vertical" -->
-<!--     android:fillViewport="true"> -->
-
-    <RelativeLayout
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background">
+
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -19,8 +19,7 @@
 			    android:layout_width="fill_parent" 
 			    android:background="@drawable/bg" 
 			    android:layout_height="wrap_content" 
-			    android:layout_gravity="top"
-			    android:layout_alignParentTop="true">
+			    android:gravity="top">
 			    
 			    <ImageView 
 			    	android:src="@drawable/left"
@@ -37,44 +36,22 @@
 				    android:visibility="gone" />
 			    
 			</RelativeLayout>
-			
-			<!-- Footer -->
-			<LinearLayout 
-			    android:id="@+id/login_footer"
-				android:layout_width="fill_parent" 
-				android:orientation="vertical" 
-				android:layout_gravity="bottom" 
-				android:gravity="bottom" 
-				android:layout_height="wrap_content"
-				android:layout_alignParentBottom="true">
-  	  
-				<RelativeLayout 
-				    android:layout_width="fill_parent" 
-					android:layout_height="wrap_content" 
-					android:background="@drawable/bg" >
-    
-    				<ImageView
-						android:src="@drawable/right" 
-						android:layout_width="wrap_content" 
-						android:layout_height="wrap_content" 
-						android:layout_centerHorizontal="true"/>
-      
-				</RelativeLayout>
-				
-			</LinearLayout>
+
 			
 	        <!-- Content -->
-	        <ScrollView
-		        android:layout_width="fill_parent"
-		        android:layout_height="fill_parent"
-		        android:layout_above="@id/login_footer"
-		        android:layout_below="@id/login_header"
-		        android:layout_centerHorizontal="true" 
-		        android:fillViewport="true">
+<!-- 	        <ScrollView -->
+<!-- 		        android:layout_width="fill_parent" -->
+<!-- 		        android:layout_height="fill_parent" -->
+<!-- 		        android:layout_above="@id/login_footer" -->
+<!-- 		        android:layout_below="@id/login_header" -->
+<!-- 		        android:layout_centerHorizontal="true"  -->
+<!-- 		        android:fillViewport="true"> -->
 				
 		    <RelativeLayout
 		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content">
+		        android:layout_height="wrap_content"
+			    android:layout_marginTop="25dp"
+			    android:layout_marginBottom="25dp">
 
 		        <!-- Use two LinearLayouts to create a border. -->
 		        <LinearLayout
@@ -155,7 +132,52 @@
 		        </LinearLayout>
 		        
 		    </RelativeLayout>
-			</ScrollView>
-    </RelativeLayout>
+<!-- 			</ScrollView> -->
+
+			<TextView
+			    android:id="@+id/about_text"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:text="@string/about_label"
+			    android:textColor="@drawable/link" 
+			    android:textAppearance="?android:attr/textAppearanceMedium" 
+			    android:clickable="true" 
+			    android:layout_marginBottom="25dp"/>
+			
+			<TextView
+			    android:id="@+id/register_text"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:text="@string/register_label"
+			    android:textColor="@drawable/link" 
+			    android:textAppearance="?android:attr/textAppearanceMedium"
+			    android:clickable="true" 
+			    android:layout_marginBottom="25dp" />
 
-<!-- </ScrollView> -->
+			<!-- Footer -->
+			<LinearLayout 
+			    android:id="@+id/login_footer"
+				android:layout_width="fill_parent" 
+				android:orientation="vertical" 
+				android:layout_height="wrap_content">
+  	  
+				<RelativeLayout 
+				    android:layout_width="fill_parent" 
+					android:layout_height="wrap_content" 
+					android:background="@drawable/bg" >
+    
+    				<ImageView
+						android:src="@drawable/right" 
+						android:layout_width="wrap_content" 
+						android:layout_height="wrap_content" 
+						android:layout_centerHorizontal="true"/>
+      
+				</RelativeLayout>
+				
+			</LinearLayout>
+			
+    </LinearLayout>
+
+</ScrollView>

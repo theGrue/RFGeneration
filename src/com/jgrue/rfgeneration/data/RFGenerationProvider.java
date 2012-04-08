@@ -165,19 +165,23 @@ public class RFGenerationProvider extends ContentProvider {
 		    			null, null, "folder_name ASC");
 		    	
 		    	try {
+		    		boolean insertedFolder = false;
 			    	for(int i = 0; i < values.length; i++) {
-			    		if(existingFolders.moveToNext()) {
+			    		if(insertedFolder || existingFolders.moveToNext()) {
+			    			insertedFolder = false;
 			    			// A folder exists, decide what to do.
 			    			if(existingFolders.getString(1).compareTo(values[i].getAsString("folder_name")) > 0) {
 			    				// Insert this folder.
 			    				Log.i(TAG, "Inserting folder \"" + values[i].getAsString("folder_name") + "\"");
 			    				db.insert("folders", null, values[i]);
 			    				insUpdCount++;
+			    				insertedFolder = true;
 			    			} else if(existingFolders.getString(1).compareTo(values[i].getAsString("folder_name")) < 0) {
 			    				// Delete this folder.
 			    				Log.i(TAG, "Deleting folder \"" + existingFolders.getString(1) + "\"");
 			    				db.delete("collection", "folder_id = ?", new String[] { Long.toString(existingFolders.getLong(0)) });
 			    				db.delete("folders", _ID + " = ?", new String[] { Long.toString(existingFolders.getLong(0)) });
+			    				i--;
 			    			} else {
 			    				// This folder exists already, just update the flags.
 			    				Log.i(TAG, "Updating folder \"" + values[i].getAsString("folder_name") + "\"");
