@@ -335,14 +335,14 @@ public class SearchListActivity extends ListActivity {
 
 		@Override
 		protected void appendCachedData() {
+			@SuppressWarnings("unchecked")
+			ArrayAdapter<Game> wrappedAdapter = (ArrayAdapter<Game>)getWrappedAdapter();
+			
 			if(gameListToLoad.size() > 0) {
-				@SuppressWarnings("unchecked")
-				ArrayAdapter<Game> wrappedAdapter = (ArrayAdapter<Game>)getWrappedAdapter();
-				
 				for (int i = 0; i < gameListToLoad.size(); i++) { 
 					wrappedAdapter.add(gameListToLoad.get(i));
 				}
-			} else if (searchResultsLoaded) {
+			} else if (searchResultsLoaded && wrappedAdapter.getCount() == 0) {
 				AlertDialog alertDialog = new AlertDialog.Builder(SearchListActivity.this).create();
 	        	alertDialog.setMessage("No results found.");
 	        	alertDialog.setButton("OK", new DialogInterface.OnClickListener() { @Override
