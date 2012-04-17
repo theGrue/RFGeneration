@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.android.server.status.AnimatedImageView;
 import com.commonsware.cwac.endless.EndlessAdapter;
 import com.jgrue.rfgeneration.constants.Constants;
 import com.jgrue.rfgeneration.data.RFGenerationData;

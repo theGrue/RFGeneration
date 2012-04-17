@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.android.server.status.AnimatedImageView;
 import com.jgrue.rfgeneration.GameInfoActivity;
 import com.jgrue.rfgeneration.constants.Constants;
 import com.jgrue.rfgeneration.data.RFGenerationProvider;

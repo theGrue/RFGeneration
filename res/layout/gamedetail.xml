@@ -1,391 +1,383 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:background="@drawable/body"
-  android:orientation="vertical">
-<RelativeLayout 
-    android:layout_width="fill_parent" 
-    android:background="@drawable/bg" 
-    android:layout_height="wrap_content" android:layout_gravity="top">
-    <ImageView 
-      android:src="@drawable/left"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:contentDescription="@string/app_name" />
-    <ProgressBar
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/background"
+	android:orientation="vertical">
+	
+    <!-- Header -->
+    <RelativeLayout 
+	    android:layout_width="fill_parent" 
+	    android:background="@drawable/bg" 
+	    android:layout_height="wrap_content" 
+	    android:layout_gravity="top">
+    
+		<ImageView 
+			android:src="@drawable/left"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:contentDescription="@string/app_name" />	 
+			
+		<ProgressBar
 		    android:id="@+id/game_progress"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_alignParentRight="true"
 		    android:layout_centerVertical="true"
-		    android:layout_marginRight="5dp" />
-  </RelativeLayout>
-  
-  <LinearLayout android:layout_width="fill_parent" 
-    android:background="@drawable/body" 
-    android:id="@+id/HeaderLayout" android:layout_height="wrap_content">
-
-    <TextView android:id="@+id/DetailDetail" 
-    android:layout_height="wrap_content" android:text="Detail" 
-    android:layout_width="fill_parent" 
-    android:background="@drawable/text_bg_color" android:textColor="@drawable/text_color" 
-    android:textStyle="bold"
-    android:layout_marginTop="1dp" android:layout_marginBottom="1dp" android:layout_marginRight="1dp" android:layout_weight="1"
-    android:padding="5dip" android:gravity="center" 
-    android:clickable="true" android:layout_gravity="center_vertical"></TextView>
-<!--     <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
-     android:layout_gravity="center_vertical" android:background="@drawable/splash" 
-     android:layout_marginTop="1dp" android:layout_marginBottom="1dp" > -->
-    <TextView android:id="@+id/DetailImages" android:text="Images" 
-    android:layout_height="wrap_content"
-    android:layout_width="fill_parent" 
-    android:background="@drawable/text_bg_color" android:textColor="@drawable/text_color" 
-    android:textStyle="bold" android:layout_marginTop="1dp" android:layout_marginBottom="1dp"
-    android:padding="5dip" android:layout_weight="1"
-    android:clickable="true" android:gravity="center" android:layout_gravity="center_vertical"></TextView>
-<!--     </LinearLayout> -->
-    <TextView android:id="@+id/DetailCredits" 
-    android:layout_height="wrap_content" 
-    android:text="Credits" android:layout_width="fill_parent"
-    android:background="@drawable/text_bg_color" android:textColor="@drawable/text_color" 
-    android:textStyle="bold"
-    android:layout_marginTop="1dp" android:layout_marginBottom="1dp" android:layout_marginLeft="1dp"  android:layout_weight="1"
-    android:padding="5dip" android:gravity="center" 
-    android:clickable="true" android:layout_gravity="center_vertical"></TextView>
-
-  </LinearLayout>
-  
-<ScrollView
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent" 
-  android:visibility="gone"
-  android:id="@+id/gameDetailScrollView">
-
-<LinearLayout
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:orientation="vertical">
-  
-	<LinearLayout
-	  android:layout_width="fill_parent"
-	  android:layout_height="fill_parent"
-	  android:orientation="vertical"
-	  android:id="@+id/gameDetailLayout"
-	  android:visibility="gone">
-    
-	    <TextView 
-	      android:text="Title [Variant]" 
-	      android:id="@+id/gameDetailTitle" 
-	      android:layout_width="wrap_content" 
-	      android:layout_height="wrap_content"
-	      android:textColor="@drawable/splash" android:paddingRight="10dip"
-	      android:textSize="25sp"
-	      android:layout_marginLeft="5dip" android:layout_marginBottom="2dip" android:layout_marginRight="5dip"
-	      ></TextView>
-	      
-	    <View
-	      android:layout_width="fill_parent"
-	      android:layout_height="1dp"
-	      android:background="@drawable/border"
-	      android:layout_marginBottom="10dip"
-	      android:layout_marginLeft="5dip"
-	      android:layout_marginRight="5dip"
-	      ></View>
-	      
-	    <TableLayout
-	      android:layout_width="fill_parent"
-	      android:layout_height="wrap_content"
-	      android:stretchColumns="1"
-	      android:shrinkColumns="1" 
-	      android:layout_marginLeft="5dip" android:layout_marginRight="5dip">
-	      <TableRow>
-	        <TextView 
-		      android:text="Alternate Title:" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
-		      ></TextView>
-		    <TextView 
-		      android:text="AlternateTitle" 
-		      android:id="@+id/gameDetailAlternateTitle" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/text"
-		      ></TextView>
-	      </TableRow>
-	      <TableRow>
-	        <TextView 
-		      android:text="Console:" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
-		      ></TextView>
-		    <TextView 
-		      android:text="Console" 
-		      android:id="@+id/gameDetailConsole" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/text"
-		      ></TextView>
-	      </TableRow>
-	      <TableRow>
-	        <TextView 
-		      android:text="Region:" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
-		      ></TextView>
-	        <ImageView
-	          android:id="@+id/gameDetailRegion"
-	          android:layout_width="wrap_content"
-	          android:layout_height="wrap_content"
-	          android:src="@drawable/regions_u" android:layout_gravity="left"/>
-	      </TableRow>
-	      <TableRow>
-	        <TextView 
-		      android:text="Year:" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
-		      ></TextView>
-		    <TextView 
-		      android:text="Year" 
-		      android:id="@+id/gameDetailYear" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/text"
-		      ></TextView>
-	      </TableRow>
-	      <TableRow>
-	        <TextView 
-		      android:text="RFG ID #:" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
-		      ></TextView>
-		    <TextView 
-		      android:text="RFGID" 
-		      android:id="@+id/gameDetailRFGID" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/text"
-		      ></TextView>
-	      </TableRow>
-	      <TableRow>
-	        <TextView 
-		      android:text="Part #:" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
-		      ></TextView>
-		    <TextView 
-		      android:text="Part" 
-		      android:id="@+id/gameDetailPart" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/text"
-		      ></TextView>
-	      </TableRow>
-	      <TableRow>
-	        <TextView 
-		      android:text="UPC:" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
-		      ></TextView>
-		    <TextView 
-		      android:text="UPC" 
-		      android:id="@+id/gameDetailUPC" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/text"
-		      ></TextView>
-	      </TableRow>
-	      <TableRow>
-	        <TextView 
-		      android:text="Publisher:" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
-		      ></TextView>
-		    <TextView 
-		      android:text="Publisher" 
-		      android:id="@+id/gameDetailPublisher" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/text"
-		      ></TextView>
-	      </TableRow>
-	      <TableRow>
-	        <TextView 
-		      android:text="Developer:" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
-		      ></TextView>
-		    <TextView 
-		      android:text="Developer" 
-		      android:id="@+id/gameDetailDeveloper" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/text"
-		      ></TextView>
-	      </TableRow>
-	      <TableRow>
-	        <TextView 
-		      android:text="Rating:" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
-		      ></TextView>
-		    <TextView 
-		      android:text="Rating" 
-		      android:id="@+id/gameDetailRating" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/text"
-		      ></TextView>
-	      </TableRow>
-	      <TableRow>
-	        <TextView 
-		      android:text="Genre:" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
-		      ></TextView>
-		    <TextView 
-		      android:text="Genre" 
-		      android:id="@+id/gameDetailGenre" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/text"
-		      ></TextView>
-	      </TableRow>
-	      <TableRow>
-	        <TextView 
-		      android:text="Sub-genre:" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
-		      ></TextView>
-		    <TextView 
-		      android:text="Sub-genre" 
-		      android:id="@+id/gameDetailSubgenre" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/text"
-		      ></TextView>
-	      </TableRow>
-	      <TableRow>
-	        <TextView 
-		      android:text="Players:" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
-		      ></TextView>
-		    <TextView 
-		      android:text="Players" 
-		      android:id="@+id/gameDetailPlayers" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/text"
-		      ></TextView>
-	      </TableRow>
-	      <TableRow>
-	        <TextView 
-		      android:text="Controller:" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
-		      ></TextView>
-		    <TextView 
-		      android:text="Controller" 
-		      android:id="@+id/gameDetailController" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/text"
-		      ></TextView>
-	      </TableRow>
-	      <TableRow>
-	        <TextView 
-		      android:text="Media Format:" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/splash" android:textStyle="bold" android:paddingRight="10dip"
-		      ></TextView>
-		    <TextView 
-		      android:text="MediaFormat" 
-		      android:id="@+id/gameDetailMediaFormat" 
-		      android:layout_width="wrap_content" 
-		      android:layout_height="wrap_content"
-		      android:textColor="@drawable/text"
-		      ></TextView>
-	      </TableRow>
-	    </TableLayout>
-  
-	</LinearLayout>
-	
-
-
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:id="@+id/gameCreditsLayout"
-	    android:padding="5dip"
-	    android:orientation="vertical"
-	    android:visibility="gone">
-	</LinearLayout>
-  
-  </LinearLayout>
-</ScrollView>
-
-	<RelativeLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:id="@+id/gameImagesLayout"
-	    android:padding="5dip"
-	    android:orientation="vertical"
-	    android:gravity="center"
-	    android:visibility="gone">
-	    
-   	    <TableLayout android:id="@+id/tableLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent"
-   	    android:stretchColumns="1" android:shrinkColumns="1" android:layout_marginBottom="20dip">
-	        <TableRow android:layout_weight="1" android:id="@+id/tableRow1" android:layout_width="fill_parent" android:layout_height="fill_parent">
-		        <ImageButton android:src="@drawable/ic_media_play_flip" android:layout_width="wrap_content" android:id="@+id/gameImagesLeft" android:layout_height="wrap_content" android:background="#00000000" android:layout_gravity="center_horizontal|center_vertical"></ImageButton>
-		            <com.blundell.tut.LoaderImageView
-				       android:id="@+id/gameImagesImage"
-				       android:layout_width="wrap_content"
-				       android:layout_height="wrap_content"
-				       android:layout_gravity="center_horizontal|center_vertical"
-				       />
-		        <ImageButton android:src="@drawable/ic_media_play" android:layout_width="wrap_content" android:id="@+id/gameImagesRight" android:layout_height="wrap_content" android:background="#00000000" android:layout_gravity="center_horizontal|center_vertical"></ImageButton>
-	        </TableRow>
-	    </TableLayout>
-	    
-	    <TextView
-	    	android:layout_width="fill_parent"
-	    	android:layout_height="wrap_content"
-	    	android:id="@+id/gameImagesText"
-	    	android:gravity="center"
-	    	android:textColor="@drawable/text" android:layout_gravity="bottom" android:layout_alignParentBottom="true" ></TextView>
-	   
+		    android:layout_marginRight="5dp"  />
+			
 	</RelativeLayout>
 	
-	<LinearLayout android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:id="@+id/gameErrorLayout"
-	    android:padding="5dip"
-	    android:orientation="vertical"
-	    android:gravity="center"
-	    android:visibility="gone">
-	    <ImageView android:src="@drawable/negativeman" android:layout_width="wrap_content"
-	    android:layout_height="wrap_content" android:gravity="center"></ImageView>
-	    <TextView android:id="@+id/gameDetailError" android:layout_width="fill_parent"
-	    android:layout_height="wrap_content" android:gravity="center"
-	    android:textColor="@drawable/text" ></TextView>
-	    <EditText android:id="@+id/gameDetailErrorRFGID" android:layout_width="fill_parent"
-	    android:layout_height="wrap_content" android:gravity="center"></EditText>
+    <LinearLayout 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="top" 
+	    android:background="@drawable/splash" 
+	    android:layout_marginTop="1dp" 
+	    android:layout_marginBottom="1dp">
+
+        <TextView
+            android:id="@+id/game_header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="5dip"
+            android:textColor="@drawable/body"
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:ellipsize="marquee" />
+        
     </LinearLayout>
+    
+    <!-- Content -->
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
+        
+        <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+
+            <LinearLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical"
+		        android:background="@drawable/body">
+		        
+	            <TextView
+	                android:id="@+id/game_title"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:textAppearance="?android:attr/textAppearanceLarge"
+	                android:textColor="@drawable/splash"
+	                android:textStyle="bold"
+	                android:layout_marginLeft="5dp"
+	                android:layout_marginRight="5dp" />
+	            
+	            <TextView
+	                android:id="@+id/game_info"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:textColor="@drawable/link"
+	                android:layout_marginLeft="5dp"
+	                android:layout_marginRight="5dp" />
+	            
+	            <View
+	                android:layout_width="fill_parent"
+	                android:layout_height="1dp"
+	                android:background="@drawable/border"/>
+            
+            </LinearLayout>
+            
+            <!-- My Folders -->
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="5dip"
+	            android:background="@drawable/border"
+	            android:visibility="gone" >
+
+	            <LinearLayout
+	                android:layout_width="fill_parent"
+	                android:layout_height="fill_parent"
+	                android:layout_margin="1dip"
+	                android:background="@drawable/body"
+	                android:orientation="vertical" >
+	                
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="@string/folders_header"
+	                    android:textAppearance="?android:attr/textAppearanceLarge"
+	                    android:textColor="@drawable/splash"
+	                    android:textStyle="bold"
+	                    android:layout_marginLeft="5dp" />
+	                
+	                <View
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="2dip"
+	                    android:layout_marginBottom="5dip"
+	                    android:layout_marginLeft="5dip"
+	                    android:layout_marginRight="5dip"
+	                    android:background="@drawable/splash" />
+	                
+	                <TableLayout
+	                    android:id="@+id/game_folder_table"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:stretchColumns="0" >
+	                    
+                    </TableLayout>
+	                
+                </LinearLayout>
+                
+            </LinearLayout>
+            
+	        <!-- Images -->
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="5dip"
+	            android:background="@drawable/border" >
+
+	            <LinearLayout
+	                android:layout_width="fill_parent"
+	                android:layout_height="fill_parent"
+	                android:layout_margin="1dip"
+	                android:background="@drawable/body"
+	                android:orientation="vertical" >
+	                
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="@string/images_header"
+	                    android:textAppearance="?android:attr/textAppearanceLarge"
+	                    android:textColor="@drawable/splash"
+	                    android:textStyle="bold"
+	                    android:layout_marginLeft="5dp" />
+	                
+	                <View
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="2dip"
+	                    android:layout_marginBottom="5dip"
+	                    android:layout_marginLeft="5dip"
+	                    android:layout_marginRight="5dip"
+	                    android:background="@drawable/splash" />
+	                
+	                <HorizontalScrollView
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content" 
+	                    android:paddingLeft="5dp"
+						android:paddingRight="5dp"
+						android:layout_marginBottom="5dip"
+						android:scrollbars="none">
+	                    
+	                    <LinearLayout
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:orientation="horizontal" >
+
+	                        <LinearLayout
+					            android:layout_width="fill_parent"
+					            android:layout_height="wrap_content"
+					            android:background="@drawable/border" >
+					            
+		                        <TextView
+		                            android:id="@+id/game_front_button"
+		                            android:layout_width="wrap_content"
+		                            android:layout_height="wrap_content"
+		                            android:layout_marginLeft="1dip"
+		                            android:layout_marginTop="1dip"
+		                            android:layout_marginBottom="1dip"
+		                            android:padding="5dp"
+		                            android:textAppearance="?android:attr/textAppearanceLarge"
+		                            android:text="@string/image_front_label"
+		                            android:textColor="@drawable/border"
+		                            android:background="@drawable/background" />
+	                        
+	                        </LinearLayout>
+	                        
+	                        <LinearLayout
+					            android:layout_width="fill_parent"
+					            android:layout_height="wrap_content"
+					            android:background="@drawable/border" >
+					            
+		                        <TextView
+		                            android:id="@+id/game_back_button"
+		                            android:layout_width="wrap_content"
+		                            android:layout_height="wrap_content"
+		                            android:layout_marginLeft="1dip"
+		                            android:layout_marginTop="1dip"
+		                            android:layout_marginBottom="1dip"
+		                            android:padding="5dp"
+		                            android:textAppearance="?android:attr/textAppearanceLarge"
+		                            android:text="@string/image_back_label"
+		                            android:textColor="@drawable/border"
+		                            android:background="@drawable/background" />
+	                        
+	                        </LinearLayout>
+	                        
+	                        <LinearLayout
+					            android:layout_width="fill_parent"
+					            android:layout_height="wrap_content"
+					            android:background="@drawable/border" >
+					            
+		                        <TextView
+		                            android:id="@+id/game_screenshot_button"
+		                            android:layout_width="wrap_content"
+		                            android:layout_height="wrap_content"
+		                            android:layout_marginLeft="1dip"
+		                            android:layout_marginTop="1dip"
+		                            android:layout_marginBottom="1dip"
+		                            android:padding="5dp"
+		                            android:textAppearance="?android:attr/textAppearanceLarge"
+		                            android:text="@string/image_screenshot_label"
+		                            android:textColor="@drawable/border"
+		                            android:background="@drawable/background" />
+	                        
+	                        </LinearLayout>
+	                        
+	                        <LinearLayout
+					            android:layout_width="fill_parent"
+					            android:layout_height="wrap_content"
+					            android:background="@drawable/border" >
+					            
+		                        <TextView
+		                            android:id="@+id/game_game_button"
+		                            android:layout_width="wrap_content"
+		                            android:layout_height="wrap_content"
+		                            android:layout_marginLeft="1dip"
+		                            android:layout_marginTop="1dip"
+		                            android:layout_marginBottom="1dip"
+		                            android:padding="5dp"
+		                            android:textAppearance="?android:attr/textAppearanceLarge"
+		                            android:text="@string/image_game_label"
+		                            android:textColor="@drawable/border"
+		                            android:background="@drawable/background" />
+	                        
+	                        </LinearLayout>
+	                        
+	                        <LinearLayout
+					            android:layout_width="fill_parent"
+					            android:layout_height="wrap_content"
+					            android:background="@drawable/border" >
+					            
+		                        <TextView
+		                            android:id="@+id/game_manual_button"
+		                            android:layout_width="wrap_content"
+		                            android:layout_height="wrap_content"
+		                            android:layout_margin="1dip"
+		                            android:padding="5dp"
+		                            android:textAppearance="?android:attr/textAppearanceLarge"
+		                            android:text="@string/image_manual_label"
+		                            android:textColor="@drawable/border"
+		                            android:background="@drawable/background" />
+	                        
+	                        </LinearLayout>
+	                        							
+                        </LinearLayout>
+	                    
+                    </HorizontalScrollView>
+	                
+                </LinearLayout>
+                
+            </LinearLayout>
+            
+	        <!-- Game Details -->
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="5dip"
+	            android:background="@drawable/border" >
+
+	            <LinearLayout
+	                android:layout_width="fill_parent"
+	                android:layout_height="fill_parent"
+	                android:layout_margin="1dip"
+	                android:background="@drawable/body"
+	                android:orientation="vertical" >
+	                
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="@string/detail_header"
+	                    android:textAppearance="?android:attr/textAppearanceLarge"
+	                    android:textColor="@drawable/splash"
+	                    android:textStyle="bold"
+	                    android:layout_marginLeft="5dp" />
+	                
+	                <View
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="2dip"
+	                    android:layout_marginBottom="5dip"
+	                    android:layout_marginLeft="5dip"
+	                    android:layout_marginRight="5dip"
+	                    android:background="@drawable/splash" />
+	                
+	                <TableLayout
+	                    android:id="@+id/game_details_table"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	      				android:layout_marginLeft="5dip" 
+	      				android:layout_marginRight="5dip"
+	      				android:stretchColumns="1"
+	      				android:shrinkColumns="1" >
+
+                    </TableLayout>
+	                
+                </LinearLayout>
+                
+            </LinearLayout>
+            
+	        <!-- Page Credits -->
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="5dip"
+	            android:background="@drawable/border" >
+
+	            <LinearLayout
+	                android:layout_width="fill_parent"
+	                android:layout_height="fill_parent"
+	                android:layout_margin="1dip"
+	                android:background="@drawable/body"
+	                android:orientation="vertical" >
+	                
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="@string/credits_header"
+	                    android:textAppearance="?android:attr/textAppearanceLarge"
+	                    android:textColor="@drawable/splash"
+	                    android:textStyle="bold"
+	                    android:layout_marginLeft="5dp" />
+	                
+	                <View
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="2dip"
+	                    android:layout_marginBottom="5dip"
+	                    android:layout_marginLeft="5dip"
+	                    android:layout_marginRight="5dip"
+	                    android:background="@drawable/splash" />
+	                
+	                <LinearLayout
+	                    android:id="@+id/game_credits_table"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="5dip"
+	                    android:layout_marginRight="5dip"
+	                    android:orientation="vertical" >
+	                    
+                    </LinearLayout>
+	                
+                </LinearLayout>
+                
+            </LinearLayout>
+	        
+        </LinearLayout>
+        
+    </ScrollView>
 	
 </LinearLayout>

@@ -13,6 +13,7 @@ public class Constants {
 	public static final String FUNCTION_SEARCH = BASE_URL + "/cgi-bin/search.pl?search=true&inputtype=title"; //&query=<query>
 	public static final String FUNCTION_FOLDERS = BASE_URL + "/cgi-bin/collection.pl?action=managefolders";
 	public static final String FUNCTION_CSV = BASE_URL + "/cgi-bin/collection.pl?printpage=export"; //&name=<username>&folder=<folder>
+	public static final String FUNCTION_IMAGE = BASE_URL + "/images/games/"; // folder/type/rfgid.jpg
 	
 	public static final String PARAM_USERNAME = "name";
 	public static final String PARAM_FOLDER = "folder";
@@ -39,4 +40,6 @@ public class Constants {
 	public static final String INTENT_GAME_RFGID = PREFS_LAST_SEARCH;
 	public static final String INTENT_CONSOLE_ID = PARAM_CONSOLE;
 	public static final String INTENT_TYPE = PARAM_TYPE;
+	public static final String INTENT_WEB_URL = "URL";
+	public static final String INTENT_WEB_TITLE = "Title";
 }
