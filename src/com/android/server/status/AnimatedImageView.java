@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jgrue.rfgeneration;
+package com.android.server.status;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
