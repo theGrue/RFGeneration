@@ -171,8 +171,8 @@ public class SearchListActivity extends ListActivity {
                     		AnimatedImageView regionAnim = new AnimatedImageView(v.getContext());
                     		regionAnim.setImageDrawable(o.getRegionAnimation(v.getContext()));
                     		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams( 
-                					android.view.ViewGroup.LayoutParams.FILL_PARENT,
-                					android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+                    				(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 21, getResources().getDisplayMetrics()),
+                    				(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, getResources().getDisplayMetrics()));
                     		layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
                     		regionLayout.addView(regionAnim, layoutParams);
                     	}

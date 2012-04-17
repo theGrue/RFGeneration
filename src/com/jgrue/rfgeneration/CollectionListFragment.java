@@ -292,8 +292,8 @@ public class CollectionListFragment extends ListFragment implements LoaderManage
             		AnimatedImageView regionAnim = new AnimatedImageView(view.getContext());
             		regionAnim.setImageDrawable(o.getRegionAnimation(view.getContext()));
             		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-            				android.view.ViewGroup.LayoutParams.FILL_PARENT,
-            				android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+            				(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 21, getResources().getDisplayMetrics()),
+            				(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, getResources().getDisplayMetrics()));
             		layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
             		regionLayout.addView(regionAnim, layoutParams);
             	}
