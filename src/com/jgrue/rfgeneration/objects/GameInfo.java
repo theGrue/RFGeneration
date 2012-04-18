@@ -36,6 +36,14 @@ public class GameInfo extends Game {
 		nameList = new ArrayList<String>();
 		creditList = new ArrayList<String>();
 		imageTypes = new ArrayList<String>();
+		
+		// Set properties on base class from extendedInfo.
+		super.setRFGID(extendedInfo.get(RFGID));
+		super.setConsole(extendedInfo.get(CONSOLE));
+		super.setRegion(extendedInfo.get(REGION));
+		super.setPublisher(extendedInfo.get(PUBLISHER));
+		try { super.setYear(Integer.parseInt(extendedInfo.get(YEAR))); } catch (Exception e) { }
+		super.setGenre(extendedInfo.get(GENRE));
 	}
 	
 	public void setAlternateTitle(String alternateTitle) {

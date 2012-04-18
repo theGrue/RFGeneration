@@ -47,9 +47,11 @@ public class Game {
 		if(this.console == null)
 			this.console = new Console();
 		
-		String[] splitId = rfgid.split("-");
-		regionId = splitId[0];
-		this.console.setId(splitId[1]);
+		if(rfgid != null && rfgid.length() > 0) {
+			String[] splitId = rfgid.split("-");
+			regionId = splitId[0];
+			this.console.setId(splitId[1]);
+		}
 	}
 	public String getRFGID() {
 		return rfgid;

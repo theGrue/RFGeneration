@@ -2,6 +2,9 @@ package com.jgrue.rfgeneration.scrapers;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -31,74 +34,52 @@ public class GameInfoScraper {
 	}
 	
 	private static GameInfo scrapeGameInfo(String rfgid) throws Exception {
-		GameInfo gameInfo = new GameInfo();
-		gameInfo.setRFGID(rfgid);
-		
 		URL url = new URL("http://www.rfgeneration.com/cgi-bin/getinfo.pl?ID=" + rfgid);
 		Log.i(TAG, "Target URL: " + url.toString());
 		Document document = Jsoup.parse(url, 30000);
 		Log.i(TAG, "Retrieved URL: " + document.baseUri());
 		
-		Elements tables = document.select("table tr:eq(3) td:eq(1) table.bordercolor tr td table.windowbg2 tr:eq(3) td table");
-		if(tables.size() <= 4)
+		Elements tables = document.select("table > tbody > tr:eq(3) > td:eq(1) > table.bordercolor > tbody > tr > td > table.windowbg2 > tbody > tr:eq(3) > td > table");
+		/*if(tables.size() <= 4)
 		{
 			Log.w(TAG, "Unexpected results for " + rfgid + ", switching to HardwareInfoScraper.");
 			return HardwareInfoScraper.scrapeHardwareInfo(rfgid);
 		}
 		
-		Element table = tables.get(4);
-		Elements tableRows = table.select("tr");
-		 
-		Element title = document.select("div.headline").get(0);
-		gameInfo.setTitle(title.text());
+		Element table = tables.get(4);*/
 		
-		// Check for a variation title
-		/*Pattern variantRegex = Pattern.compile(" \\[.*\\]$");
-		Matcher matcher = variantRegex.matcher(gameInfo.getTitle());
-		if(matcher.find())
-		{
-			gameInfo.setVariationTitle(matcher.group().substring(2, matcher.group().length() - 1));
-			gameInfo.setTitle(gameInfo.getTitle().substring(0, gameInfo.getTitle().length() - gameInfo.getVariationTitle().length() - 3));
-		}*/
-		 
+		// Game Details are stored in the first table.
+		Elements tableRows = tables.get(0).select("tr");
+		Map<String, String> properties = new HashMap<String, String>();
+		
 		for(int i = 0; i < tableRows.size(); i++) {
 			 Elements tableData = tableRows.get(i).select("td");
-			 String field = tableData.get(0).text();
-			 String value = tableData.get(1).text();
+			 String field = tableData.get(0).text().trim().replace(":", "");
+			 String value = tableData.get(1).text().trim();
 			 
-			 if(field.contains("Console"))
-				 gameInfo.setConsole(value);
-			 else if(field.contains("Region"))
-				 gameInfo.setRegion(tableData.get(1).select("img").first().attr("title"));
-			 else if(field.contains("Year"))
-				 gameInfo.setYear(Integer.parseInt(value));
-			 else if(field.contains("Part"))
-				 gameInfo.setPartNumber(value);
-			 else if(field.contains("UPC"))
-			 	 gameInfo.setUPC(value);
-		 	 else if(field.contains("Publisher"))
-		 		 gameInfo.setPublisher(value);
-		 	 else if(field.contains("Developer"))
-		 		 gameInfo.setDeveloper(value);
-		 	 else if(field.contains("Rating"))
-		 		 gameInfo.setRating(value);
-		 	 else if(field.contains("Genre"))
-		 		 gameInfo.setGenre(value);
-		 	 else if(field.contains("Sub-genre"))
-		 		 gameInfo.setSubGenre(value);
-		 	 else if(field.contains("Players"))
-		 		 gameInfo.setPlayers(value);
-		 	 else if(field.contains("Controller"))
-		 		 gameInfo.setControlScheme(value);
-		 	 else if(field.contains("Media Format"))
-		 		 gameInfo.setMediaFormat(value);
-		 	 else if(field.contains("Alternate Title"))
-		 		 gameInfo.setAlternateTitle(value);
+			 if(field.length() == 0)
+				 continue;
+			 
+			 if(GameInfo.REGION.equals(field)) {
+				 StringBuilder sb = new StringBuilder();
+				 Elements regions = tableData.select("img");
+				 for(int j = 0; j < regions.size(); j++) {
+					 sb.append(regions.get(j).attr("title"));
+					 if (j < regions.size()) sb.append(',');
+				 }
+				 //properties.put(field, tableData.get(1).select("img").first().attr("title"));
+				 properties.put(field, sb.toString());
+			 } else if (value.length() > 0) {
+				 properties.put(field, value);
+			 }
 		}
 		
-		table = tables.get(tables.size() - 2);
-		tableRows = table.select("tr");
-		 
+		// Set the title and details.
+		GameInfo gameInfo = new GameInfo(properties);
+		gameInfo.setTitle(document.select("tr#title div.headline").get(0).text());
+		
+		// Page Credits are stored in the second to last table.
+		tableRows = tables.get(tables.size() - 2).select("tr");
 		ArrayList<String> names = new ArrayList<String>();
 		ArrayList<String> credits = new ArrayList<String>();
 		 

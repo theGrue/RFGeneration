@@ -104,6 +104,7 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
     	// Snip out any variation title.
     	Matcher matcher = variantRegex.matcher(gameInfo.getTitle());
     	String mainTitle = gameInfo.getTitle(), variationTitle = "";
+    	String publisher = gameInfo.getPublisher() != null ? gameInfo.getPublisher() : "";
     	if(matcher.find()) {
     		variationTitle = matcher.group().substring(2, matcher.group().length() - 1);
     		mainTitle = gameInfo.getTitle().substring(0, gameInfo.getTitle().length() - variationTitle.length() - 3);
@@ -115,15 +116,19 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
     	
     	StringBuilder sb = new StringBuilder();
     	sb.append(variationTitle);
-    	if (sb.length() > 0 && gameInfo.getPublisher().length() > 0)
+    	if (sb.length() > 0 && publisher.length() > 0)
     		sb.append(", ");
-    	sb.append(gameInfo.getPublisher());
-    	if (sb.length() > 0 && gameInfo.getPublisher().length() > 0 && gameInfo.getYear() > 0)
+    	sb.append(publisher);
+    	if (sb.length() > 0 && publisher.length() > 0 && gameInfo.getYear() > 0)
     		sb.append(", ");
     	if(gameInfo.getYear() > 0)
     		sb.append(gameInfo.getYear());
-    	((TextView)findViewById(R.id.game_info)).setText(sb.toString());
-    	
+    	if(sb.toString().length() > 0) {
+    		((TextView)findViewById(R.id.game_info)).setText(sb.toString());
+    	} else {
+    		findViewById(R.id.game_info).setVisibility(View.GONE);
+    	}
+    	    	
     	// Enable the image links.
     	for(String image : gameInfo.getImageTypes()) {
     		if(image.equals("bf"))
