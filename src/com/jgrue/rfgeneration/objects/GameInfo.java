@@ -156,7 +156,7 @@ public class GameInfo extends Game {
 	}
 	
 	private void put(String key, String value) {
-		if(value.trim().length() > 0)
+		if(value != null && value.trim().length() > 0)
 			extendedInfo.put(key, value.trim());
 	}
 	private void put(String key, int value) {

@@ -38,6 +38,13 @@ public class Constants {
 	public static final String INTENT_FOLDER = PARAM_FOLDER;
 	public static final String INTENT_GAME_ID = PARAM_RFGID;
 	public static final String INTENT_GAME_RFGID = PREFS_LAST_SEARCH;
+	public static final String INTENT_GAME_CONSOLE = PARAM_CONSOLE;
+	public static final String INTENT_GAME_REGION = "GameRegion";
+	public static final String INTENT_GAME_TYPE = PARAM_TYPE;
+	public static final String INTENT_GAME_TITLE = "GameTitle";
+	public static final String INTENT_GAME_PUBLISHER = "GamePublisher";
+	public static final String INTENT_GAME_YEAR = "GameYear";
+	public static final String INTENT_GAME_GENRE = "GameGenre";
 	public static final String INTENT_CONSOLE_ID = PARAM_CONSOLE;
 	public static final String INTENT_TYPE = PARAM_TYPE;
 	public static final String INTENT_WEB_URL = "URL";

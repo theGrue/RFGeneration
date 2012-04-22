@@ -52,41 +52,45 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 		
 		rfgData = new RFGenerationData(this);
 		variantRegex = Pattern.compile(" \\[.*\\]$");
+		gameInfo = new GameInfo();
+		
 		Long gameId = getIntent().getLongExtra(Constants.INTENT_GAME_ID, 0);
 		String rfgId = getIntent().getStringExtra(Constants.INTENT_GAME_RFGID);
 		
-		// If we were passed an RFGID but not a game_id, look it up in the database.
+		// If we were passed an RFGID but not a game_id, set everything by intent.
 		if(gameId == 0 && rfgId != null) {
-			Log.i(TAG, "Only received RFGID, performing database lookup for _ID.");
-			SQLiteDatabase db = rfgData.getReadableDatabase();
-			Cursor gameIdCursor = db.query("games", new String[] { _ID }, "rfgid = ?", new String[] { rfgId }, null, null, null);
-			startManagingCursor(gameIdCursor);
-			if (gameIdCursor.moveToNext()) {
-				gameId = gameIdCursor.getLong(0);
-			}
-		}
-		
-		// Get the information about the game from the local database.
-		ContentResolver db = getContentResolver();
-		Cursor gameInfoCursor = db.query(Uri.withAppendedPath(RFGenerationProvider.GAMES_URI, Long.toString(gameId)), 
-				new String[] { "rfgid", "console_name", "region", "title", "publisher", "year", "genre", "type" }, 
-				null, null, null);
-		startManagingCursor(gameInfoCursor);
-		
-		// Read the data into an object.
-		gameInfo = new GameInfo();
-		if (gameInfoCursor.moveToNext()) {
-			rfgId = gameInfoCursor.getString(0);
-			gameInfo.setRFGID(gameInfoCursor.getString(0));
-			gameInfo.setConsole(gameInfoCursor.getString(1));
-			gameInfo.setRegion(gameInfoCursor.getString(2));
-			gameInfo.setTitle(gameInfoCursor.getString(3));
-			gameInfo.setPublisher(gameInfoCursor.getString(4));
-			gameInfo.setYear(gameInfoCursor.getInt(5));
-			gameInfo.setGenre(gameInfoCursor.getString(6));
-			gameInfo.setType(gameInfoCursor.getString(7));
+			gameInfo.setRFGID(rfgId);
+			gameInfo.setConsole(getIntent().getStringExtra(Constants.INTENT_GAME_CONSOLE));
+			gameInfo.setRegion(getIntent().getStringExtra(Constants.INTENT_GAME_REGION));
+			gameInfo.setType(getIntent().getStringExtra(Constants.INTENT_GAME_TYPE));
+			gameInfo.setTitle(getIntent().getStringExtra(Constants.INTENT_GAME_TITLE));
+			gameInfo.setPublisher(getIntent().getStringExtra(Constants.INTENT_GAME_PUBLISHER));
+			gameInfo.setYear(getIntent().getIntExtra(Constants.INTENT_GAME_YEAR, 0));
+			gameInfo.setGenre(getIntent().getStringExtra(Constants.INTENT_GAME_GENRE));
 			
 			displayGameInfo();
+		} else if (gameId > 0) {
+			// Get the information about the game from the local database.
+			ContentResolver db = getContentResolver();
+			Cursor gameInfoCursor = db.query(Uri.withAppendedPath(RFGenerationProvider.GAMES_URI, Long.toString(gameId)), 
+					new String[] { "rfgid", "console_name", "region", "title", "publisher", "year", "genre", "type" }, 
+					null, null, null);
+			startManagingCursor(gameInfoCursor);
+			
+			// Read the data into an object.
+			if (gameInfoCursor.moveToNext()) {
+				rfgId = gameInfoCursor.getString(0);
+				gameInfo.setRFGID(gameInfoCursor.getString(0));
+				gameInfo.setConsole(gameInfoCursor.getString(1));
+				gameInfo.setRegion(gameInfoCursor.getString(2));
+				gameInfo.setTitle(gameInfoCursor.getString(3));
+				gameInfo.setPublisher(gameInfoCursor.getString(4));
+				gameInfo.setYear(gameInfoCursor.getInt(5));
+				gameInfo.setGenre(gameInfoCursor.getString(6));
+				gameInfo.setType(gameInfoCursor.getString(7));
+				
+				displayGameInfo();
+			}
 		}
 		
 		// Load everything else in the background.
@@ -111,7 +115,10 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
     	}
     	
     	// Display the basic info.
-    	((TextView)findViewById(R.id.game_header)).setText(gameInfo.getTitle() + " (" + gameInfo.getConsole() + ")");
+    	if(gameInfo.getConsole() !=null)
+    		((TextView)findViewById(R.id.game_header)).setText(gameInfo.getTitle() + " (" + gameInfo.getConsole() + ")");
+    	else
+    		((TextView)findViewById(R.id.game_header)).setText(gameInfo.getTitle());
     	((TextView)findViewById(R.id.game_title)).setText(mainTitle);
     	
     	StringBuilder sb = new StringBuilder();
@@ -123,6 +130,8 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
     		sb.append(", ");
     	if(gameInfo.getYear() > 0)
     		sb.append(gameInfo.getYear());
+    	if(gameInfo.getType() != null && !gameInfo.getType().equals("S"))
+    		sb.insert(0, "[" + gameInfo.getType() + "] ");
     	if(sb.toString().length() > 0) {
     		((TextView)findViewById(R.id.game_info)).setText(sb.toString());
     	} else {

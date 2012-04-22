@@ -75,6 +75,13 @@ public class SearchListActivity extends ListActivity {
 	  
 	  	Intent myIntent = new Intent(v.getContext(), GameInfoActivity.class);
 		myIntent.putExtra(Constants.INTENT_GAME_RFGID, gameList.get(position).getRFGID());
+		myIntent.putExtra(Constants.INTENT_GAME_CONSOLE, gameList.get(position).getConsole());
+		myIntent.putExtra(Constants.INTENT_GAME_REGION, gameList.get(position).getRegion());
+		myIntent.putExtra(Constants.INTENT_GAME_TYPE, gameList.get(position).getType());
+		myIntent.putExtra(Constants.INTENT_GAME_TITLE, gameList.get(position).getTitle());
+		myIntent.putExtra(Constants.INTENT_GAME_PUBLISHER, gameList.get(position).getPublisher());
+		myIntent.putExtra(Constants.INTENT_GAME_YEAR, gameList.get(position).getYear());
+		myIntent.putExtra(Constants.INTENT_GAME_GENRE, gameList.get(position).getGenre());
 		startActivityForResult(myIntent, 0);
 	}
 
