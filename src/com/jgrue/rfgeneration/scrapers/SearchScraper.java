@@ -35,7 +35,8 @@ public class SearchScraper {
 				Elements tableData = tableRows.get(i).select("td");
 				
 				Game newGame = new Game();
-				newGame.setRFGID(tableData.get(3).select("a").first().attr("href").substring(14));
+				String href = tableData.get(3).select("a").first().attr("href");
+				newGame.setRFGID(href.substring(href.indexOf("=") + 1));
 				newGame.setConsole(tableData.get(0).text());
 				newGame.setRegion(tableData.get(1).select("img").first().attr("title"));
 				newGame.setType(tableData.get(2).text());

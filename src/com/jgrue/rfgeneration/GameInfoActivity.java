@@ -43,7 +43,8 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 	private Pattern variantRegex;
 	private final String[] infoOrder = new String[] { GameInfo.ALTERNATE_TITLE, GameInfo.CONSOLE, GameInfo.REGION, GameInfo.YEAR,
 			GameInfo.RFGID, GameInfo.PART_NUMBER, GameInfo.UPC, GameInfo.PUBLISHER, GameInfo.DEVELOPER, GameInfo.RATING,
-			GameInfo.GENRE, GameInfo.SUB_GENRE, GameInfo.PLAYERS, GameInfo.CONTROL_SCHEME, GameInfo.MEDIA_FORMAT };
+			GameInfo.GENRE, GameInfo.SUB_GENRE, GameInfo.PLAYERS, GameInfo.CONTROL_SCHEME, GameInfo.MEDIA_FORMAT,
+			GameInfo.MANUFACTURER, GameInfo.CLASS, GameInfo.SUBCLASS };
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -150,6 +151,11 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
     			enableImageButton(R.id.game_game_button);
     		else if(image.equals("ms"))
     			enableImageButton(R.id.game_manual_button);
+    	}
+    	
+    	if("H".equals(gameInfo.getType())) {
+    		findViewById(R.id.game_game_button).setVisibility(View.GONE);
+    		((TextView)findViewById(R.id.game_screenshot_button)).setText("Hardware");
     	}
         
         // Display the extended info.
@@ -284,10 +290,15 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 		else if (v.getId() == R.id.game_manual_button)
 			type = "ms";
 		
-		if(type != null) {
+		if(type != null && !type.equals("ss")) {
 			Intent myIntent = new Intent(GameInfoActivity.this, WebViewActivity.class);
 			myIntent.putExtra(Constants.INTENT_WEB_TITLE, title);
 			myIntent.putExtra(Constants.INTENT_WEB_URL, Constants.FUNCTION_IMAGE + folder + "/" + type + "/" + rfgId + ".jpg");
+	        startActivityForResult(myIntent, 0);
+		} else if (type.equals("ss")) {
+			Intent myIntent = new Intent(GameInfoActivity.this, WebViewActivity.class);
+			myIntent.putExtra(Constants.INTENT_WEB_TITLE, title);
+			myIntent.putExtra(Constants.INTENT_WEB_URL, Constants.FUNCTION_SCREENSHOT + "?" + Constants.PARAM_RFGID + "=" + rfgId);
 	        startActivityForResult(myIntent, 0);
 		}
 	}

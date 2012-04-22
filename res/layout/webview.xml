@@ -42,7 +42,9 @@
             android:layout_height="wrap_content"
             android:padding="5dip"
             android:textColor="@drawable/body"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:ellipsize="marquee" />
 
     </LinearLayout>
     

@@ -14,6 +14,7 @@ public class Constants {
 	public static final String FUNCTION_FOLDERS = BASE_URL + "/cgi-bin/collection.pl?action=managefolders";
 	public static final String FUNCTION_CSV = BASE_URL + "/cgi-bin/collection.pl?printpage=export"; //&name=<username>&folder=<folder>
 	public static final String FUNCTION_IMAGE = BASE_URL + "/images/games/"; // folder/type/rfgid.jpg
+	public static final String FUNCTION_SCREENSHOT = BASE_URL + "/cgi-bin/screenshot.pl"; //?ID=<rfgid>
 	
 	public static final String PARAM_USERNAME = "name";
 	public static final String PARAM_FOLDER = "folder";

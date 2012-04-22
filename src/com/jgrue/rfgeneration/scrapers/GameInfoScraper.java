@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 
 import android.util.Log;
 
+import com.jgrue.rfgeneration.constants.Constants;
 import com.jgrue.rfgeneration.objects.GameInfo;
 import com.jgrue.rfgeneration.scrapers.HardwareInfoScraper;
 
@@ -34,19 +35,17 @@ public class GameInfoScraper {
 	}
 	
 	private static GameInfo scrapeGameInfo(String rfgid) throws Exception {
-		URL url = new URL("http://www.rfgeneration.com/cgi-bin/getinfo.pl?ID=" + rfgid);
+		URL url = new URL(Constants.FUNCTION_GAME_INFO + "?" + Constants.PARAM_RFGID + "=" + rfgid);
 		Log.i(TAG, "Target URL: " + url.toString());
 		Document document = Jsoup.parse(url, 30000);
 		Log.i(TAG, "Retrieved URL: " + document.baseUri());
 		
 		Elements tables = document.select("table > tbody > tr:eq(3) > td:eq(1) > table.bordercolor > tbody > tr > td > table.windowbg2 > tbody > tr:eq(3) > td > table");
-		/*if(tables.size() <= 4)
+		if(tables.size() == 0)
 		{
 			Log.w(TAG, "Unexpected results for " + rfgid + ", switching to HardwareInfoScraper.");
 			return HardwareInfoScraper.scrapeHardwareInfo(rfgid);
 		}
-		
-		Element table = tables.get(4);*/
 		
 		// Game Details are stored in the first table.
 		Elements tableRows = tables.get(0).select("tr");

@@ -23,6 +23,9 @@ public class GameInfo extends Game {
 	public static final String PLAYERS = "Players";
 	public static final String CONTROL_SCHEME = "Controller";
 	public static final String MEDIA_FORMAT = "Media Format";
+	public static final String MANUFACTURER = "Manufacturer";
+	public static final String CLASS = "Class";
+	public static final String SUBCLASS = "Subclass";
 	private List<String> nameList;
 	private List<String> creditList;
 	private List<String> imageTypes;
