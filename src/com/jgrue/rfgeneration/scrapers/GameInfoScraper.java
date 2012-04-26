@@ -53,6 +53,11 @@ public class GameInfoScraper {
 		
 		for(int i = 0; i < tableRows.size(); i++) {
 			 Elements tableData = tableRows.get(i).select("td");
+			 
+			 // Sometimes non-US ratings can get mixed up in here and only have one cell.
+			 if(tableData.size() < 2)
+				 continue;
+			 
 			 String field = tableData.get(0).text().trim().replace(":", "");
 			 String value = tableData.get(1).text().trim();
 			 
