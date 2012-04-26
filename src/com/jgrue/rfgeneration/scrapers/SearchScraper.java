@@ -46,16 +46,7 @@ public class SearchScraper {
 				newGame.setGenre(tableData.get(6).text());
 				gameList.add(newGame);
 			}
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (Exception e) { }
 		
 		return gameList;
 	}
@@ -77,16 +68,7 @@ public class SearchScraper {
 			Element div = document.select("div.smalltext").get(1);
 			String divText = div.text().substring(div.text().indexOf("of") + 3);
 			numPages = (int) Math.ceil(Integer.parseInt(divText.substring(0, divText.indexOf(" "))) / 50.0);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (Exception e) { }
 		
 		return numPages;
 	}
