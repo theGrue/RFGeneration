@@ -118,9 +118,9 @@ public class RFGenerationProvider extends ContentProvider {
 		    	for(int i = 0; i < values.length; i++) {
 	    			// Save collection quantities in a separate array, then trim down values[i].
 	    			ContentValues quantities = new ContentValues();
-	    			quantities.put("qty", values[i].getAsInteger("qty"));
-	    			quantities.put("box", values[i].getAsInteger("box"));
-	    			quantities.put("man", values[i].getAsInteger("man"));
+	    			quantities.put("qty", values[i].getAsFloat("qty"));
+	    			quantities.put("box", values[i].getAsFloat("box"));
+	    			quantities.put("man", values[i].getAsFloat("man"));
 	    			values[i].remove("folder_name");
 	    			values[i].remove("qty");
 	    			values[i].remove("box");

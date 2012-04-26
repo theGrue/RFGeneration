@@ -182,9 +182,9 @@ public class RFGenerationService extends Service {
                     
                     // "collection" table values.
                     gameInsert.put("folder_name", folderName);
-                    gameInsert.put("qty", Integer.parseInt(nextLine[8]));
-                    gameInsert.put("box", Integer.parseInt(nextLine[9]));
-                    gameInsert.put("man", Integer.parseInt(nextLine[10]));
+                    gameInsert.put("qty", Float.parseFloat(nextLine[8]));
+                    gameInsert.put("box", Float.parseFloat(nextLine[9]));
+                    gameInsert.put("man", Float.parseFloat(nextLine[10]));
                     
                     gameList.add(gameInsert);
                 }

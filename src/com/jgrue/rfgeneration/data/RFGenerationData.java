@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class RFGenerationData extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "rfgeneration.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 	
 	public RFGenerationData(Context ctx) {
 		super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
@@ -37,12 +37,26 @@ public class RFGenerationData extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE collection (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				"folder_id INT NOT NULL, game_id INT NOT NULL, qty INT NOT NULL, " +
 				"box INT NOT NULL, man INT NOT NULL);");
+		
+		// Upgrade this database to the latest version.
+		onUpgrade(db, 1, DATABASE_VERSION);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// TODO Auto-generated method stub
-
+		if(oldVersion < 2) {
+			// Add a few new consoles.
+			InsertHelper ih = new InsertHelper(db, "consoles");
+			final int id = ih.getColumnIndex(_ID);
+	        final int name = ih.getColumnIndex("console_name");
+	        final int abbv = ih.getColumnIndex("console_abbv");	 
+	        
+	        ih.prepareForInsert(); ih.bind(id, 190); ih.bind(name, "Sord M5"); ih.bind(abbv, "Sord"); ih.execute();
+	        ih.prepareForInsert(); ih.bind(id, 191); ih.bind(name, "Oric-1 / Atmos"); ih.bind(abbv, "Oric"); ih.execute();
+	        ih.prepareForInsert(); ih.bind(id, 192); ih.bind(name, "Acorn Archimedes"); ih.bind(abbv, "Arch"); ih.execute();
+	        ih.prepareForInsert(); ih.bind(id, 193); ih.bind(name, "Panasonic JR"); ih.bind(abbv, "JR"); ih.execute();
+	        ih.prepareForInsert(); ih.bind(id, 194); ih.bind(name, "Steam"); ih.bind(abbv, "Steam"); ih.execute();
+		}
 	}
 	
 	private void insertConsoles(SQLiteDatabase db) {

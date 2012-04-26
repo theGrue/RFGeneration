@@ -206,9 +206,9 @@ public class SearchListActivity extends ListActivity {
 	        					newFolder.setPrivate(cursor.getInt(1) == 1);
 	        					
 	        					Collection newCollection = new Collection();
-	        					newCollection.setGameQuantity(cursor.getInt(3));
-	        					newCollection.setBoxQuantity(cursor.getInt(4));
-	        					newCollection.setManualQuantity(cursor.getInt(5));
+	        					newCollection.setGameQuantity(cursor.getFloat(3));
+	        					newCollection.setBoxQuantity(cursor.getFloat(4));
+	        					newCollection.setManualQuantity(cursor.getFloat(5));
 	        					newCollection.setFolder(newFolder);
 	        					
 	        					collections.add(newCollection);
@@ -244,9 +244,9 @@ public class SearchListActivity extends ListActivity {
 	    			    	
 	    			    	TextView folderQty = new TextView(v.getContext());
 	    			    	folderQty.setText(Html.fromHtml("<font color=\"#" + Integer.toHexString(getResources().getColor(R.drawable.qty)).substring(2) + "\">" + 
-	    			    			"G:" + o.getCollections().get(i).getGameQuantity() + "</font> <font color=\"#" + Integer.toHexString(getResources().getColor(R.drawable.box)).substring(2) + "\">" + 
-	    			    			"B:" + o.getCollections().get(i).getBoxQuantity() + "</font> <font color=\"#" + Integer.toHexString(getResources().getColor(R.drawable.man)).substring(2) + "\">" +
-	    			    			"M:" + o.getCollections().get(i).getManualQuantity() + "</font> "));
+	    			    			"G:" + Collection.getQuantityString(o.getCollections().get(i).getGameQuantity()) + "</font> <font color=\"#" + Integer.toHexString(getResources().getColor(R.drawable.box)).substring(2) + "\">" + 
+	    			    			"B:" + Collection.getQuantityString(o.getCollections().get(i).getBoxQuantity()) + "</font> <font color=\"#" + Integer.toHexString(getResources().getColor(R.drawable.man)).substring(2) + "\">" +
+	    			    			"M:" + Collection.getQuantityString(o.getCollections().get(i).getManualQuantity()) + "</font> "));
 	    			    	folderQty.setTextColor(getResources().getColor(R.drawable.text));
 	    			    	LayoutParams folderQtyLayout = new LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 	    			    	folderQtyLayout.setMargins(0, 0, paddingUnit * 2, 0);

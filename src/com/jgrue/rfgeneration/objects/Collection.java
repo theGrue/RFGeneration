@@ -1,10 +1,13 @@
 package com.jgrue.rfgeneration.objects;
 
+import java.text.DecimalFormat;
+
 public class Collection {
 	private Folder folder;
-	private int qty;
-	private int box;
-	private int man;
+	private float qty;
+	private float box;
+	private float man;
+	private static DecimalFormat format = new DecimalFormat("##0.##");
 	
 	public void setFolder(Folder folder) {
 		this.folder = folder;
@@ -12,22 +15,26 @@ public class Collection {
 	public Folder getFolder() {
 		return folder;
 	}
-	public void setGameQuantity(int qty) {
+	public void setGameQuantity(float qty) {
 		this.qty = qty;
 	}
-	public int getGameQuantity() {
+	public float getGameQuantity() {
 		return qty;
 	}
-	public void setBoxQuantity(int box) {
+	public void setBoxQuantity(float box) {
 		this.box = box;
 	}
-	public int getBoxQuantity() {
+	public float getBoxQuantity() {
 		return box;
 	}
-	public void setManualQuantity(int man) {
+	public void setManualQuantity(float man) {
 		this.man = man;
 	}
-	public int getManualQuantity() {
+	public float getManualQuantity() {
 		return man;
+	}
+	
+	public static String getQuantityString(float qty) {
+		return format.format(qty);
 	}
 }

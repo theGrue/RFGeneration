@@ -97,9 +97,9 @@ public class CollectionListFragment extends ListFragment implements LoaderManage
 				newFolder.setPrivate(collection.getInt(2) == 1);
 				
 				Collection newCollection = new Collection();
-				newCollection.setGameQuantity(collection.getInt(4));
-				newCollection.setBoxQuantity(collection.getInt(5));
-				newCollection.setManualQuantity(collection.getInt(6));
+				newCollection.setGameQuantity(collection.getFloat(4));
+				newCollection.setBoxQuantity(collection.getFloat(5));
+				newCollection.setManualQuantity(collection.getFloat(6));
 				newCollection.setFolder(newFolder);
 				
 				gameCollections.add(newCollection);
@@ -303,9 +303,9 @@ public class CollectionListFragment extends ListFragment implements LoaderManage
 				if(folderId > 0) {
 					view.setVisibility(View.VISIBLE);
 					((TextView)view).setText(Html.fromHtml("<font color=\"#" + Integer.toHexString(getResources().getColor(R.drawable.qty)).substring(2) + "\">" + 
-			    			"G:" + cursor.getInt(columnIndex) + "</font> <font color=\"#" + Integer.toHexString(getResources().getColor(R.drawable.box)).substring(2) + "\">" + 
-			    			"B:" + cursor.getInt(columnIndex + 1) + "</font> <font color=\"#" + Integer.toHexString(getResources().getColor(R.drawable.man)).substring(2) + "\">" +
-			    			"M:" + cursor.getInt(columnIndex + 2) + "</font>"));
+			    			"G:" + Collection.getQuantityString(cursor.getFloat(columnIndex)) + "</font> <font color=\"#" + Integer.toHexString(getResources().getColor(R.drawable.box)).substring(2) + "\">" + 
+			    			"B:" + Collection.getQuantityString(cursor.getFloat(columnIndex + 1)) + "</font> <font color=\"#" + Integer.toHexString(getResources().getColor(R.drawable.man)).substring(2) + "\">" +
+			    			"M:" + Collection.getQuantityString(cursor.getFloat(columnIndex + 2)) + "</font>"));
 				}
 				return true;
 			} else if (view.getId() == R.id.folders) {
@@ -348,9 +348,9 @@ public class CollectionListFragment extends ListFragment implements LoaderManage
     			    	
     			    	TextView folderQty = new TextView(view.getContext());
     			    	folderQty.setText(Html.fromHtml("<font color=\"#" + Integer.toHexString(getResources().getColor(R.drawable.qty)).substring(2) + "\">" + 
-    			    			"G:" + folders.get(i).getGameQuantity() + "</font> <font color=\"#" + Integer.toHexString(getResources().getColor(R.drawable.box)).substring(2) + "\">" + 
-    			    			"B:" + folders.get(i).getBoxQuantity() + "</font> <font color=\"#" + Integer.toHexString(getResources().getColor(R.drawable.man)).substring(2) + "\">" +
-    			    			"M:" + folders.get(i).getManualQuantity() + "</font> "));
+    			    			"G:" + Collection.getQuantityString(folders.get(i).getGameQuantity()) + "</font> <font color=\"#" + Integer.toHexString(getResources().getColor(R.drawable.box)).substring(2) + "\">" + 
+    			    			"B:" + Collection.getQuantityString(folders.get(i).getBoxQuantity()) + "</font> <font color=\"#" + Integer.toHexString(getResources().getColor(R.drawable.man)).substring(2) + "\">" +
+    			    			"M:" + Collection.getQuantityString(folders.get(i).getManualQuantity()) + "</font> "));
     			    	folderQty.setTextColor(getResources().getColor(R.drawable.text));
     			    	LayoutParams folderQtyLayout = new LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 
     			    			android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
