@@ -19,16 +19,29 @@ public class RFGenerationProvider extends ContentProvider {
     public static final Uri COLLECTION_URI = Uri.parse("content://" + AUTHORITY + "/" + COLLECTION_BASE_PATH);
     public static final Uri FOLDERS_URI = Uri.parse("content://" + AUTHORITY + "/" + FOLDERS_BASE_PATH);
     public static final Uri GAMES_URI = Uri.parse("content://" + AUTHORITY + "/" + GAMES_BASE_PATH);
+	
+	private static final int COLLECTION_FROM_ALL_FOLDERS = 1;
+	private static final int COLLECTION_FROM_OWNED_FOLDERS = 2;
+	private static final int COLLECTION_FROM_SPECIFIC_FOLDER = 3;
+	private static final int FOLDERS_ALL = 5;
+	private static final int FOLDERS_OWNED = 6;
+	private static final int GAME_SPECIFIC = 7;
+	private static final int FOLDERS_SPECIFIC = 8;
+	private static final int COLLECTION_FOR_SPECIFIC_GAME = 9;
+	private static final int GAME_NEW = 10;
+	
 	private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
 		sURIMatcher.addURI(AUTHORITY, COLLECTION_BASE_PATH, 4);
-        sURIMatcher.addURI(AUTHORITY, COLLECTION_BASE_PATH + "/all", 1);
-        sURIMatcher.addURI(AUTHORITY, COLLECTION_BASE_PATH + "/owned", 2);
-        sURIMatcher.addURI(AUTHORITY, COLLECTION_BASE_PATH + "/#", 3);
-        sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/all", 5);
-        sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/owned", 6);
-        sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/#", 8);
-        sURIMatcher.addURI(AUTHORITY, GAMES_BASE_PATH + "/#", 7);
+        sURIMatcher.addURI(AUTHORITY, COLLECTION_BASE_PATH + "/all", COLLECTION_FROM_ALL_FOLDERS);
+        sURIMatcher.addURI(AUTHORITY, COLLECTION_BASE_PATH + "/owned", COLLECTION_FROM_OWNED_FOLDERS);
+        sURIMatcher.addURI(AUTHORITY, COLLECTION_BASE_PATH + "/#", COLLECTION_FROM_SPECIFIC_FOLDER);
+        sURIMatcher.addURI(AUTHORITY, COLLECTION_BASE_PATH + "/" + GAMES_BASE_PATH + "/#", COLLECTION_FOR_SPECIFIC_GAME);
+        sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/all", FOLDERS_ALL);
+        sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/owned", FOLDERS_OWNED);
+        sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/#", FOLDERS_SPECIFIC);
+        sURIMatcher.addURI(AUTHORITY, GAMES_BASE_PATH, GAME_NEW);
+        sURIMatcher.addURI(AUTHORITY, GAMES_BASE_PATH + "/#", GAME_SPECIFIC);
     }
 	
 	private RFGenerationData rfgData;
@@ -45,35 +58,39 @@ public class RFGenerationProvider extends ContentProvider {
 		int uriType = sURIMatcher.match(uri);
 		
 	    switch (uriType) {
-	    case 1: // Collection from All Folders
+	    case COLLECTION_FROM_ALL_FOLDERS: // Collection from All Folders
 	    	queryBuilder.setTables("collection INNER JOIN games ON collection.game_id = games._id " +
 	    			"LEFT JOIN consoles ON games.console_id = consoles._id");
 	    	queryBuilder.setDistinct(true);
 	    	break;
-	    case 2: // Collection from Owned Folders
+	    case COLLECTION_FROM_OWNED_FOLDERS: // Collection from Owned Folders
 	    	queryBuilder.setTables("collection INNER JOIN games ON collection.game_id = games._id " +
     			"INNER JOIN folders ON collection.folder_id = folders._id " +
 				"LEFT JOIN consoles ON games.console_id = consoles._id");
     		queryBuilder.appendWhere("is_owned = 1");
     		queryBuilder.setDistinct(true);
 	    	break;
-	    case 3: // Collection from Specific Folder
+	    case COLLECTION_FROM_SPECIFIC_FOLDER: // Collection from Specific Folder
 	    	queryBuilder.setTables("collection INNER JOIN games ON collection.game_id = games._id " +
 				"LEFT JOIN consoles ON games.console_id = consoles._id");
     		queryBuilder.appendWhere("folder_id = " + uri.getLastPathSegment());
 	    	break;
-	    case 5: // All Folders
+	    case COLLECTION_FOR_SPECIFIC_GAME: // Collection for Specific Game
+	    	queryBuilder.setTables("collection INNER JOIN folders ON collection.folder_id = folders._id");
+	    	queryBuilder.appendWhere("game_id = " + uri.getLastPathSegment());
+	    	break;
+	    case FOLDERS_ALL: // All Folders
 	    	queryBuilder.setTables("folders");
 	    	break;
-	    case 6: // Owned Folders
+	    case FOLDERS_OWNED: // Owned Folders
 	    	queryBuilder.setTables("folders");
 	    	queryBuilder.appendWhere("is_owned = 1");
 	    	break;
-	    case 8: // Individual Folder
+	    case FOLDERS_SPECIFIC: // Individual Folder
 	    	queryBuilder.setTables("folders");
 	    	queryBuilder.appendWhere(_ID + " = " + uri.getLastPathSegment());
 	    	break;
-	    case 7: // Individual Game
+	    case GAME_SPECIFIC: // Individual Game
 	    	queryBuilder.setTables("games");
 	    	queryBuilder.appendWhere(_ID + " = " + uri.getLastPathSegment());
 	    	break;
@@ -89,14 +106,18 @@ public class RFGenerationProvider extends ContentProvider {
 	
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
-		// TODO Auto-generated method stub
+		int uriType = sURIMatcher.match(uri);
+		if (uriType != GAME_NEW) {
+			throw new IllegalArgumentException("Invalid URI for insert");
+	    }
+		
 		return null;
 	}
 	
 	@Override
 	public int bulkInsert(Uri uri, ContentValues[] values) {
 		int uriType = sURIMatcher.match(uri);
-	    if (uriType != 3 && uriType != 5 && uriType != 6) {
+	    if (uriType != COLLECTION_FROM_SPECIFIC_FOLDER && uriType != FOLDERS_ALL && uriType != FOLDERS_OWNED) {
 	        throw new IllegalArgumentException("Invalid URI for insert");
 	    }
 	    
@@ -105,11 +126,8 @@ public class RFGenerationProvider extends ContentProvider {
 	    db.beginTransaction();
 	    
 	    try {
-	    	if (uriType == 3) {
+	    	if (uriType == COLLECTION_FROM_SPECIFIC_FOLDER) {
 	    		long folderId = Long.parseLong(uri.getLastPathSegment());
-	    		
-		    	// If this is folderId = 0, insert a new folder record.
-		    	
 		    	
 		    	// Wipe all collection data for this folder.
 		    	int deleteCount = db.delete("collection", "folder_id = ?", new String[] { Long.toString(folderId) });
@@ -160,7 +178,7 @@ public class RFGenerationProvider extends ContentProvider {
 		    	timeStamp.put("last_load", System.currentTimeMillis() / 1000L);
 		    	Log.i(TAG, "Updating timestamp on folder " + folderId + " to " + timeStamp.getAsLong("last_load"));
 		    	db.update("folders", timeStamp, _ID + " = ?", new String[] { Long.toString(folderId) });
-		    } else if (uriType == 5 || uriType == 6) {
+		    } else if (uriType == FOLDERS_ALL || uriType == FOLDERS_OWNED) {
 		    	Cursor existingFolders = query(uri, new String[] { _ID, "folder_name" }, 
 		    			null, null, "folder_name ASC");
 		    	
@@ -211,7 +229,7 @@ public class RFGenerationProvider extends ContentProvider {
 	    	
 	    	// Always notify folders/all, the home screen is keeping track of this.
 	    	getContext().getContentResolver().notifyChange(Uri.withAppendedPath(FOLDERS_URI, "all"), null);
-	    	if(uriType != 5)
+	    	if(uriType != FOLDERS_ALL)
 	    		getContext().getContentResolver().notifyChange(uri, null);
 	    } finally {
 	    	db.endTransaction();

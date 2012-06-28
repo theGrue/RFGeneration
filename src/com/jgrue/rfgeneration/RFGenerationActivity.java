@@ -22,7 +22,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
@@ -43,7 +42,6 @@ public class RFGenerationActivity extends FragmentActivity implements OnClickLis
 	private static final String TAG = "RFGenerationActivity";
 	private List<Folder> folderList;
 	private int selectedFolder;
-	private SimpleCursorAdapter adapter;
 	
     /** Called when the activity is first created. */
     @Override

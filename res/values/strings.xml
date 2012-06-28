@@ -32,4 +32,8 @@ huge game database to find a wealth of information, images, and more.
     <string name="image_manual_label">Manual</string>
     <string name="detail_header">Game Details</string>
     <string name="credits_header">Page Credits</string>
+    <string name="add_to_folder_label">Add to Folder:</string>
+    <string name="game_quantity_label">Quantity:</string>
+    <string name="box_quantity_label">Boxes:</string>
+    <string name="manual_quantity_label">Manuals:</string>
 </resources>
