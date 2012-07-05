@@ -29,6 +29,7 @@ public class RFGenerationProvider extends ContentProvider {
 	private static final int FOLDERS_SPECIFIC = 8;
 	private static final int COLLECTION_FOR_SPECIFIC_GAME = 9;
 	private static final int GAME_NEW = 10;
+	private static final int FOLDER_FOR_SPECIFIC_GAME = 11;
 	
 	private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
@@ -40,6 +41,7 @@ public class RFGenerationProvider extends ContentProvider {
         sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/all", FOLDERS_ALL);
         sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/owned", FOLDERS_OWNED);
         sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/#", FOLDERS_SPECIFIC);
+        sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/#/" + GAMES_BASE_PATH + "/#", FOLDER_FOR_SPECIFIC_GAME);
         sURIMatcher.addURI(AUTHORITY, GAMES_BASE_PATH, GAME_NEW);
         sURIMatcher.addURI(AUTHORITY, GAMES_BASE_PATH + "/#", GAME_SPECIFIC);
     }
