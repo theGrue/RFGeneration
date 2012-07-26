@@ -41,7 +41,7 @@ public class RFGenerationProvider extends ContentProvider {
         sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/all", FOLDERS_ALL);
         sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/owned", FOLDERS_OWNED);
         sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/#", FOLDERS_SPECIFIC);
-        sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/#/" + GAMES_BASE_PATH + "/#", FOLDER_FOR_SPECIFIC_GAME);
+        sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/#/" + GAMES_BASE_PATH + "/*", FOLDER_FOR_SPECIFIC_GAME);
         sURIMatcher.addURI(AUTHORITY, GAMES_BASE_PATH, GAME_NEW);
         sURIMatcher.addURI(AUTHORITY, GAMES_BASE_PATH + "/#", GAME_SPECIFIC);
     }
@@ -242,8 +242,30 @@ public class RFGenerationProvider extends ContentProvider {
 
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
-		// TODO Auto-generated method stub
-		return 0;
+		int uriType = sURIMatcher.match(uri);
+		if (uriType != FOLDER_FOR_SPECIFIC_GAME) {
+			throw new IllegalArgumentException("Invalid URI for insert");
+	    }
+		
+		SQLiteDatabase db = rfgData.getWritableDatabase();
+		
+		Long gameId = 0L;
+		Cursor gameIdCursor = db.query("games", new String[] { _ID }, "rfgid = ?", new String[] { uri.getPathSegments().get(3) }, 
+				null, null, null);
+		if(gameIdCursor.moveToNext())
+			gameId = gameIdCursor.getLong(0);
+		gameIdCursor.close();
+			
+		int numRows = db.delete("collection", "folder_id = ? and game_id = ?", 
+				new String[] { uri.getPathSegments().get(1), Long.toString(gameId) });
+		
+		getContext().getContentResolver().notifyChange(Uri.withAppendedPath(FOLDERS_URI, "all"), null);
+		getContext().getContentResolver().notifyChange(Uri.withAppendedPath(FOLDERS_URI, "owned"), null);
+		getContext().getContentResolver().notifyChange(Uri.withAppendedPath(FOLDERS_URI, uri.getPathSegments().get(1)), null);
+		getContext().getContentResolver().notifyChange(Uri.withAppendedPath(RFGenerationProvider.COLLECTION_URI, 
+				"games/" + Long.toString(gameId)), null);
+		
+		return numRows;
 	}
 
 	@Override

@@ -180,6 +180,7 @@ public class CollectionListFragment extends ListFragment implements LoaderManage
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 		adapter.swapCursor(cursor);
+		adapter.notifyDataSetChanged(); 
 		getActivity().findViewById(R.id.collection_progress).setVisibility(View.GONE);	   
 	}
 

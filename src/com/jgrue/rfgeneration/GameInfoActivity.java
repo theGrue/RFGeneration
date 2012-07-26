@@ -502,7 +502,8 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 				       .setCancelable(false)
 				       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 				           public void onClick(DialogInterface dialog, int id) {
-				                new DeleteGameTask().execute(gameInfo.getRFGID(), collections.get(index).getFolder().getName());
+				                new DeleteGameTask().execute(gameInfo.getRFGID(), collections.get(index).getFolder().getName(),
+				                		Long.toString(gameInfo.getId()), Long.toString(collections.get(index).getFolder().getId()));
 				           }
 				       })
 				       .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -522,8 +523,7 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 		protected Boolean doInBackground(Collection... params) {
 			if (AddGameScraper.addGame(GameInfoActivity.this, gameInfo.getRFGID(), params[0].getFolder().getName(),
 					params[0].getGameQuantity(), params[0].getBoxQuantity(), params[0].getManualQuantity())) {
-				
-				
+				// Add the game to the local database as well.
 				return true;
 			}
 			
@@ -541,8 +541,9 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 		@Override
 		protected Boolean doInBackground(String... params) {
 			if (DeleteGameScraper.deleteGame(GameInfoActivity.this, params[0], params[1])) {
-				
-				return true;
+				int numRows = GameInfoActivity.this.getContentResolver().delete(
+						Uri.withAppendedPath(RFGenerationProvider.FOLDERS_URI, params[3] + "/games/" + params[0]), null, null);
+				return numRows > 0;
 			}
 			
 			return false;
