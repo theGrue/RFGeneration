@@ -51,6 +51,7 @@ public class Game {
 			String[] splitId = rfgid.split("-");
 			regionId = splitId[0];
 			this.console.setId(splitId[1]);
+			type = splitId[2];
 		}
 	}
 	public String getRFGID() {

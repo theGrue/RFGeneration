@@ -23,6 +23,7 @@ import com.quietlycoding.android.picker.NumberPicker;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -479,6 +480,11 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 						c.setBoxQuantity(boxPicker.getCurrent());
 						c.setManualQuantity(manualPicker.getCurrent());
 						c.setFolder(new Folder(((TextView)folderSpinner.getSelectedView()).getText().toString()));
+						
+						Cursor cursor = ((SimpleCursorAdapter)folderSpinner.getAdapter()).getCursor();
+						cursor.moveToPosition(folderSpinner.getSelectedItemPosition());
+						c.getFolder().setId(cursor.getLong(0));
+						
 						new AddGameTask().execute(c);
 						dialog.cancel();
 					}
@@ -524,7 +530,36 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 			if (AddGameScraper.addGame(GameInfoActivity.this, gameInfo.getRFGID(), params[0].getFolder().getName(),
 					params[0].getGameQuantity(), params[0].getBoxQuantity(), params[0].getManualQuantity())) {
 				// Add the game to the local database as well.
-				return true;
+                ContentValues gameInsert = new ContentValues();
+                
+                // "games" table values.
+                gameInsert.put("rfgid", gameInfo.getRFGID());
+                gameInsert.put("console_id", gameInfo.getConsoleId());
+                gameInsert.put("console_name", gameInfo.getConsole());
+                gameInsert.put("region_id", gameInfo.getRegionId());
+                gameInsert.put("region", gameInfo.getRegion());
+                gameInsert.put("type", gameInfo.getType());
+                gameInsert.put("title", gameInfo.getTitle());
+                gameInsert.put("publisher", gameInfo.getPublisher());
+                if(gameInfo.getYear() > 0)
+                	gameInsert.put("year", gameInfo.getYear());
+                gameInsert.put("genre", gameInfo.getGenre());
+                
+                Uri game = GameInfoActivity.this.getContentResolver().insert(RFGenerationProvider.GAMES_URI, gameInsert);
+                Long gameId = Long.parseLong(game.getLastPathSegment());
+                gameInfo.setId(gameId);
+                
+                // Add game to collection
+                ContentValues quantities = new ContentValues();
+                quantities.put("qty", params[0].getGameQuantity());
+    			quantities.put("box", params[0].getBoxQuantity());
+    			quantities.put("man", params[0].getManualQuantity());
+    			quantities.put("folder_id", params[0].getFolder().getId());
+				quantities.put("game_id", gameId);
+				
+				Uri collection = GameInfoActivity.this.getContentResolver().insert(RFGenerationProvider.COLLECTION_URI, quantities);
+                
+				return gameId > 0;
 			}
 			
 			return false;

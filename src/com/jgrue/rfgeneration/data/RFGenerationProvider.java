@@ -23,6 +23,7 @@ public class RFGenerationProvider extends ContentProvider {
 	private static final int COLLECTION_FROM_ALL_FOLDERS = 1;
 	private static final int COLLECTION_FROM_OWNED_FOLDERS = 2;
 	private static final int COLLECTION_FROM_SPECIFIC_FOLDER = 3;
+	private static final int COLLECTION_NEW = 4;
 	private static final int FOLDERS_ALL = 5;
 	private static final int FOLDERS_OWNED = 6;
 	private static final int GAME_SPECIFIC = 7;
@@ -33,7 +34,7 @@ public class RFGenerationProvider extends ContentProvider {
 	
 	private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
-		sURIMatcher.addURI(AUTHORITY, COLLECTION_BASE_PATH, 4);
+		sURIMatcher.addURI(AUTHORITY, COLLECTION_BASE_PATH, COLLECTION_NEW);
         sURIMatcher.addURI(AUTHORITY, COLLECTION_BASE_PATH + "/all", COLLECTION_FROM_ALL_FOLDERS);
         sURIMatcher.addURI(AUTHORITY, COLLECTION_BASE_PATH + "/owned", COLLECTION_FROM_OWNED_FOLDERS);
         sURIMatcher.addURI(AUTHORITY, COLLECTION_BASE_PATH + "/#", COLLECTION_FROM_SPECIFIC_FOLDER);
@@ -109,11 +110,46 @@ public class RFGenerationProvider extends ContentProvider {
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
 		int uriType = sURIMatcher.match(uri);
-		if (uriType != GAME_NEW) {
+		
+		if (uriType == GAME_NEW) {
+			// Check whether the game already exists in the database.
+			SQLiteDatabase db = rfgData.getWritableDatabase();
+			Cursor gameCursor = db.query("games", new String[] { _ID }, "rfgid = ?", 
+				new String[] { values.getAsString("rfgid") }, null, null, null);
+			long gameId = 0;
+			
+			if (gameCursor.moveToNext()) {
+				gameId = gameCursor.getLong(0);
+				gameCursor.close();
+			} else {
+				gameCursor.close();
+				gameId = db.insert("games", null, values);
+				if (gameId != -1) {
+					// Inserted the game successfully!
+					Log.i(TAG, "Inserted " + values.getAsString("rfgid") + " / " + values.getAsString("title"));
+				} else {
+					// So we couldn't insert it, but it doesn't exist either. Uh oh.
+					Log.e(TAG, "RFGID " + values.getAsString("rfgid") + " was rejected, but doesn't exist in the games table.");
+				}
+			} 
+			
+			return Uri.withAppendedPath(GAMES_URI, Long.toString(gameId));
+		} else if (uriType == COLLECTION_NEW) {
+			Log.i(TAG, "Inserting collection record for " + values.getAsString("rfgid"));
+			SQLiteDatabase db = rfgData.getWritableDatabase();
+			long collectionId = db.insert("collection", null, values);
+			
+			// Notify everybody, just like with a delete.
+			getContext().getContentResolver().notifyChange(Uri.withAppendedPath(FOLDERS_URI, "all"), null);
+			getContext().getContentResolver().notifyChange(Uri.withAppendedPath(FOLDERS_URI, "owned"), null);
+			getContext().getContentResolver().notifyChange(Uri.withAppendedPath(FOLDERS_URI, values.getAsString("folder_id")), null);
+			getContext().getContentResolver().notifyChange(Uri.withAppendedPath(RFGenerationProvider.COLLECTION_URI, 
+					"games/" + values.getAsString("game_id")), null);
+			
+			return Uri.withAppendedPath(COLLECTION_URI, Long.toString(collectionId));
+		} else {
 			throw new IllegalArgumentException("Invalid URI for insert");
 	    }
-		
-		return null;
 	}
 	
 	@Override
