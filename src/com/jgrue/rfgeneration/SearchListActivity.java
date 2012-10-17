@@ -74,6 +74,7 @@ public class SearchListActivity extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 	  
 	  	Intent myIntent = new Intent(v.getContext(), GameInfoActivity.class);
+	  	myIntent.putExtra(Constants.INTENT_GAME_ID, gameList.get(position).getId());
 		myIntent.putExtra(Constants.INTENT_GAME_RFGID, gameList.get(position).getRFGID());
 		myIntent.putExtra(Constants.INTENT_GAME_CONSOLE, gameList.get(position).getConsole());
 		myIntent.putExtra(Constants.INTENT_GAME_REGION, gameList.get(position).getRegion());

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URLEncoder;
 
 import org.jsoup.Jsoup;
-import org.jsoup.Connection.Method;
 import org.jsoup.nodes.Document;
 
 import android.content.Context;

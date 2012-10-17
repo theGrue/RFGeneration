@@ -45,7 +45,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -79,6 +78,8 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 		
 		// If we were passed an RFGID but not a game_id, set everything by intent.
 		if(gameId == 0 && rfgId != null) {
+			Log.d(TAG, "Setting gameInfo via Intent.");
+			
 			gameInfo.setRFGID(rfgId);
 			gameInfo.setConsole(getIntent().getStringExtra(Constants.INTENT_GAME_CONSOLE));
 			gameInfo.setRegion(getIntent().getStringExtra(Constants.INTENT_GAME_REGION));
@@ -90,6 +91,8 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 			
 			displayGameInfo();
 		} else if (gameId > 0) {
+			Log.d(TAG, "Setting gameInfo by ID.");
+			
 			// Get the information about the game from the local database.
 			ContentResolver db = getContentResolver();
 			Cursor gameInfoCursor = db.query(Uri.withAppendedPath(RFGenerationProvider.GAMES_URI, Long.toString(gameId)), 
@@ -474,6 +477,7 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 			builder.setView(addGameView)
 				.setTitle("Add to Collection")
 				.setPositiveButton("Add Game", new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						Collection c = new Collection();
 						c.setGameQuantity(gamePicker.getCurrent());
@@ -490,6 +494,7 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 					}
 				})
 				.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 					}
@@ -507,13 +512,15 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 				builder.setMessage("Are you sure you want to remove this game from " + collections.get(index).getFolder().getName() + "?")
 				       .setCancelable(false)
 				       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-				           public void onClick(DialogInterface dialog, int id) {
+				           @Override
+						public void onClick(DialogInterface dialog, int id) {
 				                new DeleteGameTask().execute(gameInfo.getRFGID(), collections.get(index).getFolder().getName(),
 				                		Long.toString(gameInfo.getId()), Long.toString(collections.get(index).getFolder().getId()));
 				           }
 				       })
 				       .setNegativeButton("No", new DialogInterface.OnClickListener() {
-				           public void onClick(DialogInterface dialog, int id) {
+				           @Override
+						public void onClick(DialogInterface dialog, int id) {
 				                dialog.cancel();
 				           }
 				       });
@@ -523,10 +530,10 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 		}
 	}
 	
-	private class AddGameTask extends AsyncTask<Collection, Void, Boolean> {
+	private class AddGameTask extends AsyncTask<Collection, Void, Long> {
 
 		@Override
-		protected Boolean doInBackground(Collection... params) {
+		protected Long doInBackground(Collection... params) {
 			if (AddGameScraper.addGame(GameInfoActivity.this, gameInfo.getRFGID(), params[0].getFolder().getName(),
 					params[0].getGameQuantity(), params[0].getBoxQuantity(), params[0].getManualQuantity())) {
 				// Add the game to the local database as well.
@@ -549,6 +556,8 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
                 Long gameId = Long.parseLong(game.getLastPathSegment());
                 gameInfo.setId(gameId);
                 
+                //GameInfoActivity.this.getSupportLoaderManager().initLoader(gameId.intValue(), null, GameInfoActivity.this);
+                
                 // Add game to collection
                 ContentValues quantities = new ContentValues();
                 quantities.put("qty", params[0].getGameQuantity());
@@ -559,15 +568,19 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 				
 				Uri collection = GameInfoActivity.this.getContentResolver().insert(RFGenerationProvider.COLLECTION_URI, quantities);
                 
-				return gameId > 0;
+				return gameId;
 			}
 			
-			return false;
+			return 0L;
 		}
 		
 		@Override
-		protected void onPostExecute(Boolean gameAdded) {
-			Toast.makeText(GameInfoActivity.this, "Game Added", Toast.LENGTH_SHORT).show();
+		protected void onPostExecute(Long gameId) {
+			if(gameId > 0)
+			{
+				GameInfoActivity.this.getSupportLoaderManager().initLoader(gameId.intValue(), null, GameInfoActivity.this);
+				Toast.makeText(GameInfoActivity.this, "Game Added", Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 	

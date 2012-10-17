@@ -36,4 +36,5 @@ huge game database to find a wealth of information, images, and more.
     <string name="game_quantity_label">Quantity:</string>
     <string name="box_quantity_label">Boxes:</string>
     <string name="manual_quantity_label">Manuals:</string>
+    <string name="no_folders_label">This game does not appear in any folders.</string>
 </resources>

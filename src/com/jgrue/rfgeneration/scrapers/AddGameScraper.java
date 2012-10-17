@@ -7,8 +7,6 @@ import java.util.Map;
 import org.jsoup.Jsoup;
 import org.jsoup.Connection.Method;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
 import android.content.Context;
 import android.util.Log;
 
