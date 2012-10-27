@@ -282,7 +282,7 @@ public class CollectionListFragment extends ListFragment implements LoaderManage
 				if(regionLayout.getChildCount() > 0)
         			regionLayout.removeViews(0, regionLayout.getChildCount());
             	
-            	if(o.getRegion().indexOf("-") == -1) {
+            	if(o.getRegion().indexOf("-") == -1 && o.getRegion().indexOf(",") == -1) {
             		ImageView region = new ImageView(view.getContext());
             		region.setImageDrawable(o.getRegionDrawable(view.getContext()));
             		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(

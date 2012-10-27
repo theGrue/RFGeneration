@@ -544,7 +544,7 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
                 gameInsert.put("console_id", gameInfo.getConsoleId());
                 gameInsert.put("console_name", gameInfo.getConsole());
                 gameInsert.put("region_id", gameInfo.getRegionId());
-                gameInsert.put("region", gameInfo.getRegion());
+                gameInsert.put("region", gameInfo.getRegion().replaceAll(",+$", ""));
                 gameInsert.put("type", gameInfo.getType());
                 gameInsert.put("title", gameInfo.getTitle());
                 gameInsert.put("publisher", gameInfo.getPublisher());
