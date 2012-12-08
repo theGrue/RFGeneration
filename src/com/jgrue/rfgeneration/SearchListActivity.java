@@ -50,6 +50,7 @@ public class SearchListActivity extends ListActivity {
 	private RFGenerationData rfgData;
 	private Pattern variantRegex;
 	private int paddingUnit;
+	private boolean isUpc;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -58,6 +59,8 @@ public class SearchListActivity extends ListActivity {
 		setContentView(R.layout.search);
 		
 		searchGame = getIntent().getStringExtra(Constants.INTENT_SEARCH);
+		isUpc = getIntent().getStringExtra(Constants.INTENT_TYPE) != null && 
+				getIntent().getStringExtra(Constants.INTENT_TYPE).equals("UPC");
 		rfgData = new RFGenerationData(this);
 		gameList = new ArrayList<Game>();
 		variantRegex = Pattern.compile(" \\[.*\\]$");
@@ -317,8 +320,8 @@ public class SearchListActivity extends ListActivity {
 				returnMore = true;
 			} else {
 				if(numPages == -1)
-					numPages = SearchScraper.getTotalPages(searchGame);
-				gameListToLoad = SearchScraper.getSearchPage(searchGame, nextPage);
+					numPages = SearchScraper.getTotalPages(SearchListActivity.this, searchGame, isUpc);
+				gameListToLoad = SearchScraper.getSearchPage(SearchListActivity.this, searchGame, nextPage, isUpc);
 				
 				// Remove games that are already displayed.
 				int i = 0;

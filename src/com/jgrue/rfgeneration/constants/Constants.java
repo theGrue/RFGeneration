@@ -11,6 +11,7 @@ public class Constants {
 	public static final String FUNCTION_GAME_INFO = BASE_URL + "/cgi-bin/getinfo.pl"; //?ID=<rfgid>
 	public static final String FUNCTION_HARDWARE_INFO = BASE_URL + "/PHP/gethwinfo.php"; //?ID=<rfgid>
 	public static final String FUNCTION_SEARCH = BASE_URL + "/cgi-bin/search.pl?search=true&inputtype=title"; //&query=<query>
+	public static final String FUNCTION_SEARCH_UPC = BASE_URL + "/PHP/submitinfo.php?action=gameedit;sa=addvar;"; //page=1
 	public static final String FUNCTION_FOLDERS = BASE_URL + "/cgi-bin/collection.pl?action=managefolders";
 	public static final String FUNCTION_CSV = BASE_URL + "/cgi-bin/collection.pl?printpage=export"; //&name=<username>&folder=<folder>
 	public static final String FUNCTION_IMAGE = BASE_URL + "/images/games/"; // folder/type/rfgid.jpg
@@ -26,6 +27,8 @@ public class Constants {
 	public static final String PARAM_FIRST_RESULT = "firstresult";
 	public static final String PARAM_RFGID = "ID";
 	public static final String PARAM_QUERY = "query";
+	public static final String PARAM_PAGE = "page";
+	public static final String PARAM_BARCODE = "BARCODE";
 	
 	public static final String PREFS_FILE = "RFGenerationPrefsFile";
 	public static final String PREFS_USERNAME = "collectionUsername";

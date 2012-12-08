@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.jgrue.rfgeneration.constants.Constants;
 import com.jgrue.rfgeneration.data.RFGenerationProvider;
 import com.jgrue.rfgeneration.objects.Folder;
@@ -76,6 +78,7 @@ public class RFGenerationActivity extends FragmentActivity implements OnClickLis
         ((TextView)findViewById(R.id.collection_header)).setText(settings.getString(Constants.PREFS_USERNAME, "") + "'s Collection");
         ((EditText)findViewById(R.id.quick_search_text)).setText(settings.getString(Constants.PREFS_LAST_SEARCH, ""));
         findViewById(R.id.quick_search_button).setOnClickListener(this);
+        findViewById(R.id.barcode_reader_button).setOnClickListener(this);
                 
         getSupportLoaderManager().initLoader(0, null, this);
     }
@@ -291,6 +294,9 @@ public class RFGenerationActivity extends FragmentActivity implements OnClickLis
 			Intent myIntent = new Intent(RFGenerationActivity.this, SearchListActivity.class);
 			myIntent.putExtra(Constants.INTENT_SEARCH, searchGame);
 	        startActivityForResult(myIntent, 0);
+		} else if(v.getId() == R.id.barcode_reader_button) {
+			IntentIntegrator integrator = new IntentIntegrator(RFGenerationActivity.this);
+			integrator.initiateScan();
 		} else if(v.getId() >= 100) {
 			int buttonType = v.getId() % 10;
 			int index = (v.getId() - 100) / 10;
@@ -357,5 +363,17 @@ public class RFGenerationActivity extends FragmentActivity implements OnClickLis
 	    default:
 	        return super.onOptionsItemSelected(item);
 	    }
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+		if (scanResult != null && resultCode != RESULT_CANCELED) {
+			// handle scan result
+			Intent myIntent = new Intent(RFGenerationActivity.this, SearchListActivity.class);
+			myIntent.putExtra(Constants.INTENT_SEARCH, scanResult.getContents());
+			myIntent.putExtra(Constants.INTENT_TYPE, "UPC");
+	        startActivityForResult(myIntent, 0);
+		}
 	}
 }

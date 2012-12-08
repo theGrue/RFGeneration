@@ -112,6 +112,16 @@
 	                    android:layout_width="fill_parent"
 	                    android:layout_height="wrap_content" >
 
+	                    <ImageView
+	                        android:id="@+id/barcode_reader_button"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_gravity="center_vertical"
+	                        android:layout_marginLeft="5dip"
+	                        android:layout_marginRight="5dip"
+	                        android:clickable="true"
+	                        android:src="@drawable/barcode" />
+
 	                    <EditText
 	                        android:id="@+id/quick_search_text"
 	                        android:layout_width="0dip"
