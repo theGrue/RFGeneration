@@ -44,7 +44,7 @@ public class RFGenerationProvider extends ContentProvider {
         sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/#", FOLDERS_SPECIFIC);
         sURIMatcher.addURI(AUTHORITY, FOLDERS_BASE_PATH + "/#/" + GAMES_BASE_PATH + "/*", FOLDER_FOR_SPECIFIC_GAME);
         sURIMatcher.addURI(AUTHORITY, GAMES_BASE_PATH, GAME_NEW);
-        sURIMatcher.addURI(AUTHORITY, GAMES_BASE_PATH + "/#", GAME_SPECIFIC);
+        sURIMatcher.addURI(AUTHORITY, GAMES_BASE_PATH + "/*", GAME_SPECIFIC);
     }
 	
 	private RFGenerationData rfgData;
@@ -95,7 +95,13 @@ public class RFGenerationProvider extends ContentProvider {
 	    	break;
 	    case GAME_SPECIFIC: // Individual Game
 	    	queryBuilder.setTables("games");
-	    	queryBuilder.appendWhere(_ID + " = " + uri.getLastPathSegment());
+	    	
+	    	try {
+	    		long gameId = Long.parseLong(uri.getLastPathSegment());
+	    		queryBuilder.appendWhere(_ID + " = " + gameId);
+	    	} catch (NumberFormatException n) {
+	    		queryBuilder.appendWhere("rfgid = '" + uri.getLastPathSegment() + "'");
+	    	}
 	    	break;
 	    default:
 	        throw new IllegalArgumentException("Unknown URI");

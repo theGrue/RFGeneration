@@ -73,11 +73,37 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 		variantRegex = Pattern.compile(" \\[.*\\]$");
 		gameInfo = new GameInfo();
 		
-		Long gameId = getIntent().getLongExtra(Constants.INTENT_GAME_ID, 0);
+		String gameId = Long.toString(getIntent().getLongExtra(Constants.INTENT_GAME_ID, 0));
 		String rfgId = getIntent().getStringExtra(Constants.INTENT_GAME_RFGID);
+		if (gameId.equals("0"))
+			gameId = rfgId;
 		
-		// If we were passed an RFGID but not a game_id, set everything by intent.
-		if(gameId == 0 && rfgId != null) {
+		// Get the information about the game from the local database.
+		ContentResolver db = getContentResolver();
+		Cursor gameInfoCursor = db.query(Uri.withAppendedPath(RFGenerationProvider.GAMES_URI, gameId), 
+				new String[] { "rfgid", "console_name", "region", "title", "publisher", "year", "genre", "type", _ID }, 
+				null, null, null);
+		startManagingCursor(gameInfoCursor);
+		
+		if (gameInfoCursor.moveToNext()) {
+			// Read the data into an object.
+			Log.d(TAG, "Setting gameInfo by ID.");
+			
+			rfgId = gameInfoCursor.getString(0);
+			gameInfo.setRFGID(gameInfoCursor.getString(0));
+			gameInfo.setConsole(gameInfoCursor.getString(1));
+			gameInfo.setRegion(gameInfoCursor.getString(2));
+			gameInfo.setTitle(gameInfoCursor.getString(3));
+			gameInfo.setPublisher(gameInfoCursor.getString(4));
+			gameInfo.setYear(gameInfoCursor.getInt(5));
+			gameInfo.setGenre(gameInfoCursor.getString(6));
+			gameInfo.setType(gameInfoCursor.getString(7));
+
+			displayGameInfo();
+			
+			getSupportLoaderManager().initLoader(((Long)gameInfoCursor.getLong(8)).intValue(), null, this);
+		} else {
+			// If we were passed an RFGID but not a game_id, set everything by intent.
 			Log.d(TAG, "Setting gameInfo via Intent.");
 			
 			gameInfo.setRFGID(rfgId);
@@ -90,57 +116,6 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 			gameInfo.setGenre(getIntent().getStringExtra(Constants.INTENT_GAME_GENRE));
 			
 			displayGameInfo();
-		} else if (gameId > 0) {
-			Log.d(TAG, "Setting gameInfo by ID.");
-			
-			// Get the information about the game from the local database.
-			ContentResolver db = getContentResolver();
-			Cursor gameInfoCursor = db.query(Uri.withAppendedPath(RFGenerationProvider.GAMES_URI, Long.toString(gameId)), 
-					new String[] { "rfgid", "console_name", "region", "title", "publisher", "year", "genre", "type" }, 
-					null, null, null);
-			startManagingCursor(gameInfoCursor);
-			
-			// Read the data into an object.
-			if (gameInfoCursor.moveToNext()) {
-				rfgId = gameInfoCursor.getString(0);
-				gameInfo.setRFGID(gameInfoCursor.getString(0));
-				gameInfo.setConsole(gameInfoCursor.getString(1));
-				gameInfo.setRegion(gameInfoCursor.getString(2));
-				gameInfo.setTitle(gameInfoCursor.getString(3));
-				gameInfo.setPublisher(gameInfoCursor.getString(4));
-				gameInfo.setYear(gameInfoCursor.getInt(5));
-				gameInfo.setGenre(gameInfoCursor.getString(6));
-				gameInfo.setType(gameInfoCursor.getString(7));
-/*
-				Cursor collectionInfoCursor = db.query(Uri.withAppendedPath(RFGenerationProvider.COLLECTION_URI, "games/" + Long.toString(gameId)), 
-						new String[] { "folder_name", "is_owned", "is_for_sale", "is_private", "qty", "box", "man", "folder_id" }, 
-						null, null, "is_owned DESC, folder_name ASC");
-				startManagingCursor(collectionInfoCursor);
-				
-				// Read the data into a list.
-				collections = new ArrayList<Collection>();
-				while (collectionInfoCursor.moveToNext()) {
-					Folder newFolder = new Folder(collectionInfoCursor.getString(0));
-					newFolder.setId(collectionInfoCursor.getLong(7));
-					newFolder.setOwned(collectionInfoCursor.getInt(1) > 0);
-					newFolder.setForSale(collectionInfoCursor.getInt(2) > 0);
-					newFolder.setPrivate(collectionInfoCursor.getInt(3) > 0);
-					
-					Collection newCollection = new Collection();
-					newCollection.setFolder(newFolder);
-					newCollection.setGameQuantity(collectionInfoCursor.getFloat(4));
-					newCollection.setBoxQuantity(collectionInfoCursor.getFloat(5));
-					newCollection.setManualQuantity(collectionInfoCursor.getFloat(6));
-					
-					collections.add(newCollection);
-				}
-				
-				gameInfo.setCollections(collections);
-				*/
-				displayGameInfo();
-				
-				getSupportLoaderManager().initLoader(gameId.intValue(), null, this);
-			}
 		}
 		
 		// Load everything else in the background.
