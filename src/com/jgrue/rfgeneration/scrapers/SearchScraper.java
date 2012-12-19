@@ -9,11 +9,14 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 
 import com.jgrue.rfgeneration.constants.Constants;
 import com.jgrue.rfgeneration.objects.Game;
 
 public class SearchScraper {
+	private static final String TAG = "SearchScraper";
 	
 	public static List<Game> getSearchPage(Context ctx, String query, int page, boolean isUpc) throws Exception {
 		List<Game> gameList = new ArrayList<Game>();
@@ -23,21 +26,36 @@ public class SearchScraper {
 			
 			if(!isUpc) {
 				// Get the HTML page and parse it with jsoup.
-				Document document = Jsoup.connect(Constants.FUNCTION_SEARCH + 
-						"&" + Constants.PARAM_QUERY + "=" +  URLEncoder.encode(query) +
-						"&" + Constants.PARAM_FIRST_RESULT + "=" + getFirstResult(page))
+				Uri url = Uri.parse(Constants.FUNCTION_SEARCH).buildUpon()
+						.appendQueryParameter(Constants.PARAM_QUERY, query)
+						.appendQueryParameter(Constants.PARAM_FIRST_RESULT, Integer.toString(getFirstResult(page)))
+						.build();
+				
+				Log.i(TAG, "Target URL: " + url);
+				
+				Document document = Jsoup.connect(url.toString())
 					.timeout(Constants.TIMEOUT)
 					.get();
+				
+				Log.i(TAG, "Retrieved URL: " + document.baseUri());
 			 
 				// Load the results table into Game objects.
 				Element table = document.select("table > tbody > tr:eq(3) > td:eq(1) > table.bordercolor > tbody > tr.windowbg2 > td.windowbg2 > table > tbody > tr:eq(1) > td.windowbg2 > table.bordercolor").get(0);
 				tableRows = table.select("tr:gt(0)");
 			} else {
-				Document document = Jsoup.connect(Constants.FUNCTION_SEARCH_UPC +
-						Constants.PARAM_PAGE + "=" + (page + 1) + "&" + Constants.PARAM_BARCODE + "=" + query)
+				Uri url = Uri.parse(Constants.FUNCTION_SEARCH_UPC).buildUpon()
+						.appendQueryParameter(Constants.PARAM_PAGE, Integer.toString(page + 1))
+						.appendQueryParameter(Constants.PARAM_BARCODE, query)
+						.build();
+				
+				Log.i(TAG, "Target URL: " + url);
+				
+				Document document = Jsoup.connect(url.toString())
 					.cookie(Constants.LOGIN_COOKIE, LoginScraper.getCookie(ctx))
 					.timeout(Constants.TIMEOUT)
 					.get();
+				
+				Log.i(TAG, "Retrieved URL: " + document.baseUri());
 				
 				Element table = document.select("table > tbody > tr:eq(3) > td:eq(1) > table.bordercolor > tbody > tr > td > table.windowbg2 > tbody > tr:eq(1) > td > table.bordercolor").get(0);
 				tableRows = table.select("tr:gt(0)");

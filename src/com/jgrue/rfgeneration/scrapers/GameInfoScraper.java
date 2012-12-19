@@ -1,6 +1,5 @@
 package com.jgrue.rfgeneration.scrapers;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +8,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.jgrue.rfgeneration.constants.Constants;
@@ -34,9 +34,14 @@ public class GameInfoScraper {
 	}
 	
 	private static GameInfo scrapeGameInfo(String rfgid) throws Exception {
-		URL url = new URL(Constants.FUNCTION_GAME_INFO + "?" + Constants.PARAM_RFGID + "=" + rfgid);
-		Log.i(TAG, "Target URL: " + url.toString());
-		Document document = Jsoup.parse(url, 30000);
+		Uri url = Uri.parse(Constants.FUNCTION_GAME_INFO).buildUpon()
+				.appendQueryParameter(Constants.PARAM_RFGID, rfgid)
+				.build();
+		
+		Log.i(TAG, "Target URL: " + url);
+		Document document = Jsoup.connect(url.toString())
+			.timeout(Constants.TIMEOUT)
+			.get();
 		Log.i(TAG, "Retrieved URL: " + document.baseUri());
 		
 		Elements tables = document.select("table > tbody > tr:eq(3) > td:eq(1) > table.bordercolor > tbody > tr > td > table.windowbg2 > tbody > tr:eq(3) > td > table");
