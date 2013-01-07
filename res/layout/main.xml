@@ -229,6 +229,57 @@
 	            </LinearLayout>
 	            
 	        </LinearLayout>
+	        
+	        <!-- Use two LinearLayouts to create a border. -->
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="5dip"
+	            android:background="@drawable/border">
+
+	            <LinearLayout
+	                android:layout_width="fill_parent"
+	                android:layout_height="fill_parent"
+	                android:layout_margin="1dip"
+	                android:background="@drawable/body"
+	                android:orientation="vertical" >
+
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="5dip"
+	                    android:layout_marginRight="5dip"
+	                    android:text="@string/tools_header"
+	                    android:textAppearance="?android:attr/textAppearanceLarge"
+	                    android:textColor="@drawable/splash"
+	                    android:textStyle="bold" />
+
+	                <View
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="2dip"
+	                    android:layout_marginBottom="5dip"
+	                    android:layout_marginLeft="5dip"
+	                    android:layout_marginRight="5dip"
+	                    android:background="@drawable/splash" />
+
+<!-- 	                <Button
+	                    android:id="@+id/random_button"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:text="@string/random_label" /> -->
+	                <Button
+	                    android:id="@+id/logout_button"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:text="@string/logout_label"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"
+	                    android:layout_margin="3dp"
+	                    android:background="@drawable/btn_red"
+	                    style="@style/ButtonText" />
+	                
+	            </LinearLayout>
+	            
+	        </LinearLayout>
         
    		</LinearLayout>
     

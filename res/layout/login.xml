@@ -117,7 +117,10 @@
 		                    android:text="@string/login_label"
 		                    android:textAppearance="?android:attr/textAppearanceMedium"
 		                    android:layout_marginLeft="50dip"
-		                    android:layout_marginRight="50dip" />
+		                    android:layout_marginRight="50dip"
+		                    android:layout_marginBottom="3dp"
+		                    android:background="@drawable/btn_red"
+	                    	style="@style/ButtonText" />
 		                
 		            </LinearLayout>
 		            

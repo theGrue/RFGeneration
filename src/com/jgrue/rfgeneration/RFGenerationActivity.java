@@ -79,6 +79,7 @@ public class RFGenerationActivity extends FragmentActivity implements OnClickLis
         ((EditText)findViewById(R.id.quick_search_text)).setText(settings.getString(Constants.PREFS_LAST_SEARCH, ""));
         findViewById(R.id.quick_search_button).setOnClickListener(this);
         findViewById(R.id.barcode_reader_button).setOnClickListener(this);
+        findViewById(R.id.logout_button).setOnClickListener(this);
                 
         getSupportLoaderManager().initLoader(0, null, this);
     }
@@ -297,6 +298,15 @@ public class RFGenerationActivity extends FragmentActivity implements OnClickLis
 		} else if(v.getId() == R.id.barcode_reader_button) {
 			IntentIntegrator integrator = new IntentIntegrator(RFGenerationActivity.this);
 			integrator.initiateScan();
+		} else if(v.getId() == R.id.logout_button) {
+			SharedPreferences.Editor editor = getSharedPreferences(Constants.PREFS_FILE, 0).edit();
+	    	editor.putString(Constants.PREFS_COOKIE, "");
+			editor.putBoolean(Constants.PREFS_LOADCOMPLETE, false);
+			editor.commit();
+			
+			Intent myIntent = new Intent(RFGenerationActivity.this, LoginActivity.class);
+	        startActivityForResult(myIntent, 0);
+	        finish();
 		} else if(v.getId() >= 100) {
 			int buttonType = v.getId() % 10;
 			int index = (v.getId() - 100) / 10;
@@ -338,31 +348,6 @@ public class RFGenerationActivity extends FragmentActivity implements OnClickLis
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
 		// I don't think I have to do anything here, do I?
-	}
-	
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.mainmenu, menu);
-        return true;
-    }
-    
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle item selection
-	    switch (item.getItemId()) {
-	    case R.id.logout:
-	    	SharedPreferences.Editor editor = getSharedPreferences(Constants.PREFS_FILE, 0).edit();
-	    	editor.putString(Constants.PREFS_COOKIE, "");
-			editor.putBoolean(Constants.PREFS_LOADCOMPLETE, false);
-			editor.commit();
-			
-			Intent myIntent = new Intent(RFGenerationActivity.this, LoginActivity.class);
-	        startActivityForResult(myIntent, 0);
-	        finish();
-	    	return true;
-	    default:
-	        return super.onOptionsItemSelected(item);
-	    }
 	}
 	
 	@Override

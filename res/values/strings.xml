@@ -37,4 +37,15 @@ huge game database to find a wealth of information, images, and more.
     <string name="box_quantity_label">Boxes:</string>
     <string name="manual_quantity_label">Manuals:</string>
     <string name="no_folders_label">This game does not appear in any folders.</string>
+    <string name="tools_header">Tools</string>
+    <string name="random_label">Random Game</string>
+    <style name="ButtonText">
+	    <item name="android:textColor">#ffffff</item>
+	    <item name="android:gravity">center</item>
+	    <item name="android:textStyle">bold</item>
+	    <item name="android:shadowColor">#000000</item>
+	    <item name="android:shadowDx">1</item>
+	    <item name="android:shadowDy">1</item>
+	    <item name="android:shadowRadius">2</item>
+	</style>
 </resources>
