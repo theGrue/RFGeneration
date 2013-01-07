@@ -4,6 +4,8 @@ import java.io.IOException;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.Connection.Method;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -24,6 +26,7 @@ public class LoginScraper {
 		
 		try {
 			Log.i(TAG, "Retrieving new cookie for " + userName + ".");
+			Log.i(TAG, "Target URL: " + Constants.FUNCTION_LOGIN);
 			Connection.Response res = Jsoup.connect(Constants.FUNCTION_LOGIN)
 				.data(Constants.COOKIE_USERNAME, userName, Constants.COOKIE_PASSWORD, password)
 				.method(Method.POST)
@@ -31,6 +34,21 @@ public class LoginScraper {
 				.execute();
 			
 			loginCookie = res.cookie(Constants.LOGIN_COOKIE);
+
+			Document document = res.parse();
+			Log.i(TAG, "Retrieved URL: " + document.baseUri());
+
+			try {
+				Element properName = document.select("table > tbody > tr:eq(3) > td:eq(1) > div.tborder > table > tbody > tr > td.titlebg:eq(1) > b").get(0);
+				if (userName.equalsIgnoreCase(properName.text()) && !userName.equals(properName.text())) {
+					Log.i(TAG, "Username mismatch detected, replacing " + userName + " with " + properName.text() + ".");
+					SharedPreferences.Editor editor = ctx.getSharedPreferences(Constants.PREFS_FILE, 0).edit();
+				    editor.putString(Constants.PREFS_USERNAME, properName.text());
+				    editor.commit();
+				}				
+			} catch (Exception e) {
+				Log.e(TAG, "Error verifying username.");
+			}
 			
 			SharedPreferences settings = ctx.getSharedPreferences(Constants.PREFS_FILE, 0);
 			SharedPreferences.Editor editor = settings.edit();
