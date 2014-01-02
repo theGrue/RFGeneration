@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+	android:background="@drawable/background"
+    android:orientation="vertical" >
+    
+    <!-- Header -->
+    <RelativeLayout 
+	    android:layout_width="fill_parent" 
+	    android:background="@drawable/bg" 
+	    android:layout_height="wrap_content" 
+	    android:layout_gravity="top">
+    
+		<ImageView 
+			android:src="@drawable/left"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:contentDescription="@string/app_name" />	 
+			
+		<ProgressBar
+		    android:id="@+id/random_progress"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:layout_centerVertical="true"
+		    android:layout_marginRight="5dp"  />
+			
+	</RelativeLayout>
+	
+    <LinearLayout 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="top" 
+	    android:background="@drawable/splash" 
+	    android:layout_marginTop="1dp" 
+	    android:layout_marginBottom="1dp">
+
+        <TextView
+            android:text="@string/random_label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dip"
+            android:textColor="@drawable/body"
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:ellipsize="marquee" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:background="@drawable/body" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/folder"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" />
+
+			<Spinner
+			    android:id="@+id/random_spinner"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <ImageView
+                android:id="@+id/random_image"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:src="@drawable/regions_us" />
+            
+            <LinearLayout
+                android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/random_image"
+        android:layout_alignTop="@+id/random_image"
+        android:layout_alignRight="@+id/random_image"
+        android:layout_alignBottom="@+id/random_image"
+        android:gravity="bottom"
+        android:orientation="vertical">
+            
+            <TextView
+        android:id="@+id/random_game_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:text="Game Name"
+        android:textColor="#000000" 
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+            
+            <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:text="Console"
+        android:textColor="#000000"
+        android:id="@+id/random_game_console" />
+            
+            <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:text="Publisher, Year"
+        android:textColor="#000000" 
+        android:id="@+id/random_game_publisher"/>
+		</LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

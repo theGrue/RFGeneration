@@ -80,6 +80,7 @@ public class RFGenerationActivity extends FragmentActivity implements OnClickLis
         findViewById(R.id.quick_search_button).setOnClickListener(this);
         findViewById(R.id.barcode_reader_button).setOnClickListener(this);
         findViewById(R.id.logout_button).setOnClickListener(this);
+        findViewById(R.id.random_button).setOnClickListener(this);
                 
         getSupportLoaderManager().initLoader(0, null, this);
     }
@@ -307,6 +308,9 @@ public class RFGenerationActivity extends FragmentActivity implements OnClickLis
 			Intent myIntent = new Intent(RFGenerationActivity.this, LoginActivity.class);
 	        startActivityForResult(myIntent, 0);
 	        finish();
+		} else if(v.getId() == R.id.random_button) {
+			Intent myIntent = new Intent(RFGenerationActivity.this, RandomGameActivity.class);
+	        startActivityForResult(myIntent, 0);
 		} else if(v.getId() >= 100) {
 			int buttonType = v.getId() % 10;
 			int index = (v.getId() - 100) / 10;

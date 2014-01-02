@@ -35,7 +35,8 @@
 	    android:layout_gravity="top" 
 	    android:background="@drawable/splash" 
 	    android:layout_marginTop="1dp" 
-	    android:layout_marginBottom="1dp">
+	    android:layout_marginBottom="1dp">
+		
         <TextView
             android:id="@+id/collection_header"
             android:layout_width="fill_parent"
@@ -86,7 +87,7 @@
 	                        android:textColor="@drawable/splash"
 	                        android:textStyle="bold"
 	                        android:layout_marginLeft="5dp" />
-
+	                    
 	                    <ImageView
 	                        android:id="@+id/search_settings_button"
 	                        android:layout_width="wrap_content"
@@ -180,7 +181,7 @@
 	                    android:layout_marginLeft="5dip"
 	                    android:layout_marginRight="5dip"
 	                    android:background="@drawable/splash" />
-
+	                
 	                <TableLayout
 	                    android:id="@+id/folder_table"
 	                    android:layout_width="fill_parent"
@@ -262,11 +263,16 @@
 	                    android:layout_marginRight="5dip"
 	                    android:background="@drawable/splash" />
 
-<!-- 	                <Button
+ 	                <Button
 	                    android:id="@+id/random_button"
 	                    android:layout_width="fill_parent"
 	                    android:layout_height="wrap_content"
-	                    android:text="@string/random_label" /> -->
+	                    android:text="@string/random_label"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"
+	                    android:layout_margin="3dp"
+	                    android:background="@drawable/btn_red"
+	                    style="@style/ButtonText" />
+ 	                
 	                <Button
 	                    android:id="@+id/logout_button"
 	                    android:layout_width="fill_parent"

@@ -2,6 +2,7 @@ package com.jgrue.rfgeneration.constants;
 
 public class Constants {
 	public static final String BASE_URL = "http://www.rfgeneration.com";
+	public static final String API_URL = "http://api.rfgeneration.com/v1";
 	public static final String LOGIN_COOKIE = "SMFCookie10";
 	public static final int TIMEOUT = 30000;
 	
@@ -9,6 +10,7 @@ public class Constants {
 	public static final String FUNCTION_PROFILE = BASE_URL + "/cgi-bin/collection.pl?action=profile"; //&name=<username>
 	public static final String FUNCTION_COLLECTION = BASE_URL + "/cgi-bin/collection.pl";
 	public static final String FUNCTION_GAME_INFO = BASE_URL + "/cgi-bin/getinfo.pl"; //?ID=<rfgid>
+	public static final String FUNCTION_GAME_INFO_API = API_URL + "/games"; ///<rfgid>
 	public static final String FUNCTION_HARDWARE_INFO = BASE_URL + "/PHP/gethwinfo.php"; //?ID=<rfgid>
 	public static final String FUNCTION_SEARCH = BASE_URL + "/cgi-bin/search.pl?search=true&inputtype=title"; //&query=<query>
 	public static final String FUNCTION_SEARCH_UPC = BASE_URL + "/PHP/submitinfo.php?action=gameedit;sa=addvar;"; //page=1
