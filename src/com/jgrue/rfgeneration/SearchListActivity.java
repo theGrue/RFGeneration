@@ -121,7 +121,7 @@ public class SearchListActivity extends ListActivity {
                     TextView console = (TextView) v.findViewById(R.id.console);
                     if (console != null)
                     {
-                    	if(o.getConsoleAbbv().length() > 0)
+                    	if(o.getConsoleAbbv() != null && o.getConsoleAbbv().length() > 0)
                     		console.setText(o.getConsoleAbbv());
                     	else
                     	{
