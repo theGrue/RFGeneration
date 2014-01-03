@@ -19,6 +19,7 @@ public class Constants {
 	public static final String FUNCTION_ADD_GAME = FUNCTION_COLLECTION;
 	public static final String FUNCTION_EDIT_GAME = BASE_URL + "/cgi-bin/collection.pl?action=edit"; //&folder=<folder>&ID=<rfgid>
 	public static final String FUNCTION_DELETE_GAME = BASE_URL + "/cgi-bin/collection.pl?action=delete"; //&folder=<folder>&ID=<rfgid>
+	public static final String FUNCTION_CREATE_ACCOUNT = BASE_URL+ "/cgi-bin/collection.pl?action=createaccount";
 	
 	public static final String PARAM_USERNAME = "name";
 	public static final String PARAM_FOLDER = "folder";

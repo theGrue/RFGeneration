@@ -46,11 +46,37 @@ public class FolderScraper {
 				 
 				 folderList.add(newFolder);
 			}
+			
+			if (folderList.size() == 0) {
+				// If the list was empty, maybe this is a brand new user? 
+				// Hit the createaccount endpoint and try again.
+				createAccount(ctx);
+				folderList = getCollectionFolders(ctx);
+			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return folderList;
+	}
+	
+	private static void createAccount(Context ctx) {
+		Log.i(TAG, "Target URL: " + Constants.FUNCTION_CREATE_ACCOUNT);
+		
+		Document document;
+		
+		try {
+			document = Jsoup.connect(Constants.FUNCTION_CREATE_ACCOUNT)
+				.cookie(Constants.LOGIN_COOKIE, LoginScraper.getCookie(ctx))
+				.timeout(Constants.TIMEOUT)
+				.get();
+			
+			Log.i(TAG, "Retrieved URL: " + document.baseUri());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
