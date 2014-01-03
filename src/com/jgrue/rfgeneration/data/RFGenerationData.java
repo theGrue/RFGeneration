@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class RFGenerationData extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "rfgeneration.db";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 	
 	public RFGenerationData(Context ctx) {
 		super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,18 +44,43 @@ public class RFGenerationData extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		if(oldVersion < 2) {
-			// Add a few new consoles.
-			InsertHelper ih = new InsertHelper(db, "consoles");
-			final int id = ih.getColumnIndex(_ID);
-	        final int name = ih.getColumnIndex("console_name");
-	        final int abbv = ih.getColumnIndex("console_abbv");	 
-	        
+		// Add a few new consoles.
+		InsertHelper ih = new InsertHelper(db, "consoles");
+		final int id = ih.getColumnIndex(_ID);
+        final int name = ih.getColumnIndex("console_name");
+        final int abbv = ih.getColumnIndex("console_abbv");	 
+		
+		if (oldVersion < 2) {
 	        ih.prepareForInsert(); ih.bind(id, 190); ih.bind(name, "Sord M5"); ih.bind(abbv, "Sord"); ih.execute();
 	        ih.prepareForInsert(); ih.bind(id, 191); ih.bind(name, "Oric-1 / Atmos"); ih.bind(abbv, "Oric"); ih.execute();
 	        ih.prepareForInsert(); ih.bind(id, 192); ih.bind(name, "Acorn Archimedes"); ih.bind(abbv, "Arch"); ih.execute();
 	        ih.prepareForInsert(); ih.bind(id, 193); ih.bind(name, "Panasonic JR"); ih.bind(abbv, "JR"); ih.execute();
 	        ih.prepareForInsert(); ih.bind(id, 194); ih.bind(name, "Steam"); ih.bind(abbv, "Steam"); ih.execute();
+		}
+		
+		if (oldVersion < 3) {
+			ih.prepareForInsert(); ih.bind(id, 196); ih.bind(name, "Palmtex Super Micro"); ih.bind(abbv, "PSM"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 197); ih.bind(name, "Acorn Electron"); ih.bind(abbv, "Elec"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 198); ih.bind(name, "Handspring Visor"); ih.bind(abbv, "HV"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 199); ih.bind(name, "Soundic SD Family"); ih.bind(abbv, "SSD"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 200); ih.bind(name, "Sega Advanced Pico Beena"); ih.bind(abbv, "Beena"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 201); ih.bind(name, "OnLive"); ih.bind(abbv, "OnLive"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 202); ih.bind(name, "Nintendo Wii U"); ih.bind(abbv, "WiiU"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 203); ih.bind(name, "Tandy TRS-80 Color Computer"); ih.bind(abbv, "CoCo"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 204); ih.bind(name, "SNK Neo Geo X"); ih.bind(abbv, "NGX"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 205); ih.bind(name, "VTech V.Smile V-Motion Active Learning System"); ih.bind(abbv, "VVSM"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 206); ih.bind(name, "Gamepark Holdings GP2X Caanoo"); ih.bind(abbv, "GP2XC"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 207); ih.bind(name, "Microsoft Xbox LIVE Games on Demand"); ih.bind(abbv, "MGoD"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 208); ih.bind(name, "Nintendo WiiWare"); ih.bind(abbv, "NWW"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 209); ih.bind(name, "Nintendo Wii U Virtual Console"); ih.bind(abbv, "WiiUVC"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 210); ih.bind(name, "Nintendo 3DS Virtual Console"); ih.bind(abbv, "3DSVC"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 211); ih.bind(name, "Fisher-Price Smart Cycle Racer"); ih.bind(abbv, "SCR"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 212); ih.bind(name, "Fujitsu FM-77"); ih.bind(abbv, "FM77"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 213); ih.bind(name, "OUYA"); ih.bind(abbv, "OUYA"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 214); ih.bind(name, "Origin"); ih.bind(abbv, "ORG"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 215); ih.bind(name, "Sony PlayStation 4"); ih.bind(abbv, "PS4"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 216); ih.bind(name, "Microsoft Xbox One"); ih.bind(abbv, "XBOne"); ih.execute();
+			ih.prepareForInsert(); ih.bind(id, 217); ih.bind(name, "GOG.com"); ih.bind(abbv, "GOG"); ih.execute();
 		}
 	}
 	
