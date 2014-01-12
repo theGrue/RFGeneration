@@ -12,21 +12,28 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends FragmentActivity implements OnClickListener {
+public class LoginActivity extends ActionBarActivity implements OnClickListener {
 	private static final String TAG = "LoginActivity";
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.login);
+        
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
         
         // Restore username from preferences if upgrading from v1.
         SharedPreferences settings = getSharedPreferences(Constants.PREFS_FILE, 0);
@@ -44,6 +51,9 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 			String userName = ((EditText)findViewById(R.id.login_username)).getText().toString().trim();
 			String password = ((EditText)findViewById(R.id.login_password)).getText().toString().trim();
 			
+			if (userName.length() == 0 || password.length() == 0)
+				return;
+			
 			// Store the username.
 		    SharedPreferences.Editor editor = getSharedPreferences(Constants.PREFS_FILE, 0).edit();
 		    editor.putString(Constants.PREFS_USERNAME, userName);
@@ -51,7 +61,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 			
 		    // Try logging in with this information.
 		    ((Button)v).setEnabled(false);
-		    findViewById(R.id.login_progress).setVisibility(View.VISIBLE);
+		    setSupportProgressBarIndeterminateVisibility(true);
 			new LoginTask().execute(v.getContext(), userName, password);
 		} else if(v.getId() == R.id.about_text) {
 			AlertDialog ad = new AlertDialog.Builder(this).create();
@@ -93,7 +103,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 			    
 			    Toast.makeText(LoginActivity.this, "Login failed, please try again.", Toast.LENGTH_SHORT).show();
 			    ((Button)findViewById(R.id.login_button)).setEnabled(true);
-			    findViewById(R.id.login_progress).setVisibility(View.GONE);
+			    setSupportProgressBarIndeterminateVisibility(false);
 			}
 		}
 	}

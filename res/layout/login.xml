@@ -6,37 +6,11 @@
     android:background="@drawable/background">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/background"
         android:gravity="bottom"
         android:orientation="vertical" >
-        
-			<!-- Header -->
-            <RelativeLayout 
-                android:id="@+id/login_header"
-			    android:layout_width="fill_parent" 
-			    android:background="@drawable/bg" 
-			    android:layout_height="wrap_content" 
-			    android:gravity="top">
-			    
-			    <ImageView 
-			    	android:src="@drawable/left"
-			    	android:layout_width="wrap_content"
-			    	android:layout_height="wrap_content"/>
-
-			    <ProgressBar
-			        android:id="@+id/login_progress"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_alignParentRight="true"
-				    android:layout_centerVertical="true"
-				    android:layout_marginRight="5dp"
-				    android:visibility="gone" />
-			    
-			</RelativeLayout>
-
 			
 	        <!-- Content -->
 		    <RelativeLayout

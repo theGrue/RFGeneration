@@ -4,30 +4,6 @@
 	android:layout_height="fill_parent"
 	android:background="@drawable/body"
 	android:orientation="vertical">
-  
-    <!-- Header -->
-    <RelativeLayout 
-	    android:id="@+id/collection_header"
-	    android:layout_width="fill_parent" 
-	    android:background="@drawable/bg" 
-	    android:layout_height="wrap_content" 
-	    android:layout_gravity="top">
-    
-		<ImageView 
-			android:src="@drawable/left"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:contentDescription="@string/app_name" />
-
-		<ProgressBar
-		    android:id="@+id/collection_progress"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentRight="true"
-		    android:layout_centerVertical="true"
-		    android:layout_marginRight="5dp"  />
-		
-	</RelativeLayout>
 	
 	<LinearLayout 
 	    android:id="@+id/collection_titlebar"
@@ -37,8 +13,9 @@
 	    android:background="@drawable/splash" 
 	    android:layout_marginTop="1dp" 
 	    android:layout_marginBottom="1dp"
-	    android:clickable="true">
-		<ImageView
+	    android:clickable="true">
+	    
+	    <ImageView
 		    android:id="@+id/collection_folder"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"

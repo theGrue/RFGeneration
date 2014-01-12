@@ -5,29 +5,6 @@
 	android:background="@drawable/background"
 	android:orientation="vertical">
 	
-    <!-- Header -->
-    <RelativeLayout 
-	    android:layout_width="fill_parent" 
-	    android:background="@drawable/bg" 
-	    android:layout_height="wrap_content" 
-	    android:layout_gravity="top">
-    
-		<ImageView 
-			android:src="@drawable/left"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:contentDescription="@string/app_name" />	 
-			
-		<ProgressBar
-		    android:id="@+id/game_progress"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentRight="true"
-		    android:layout_centerVertical="true"
-		    android:layout_marginRight="5dp"  />
-			
-	</RelativeLayout>
-	
     <LinearLayout 
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"

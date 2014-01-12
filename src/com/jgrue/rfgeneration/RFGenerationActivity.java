@@ -24,6 +24,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
@@ -32,6 +34,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,7 +43,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TableRow.LayoutParams;
 
-public class RFGenerationActivity extends FragmentActivity implements OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
+public class RFGenerationActivity extends ActionBarActivity implements OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
 	private static final String TAG = "RFGenerationActivity";
 	private List<Folder> folderList;
 	private int selectedFolder;
@@ -49,7 +52,11 @@ public class RFGenerationActivity extends FragmentActivity implements OnClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.main);
+        
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
         
         // Set this to fix some weirdness with jsoup and cookies. Mmm, cookie soup.
         System.setProperty("http.keepAlive", "false"); 
@@ -99,7 +106,7 @@ public class RFGenerationActivity extends FragmentActivity implements OnClickLis
         for(int i = 2; i < folderList.size(); i++)
         	folderTable.addView(createFolderRow(folderList.get(i), i, folderList.get(i).isOwned() ? 2 : 1, selectedFolder == i));
         
-        findViewById(R.id.main_progress).setVisibility(View.GONE);
+        setSupportProgressBarIndeterminateVisibility(false);
     }
     
     public List<Folder> getFolderList(Cursor cursor) {
@@ -322,7 +329,7 @@ public class RFGenerationActivity extends FragmentActivity implements OnClickLis
 			        startActivityForResult(myIntent, 0);
 				} else if (buttonType == 2) {
 					Log.v(TAG, "Refreshing folder " + folderList.get(index).toString());
-					findViewById(R.id.main_progress).setVisibility(View.VISIBLE);
+					setSupportProgressBarIndeterminateVisibility(true);
 					Intent intent = new Intent(RFGenerationActivity.this, RFGenerationService.class);
 					intent.setData(Uri.parse(Long.toString(folderList.get(index).getId()) + "|" + folderList.get(index).getName()));
 					startService(intent);

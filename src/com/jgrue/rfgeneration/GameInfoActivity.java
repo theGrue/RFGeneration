@@ -37,12 +37,15 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
@@ -53,7 +56,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class GameInfoActivity extends FragmentActivity implements OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
+public class GameInfoActivity extends ActionBarActivity implements OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
 	private static final String TAG = "GameInfoActivity";
 	private RFGenerationData rfgData;
 	private GameInfo gameInfo;
@@ -67,7 +70,12 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.gamedetail);
+        
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
+        setSupportProgressBarIndeterminateVisibility(true);
 		
 		rfgData = new RFGenerationData(this);
 		variantRegex = Pattern.compile(" \\[.*\\]$");
@@ -380,7 +388,7 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 				displayGameInfo();
 			}
 			
-			findViewById(R.id.game_progress).setVisibility(View.GONE);
+			setSupportProgressBarIndeterminateVisibility(false);
 		}
     }
 

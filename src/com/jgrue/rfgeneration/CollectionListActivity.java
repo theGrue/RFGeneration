@@ -19,17 +19,20 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class CollectionListActivity extends FragmentActivity implements OnClickListener {
+public class CollectionListActivity extends ActionBarActivity implements OnClickListener {
 	private static final String TAG = "CollectionListActivity";
 	private long folderId;
 	private List<Long> folderIdList;
@@ -44,7 +47,11 @@ public class CollectionListActivity extends FragmentActivity implements OnClickL
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.collection_fragment);
+        
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
         
         // Initialize class variables
         folderId = getIntent().getLongExtra(Constants.INTENT_FOLDER, -1);
