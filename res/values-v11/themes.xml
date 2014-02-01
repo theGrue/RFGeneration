@@ -9,7 +9,13 @@
     <!-- ActionBar styles -->
     <style name="MyActionBar"
            parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@drawable/bg</item>
-        <item name="android:displayOptions">showCustom</item>
+        <item name="android:background">@drawable/splash</item>
+        <item name="android:subtitleTextStyle">@style/MyActionBarTitleText</item>
+    </style>
+    
+    <!-- ActionBar title text -->
+    <style name="MyActionBarTitleText"
+           parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+        <item name="android:textColor">@drawable/body</item>
     </style>
 </resources>

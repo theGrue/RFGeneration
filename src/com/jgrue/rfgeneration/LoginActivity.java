@@ -33,7 +33,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         setContentView(R.layout.login);
         
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
+        actionBar.setSubtitle("The Classic and Modern Gaming Databases");
         
         // Restore username from preferences if upgrading from v1.
         SharedPreferences settings = getSharedPreferences(Constants.PREFS_FILE, 0);

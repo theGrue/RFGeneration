@@ -3,6 +3,7 @@
     <!-- the theme applied to the application or activity -->
     <style name="CustomActionBarTheme"
            parent="@style/Theme.AppCompat.Light.DarkActionBar">
+
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/MyActionBar</item>
     </style>
@@ -10,8 +11,16 @@
     <!-- ActionBar styles -->
     <style name="MyActionBar"
            parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+
         <!-- Support library compatibility -->
-        <item name="background">@drawable/bg</item>
-        <item name="displayOptions">showCustom</item>
+        <item name="background">@drawable/splash</item>
+        <item name="subtitleTextStyle">@style/MyActionBarTitleText</item>
+    </style>
+    
+    <!-- ActionBar title text -->
+    <style name="MyActionBarTitleText"
+           parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+        <item name="android:textColor">@drawable/body</item>
+        <!-- The textColor property is backward compatible with the Support Library -->
     </style>
 </resources>

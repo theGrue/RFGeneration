@@ -123,28 +123,6 @@
 			    android:textAppearance="?android:attr/textAppearanceMedium"
 			    android:clickable="true" 
 			    android:layout_marginBottom="25dp" />
-
-			<!-- Footer -->
-			<LinearLayout 
-			    android:id="@+id/login_footer"
-				android:layout_width="fill_parent" 
-				android:orientation="vertical" 
-				android:layout_height="wrap_content">
-  	  
-				<RelativeLayout 
-				    android:layout_width="fill_parent" 
-					android:layout_height="wrap_content" 
-					android:background="@drawable/bg" >
-    
-    				<ImageView
-						android:src="@drawable/right" 
-						android:layout_width="wrap_content" 
-						android:layout_height="wrap_content" 
-						android:layout_centerHorizontal="true"/>
-      
-				</RelativeLayout>
-				
-			</LinearLayout>
 			
     </LinearLayout>
 

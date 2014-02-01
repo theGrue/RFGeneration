@@ -22,7 +22,6 @@ public class WebViewActivity extends ActionBarActivity {
 		setContentView(R.layout.webview);
         
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
         setSupportProgressBarIndeterminateVisibility(true);
 		
 		Log.i(TAG, "Loading URL: " + getIntent().getStringExtra(Constants.INTENT_WEB_URL));
@@ -39,7 +38,8 @@ public class WebViewActivity extends ActionBarActivity {
 		webView.getSettings().setBuiltInZoomControls(true);
 		webView.getSettings().setUseWideViewPort(true);
 		
-		((TextView)findViewById(R.id.webview_header)).setText(getIntent().getStringExtra(Constants.INTENT_WEB_TITLE));
+		actionBar.setTitle(getIntent().getStringExtra(Constants.INTENT_WEB_TITLE));
+		actionBar.setSubtitle(getIntent().getStringExtra(Constants.INTENT_WEB_SUBTITLE));
 		setSupportProgressBarIndeterminateVisibility(false);
 	}
 }

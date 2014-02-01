@@ -14,6 +14,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -32,7 +33,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class CollectionListActivity extends ActionBarActivity implements OnClickListener {
+public class CollectionListActivity extends ActionBarActivity {
 	private static final String TAG = "CollectionListActivity";
 	private long folderId;
 	private List<Long> folderIdList;
@@ -51,7 +52,7 @@ public class CollectionListActivity extends ActionBarActivity implements OnClick
         setContentView(R.layout.collection_fragment);
         
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
+        actionBar.setTitle(getSharedPreferences(Constants.PREFS_FILE, 0).getString(Constants.PREFS_USERNAME, "") + "'s Collection");
         
         // Initialize class variables
         folderId = getIntent().getLongExtra(Constants.INTENT_FOLDER, -1);
@@ -65,28 +66,18 @@ public class CollectionListActivity extends ActionBarActivity implements OnClick
         rfgData = new RFGenerationData(this);
         
 		// Set title bar
-		TextView currentPage = (TextView) findViewById(R.id.collection_text);
-		currentPage.setTag(new Object[] { folderId, consoleId, type });
+        findViewById(R.id.collection_text).setTag(new Object[] { folderId, consoleId, type });
 		if(folderId == -1)
-			currentPage.setText("All Folders");
+			actionBar.setSubtitle("All Folders");
 		else if(folderId == 0)
-			currentPage.setText("Owned Folders");
+			actionBar.setSubtitle("Owned Folders");
 		else {
 			ContentResolver db = getContentResolver();
 			Cursor folderName = db.query(Uri.withAppendedPath(RFGenerationProvider.FOLDERS_URI, Long.toString(folderId)), 
 					new String[] { "folder_name", "is_for_sale", "is_private" }, null, null, null);
 			startManagingCursor(folderName);
 			if(folderName.moveToNext())
-			{
-				currentPage.setText(folderName.getString(0));
-				
-				if (folderName.getInt(1) == 1) 
-					findViewById(R.id.collection_folder_for_sale).setVisibility(View.VISIBLE);
-				else if (folderName.getInt(2) == 1)
-					findViewById(R.id.collection_folder_private).setVisibility(View.VISIBLE);
-				else
-					findViewById(R.id.collection_folder).setVisibility(View.VISIBLE);
-			}
+				actionBar.setSubtitle(folderName.getString(0));
 		}
 		
 		if(consoleId > -1) {
@@ -96,19 +87,17 @@ public class CollectionListActivity extends ActionBarActivity implements OnClick
 			startManagingCursor(abbvCursor);
 			
 			if(abbvCursor.moveToNext()) {
-				currentPage.setText(currentPage.getText() + " :: " + abbvCursor.getString(0));
+				actionBar.setSubtitle(actionBar.getSubtitle() + " :: " + abbvCursor.getString(0));
 			} else {
-				currentPage.setText(currentPage.getText() + " :: ???");
+				actionBar.setSubtitle(actionBar.getSubtitle() + " :: ???");
 			}
 		}
 		
 		if(type.equals("H")) {
-			currentPage.setText(currentPage.getText() + " :: Hardware");
+			actionBar.setSubtitle(actionBar.getSubtitle() + " :: Hardware");
 		} else if(type.equals("S")) {
-			currentPage.setText(currentPage.getText() + " :: Software");
+			actionBar.setSubtitle(actionBar.getSubtitle() + " :: Software");
 		}
-		
-		findViewById(R.id.collection_titlebar).setOnClickListener(this);
     }
 	
     @Override
@@ -123,10 +112,6 @@ public class CollectionListActivity extends ActionBarActivity implements OnClick
 	    switch (item.getItemId()) {
 	    case R.id.filters:
 	    	createFiltersDialog();
-	        return true;
-	    case R.id.home:
-	    	Intent myIntent = new Intent(this, RFGenerationActivity.class);
-			startActivityForResult(myIntent, 0);
 	        return true;
 	    default:
 	        return super.onOptionsItemSelected(item);
@@ -259,11 +244,4 @@ public class CollectionListActivity extends ActionBarActivity implements OnClick
     		rfgData.close();
     	super.onDestroy();
     }
-
-	@Override
-	public void onClick(View v) {
-		if(v.getId() == R.id.collection_titlebar) {
-			createFiltersDialog();
-		}
-	}
 }

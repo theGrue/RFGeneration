@@ -55,9 +55,6 @@ public class RFGenerationActivity extends ActionBarActivity implements OnClickLi
         supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.main);
         
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
-        
         // Set this to fix some weirdness with jsoup and cookies. Mmm, cookie soup.
         System.setProperty("http.keepAlive", "false"); 
         
@@ -82,7 +79,7 @@ public class RFGenerationActivity extends ActionBarActivity implements OnClickLi
         } 
         
         // We're still here! Let's get the collection home set up.
-        ((TextView)findViewById(R.id.collection_header)).setText(settings.getString(Constants.PREFS_USERNAME, "") + "'s Collection");
+        getSupportActionBar().setSubtitle(settings.getString(Constants.PREFS_USERNAME, "") + "'s Collection");
         ((EditText)findViewById(R.id.quick_search_text)).setText(settings.getString(Constants.PREFS_LAST_SEARCH, ""));
         findViewById(R.id.quick_search_button).setOnClickListener(this);
         findViewById(R.id.barcode_reader_button).setOnClickListener(this);

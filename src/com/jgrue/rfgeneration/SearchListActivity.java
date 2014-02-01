@@ -67,7 +67,6 @@ public class SearchListActivity extends ActionBarListActivity {
 		setContentView(R.layout.search);
 		
 		final ActionBar actionBar = getSupportActionBar();
-        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
         setSupportProgressBarIndeterminateVisibility(true);
 		
 		searchGame = getIntent().getStringExtra(Constants.INTENT_SEARCH);
@@ -78,8 +77,8 @@ public class SearchListActivity extends ActionBarListActivity {
 		variantRegex = Pattern.compile(" \\[.*\\]$");
 		paddingUnit = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
 		
-		TextView currentPage = (TextView) findViewById(R.id.search_text);
-        currentPage.setText("Search results for \"" + searchGame + "\"...");
+		actionBar.setTitle("Quick Search");
+        actionBar.setSubtitle("Search results for \"" + searchGame + "\"...");
 		
 		setListAdapter(new SearchAdapter(gameList));
 		getListView().setOnItemClickListener(new OnItemClickListener() {

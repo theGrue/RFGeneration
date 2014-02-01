@@ -74,7 +74,6 @@ public class GameInfoActivity extends ActionBarActivity implements OnClickListen
 		setContentView(R.layout.gamedetail);
         
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
         setSupportProgressBarIndeterminateVisibility(true);
 		
 		rfgData = new RFGenerationData(this);
@@ -150,11 +149,7 @@ public class GameInfoActivity extends ActionBarActivity implements OnClickListen
     	}
     	
     	// Display the basic info.
-    	if(gameInfo.getConsole() !=null)
-    		((TextView)findViewById(R.id.game_header)).setText(gameInfo.getTitle() + " (" + gameInfo.getConsole() + ")");
-    	else
-    		((TextView)findViewById(R.id.game_header)).setText(gameInfo.getTitle());
-    	((TextView)findViewById(R.id.game_title)).setText(mainTitle);
+    	getSupportActionBar().setTitle(gameInfo.getTitle());
     	
     	StringBuilder sb = new StringBuilder();
     	sb.append(variationTitle);
@@ -168,9 +163,7 @@ public class GameInfoActivity extends ActionBarActivity implements OnClickListen
     	if(gameInfo.getType() != null && !gameInfo.getType().equals("S"))
     		sb.insert(0, "[" + gameInfo.getType() + "] ");
     	if(sb.toString().length() > 0) {
-    		((TextView)findViewById(R.id.game_info)).setText(sb.toString());
-    	} else {
-    		findViewById(R.id.game_info).setVisibility(View.GONE);
+    		getSupportActionBar().setSubtitle(sb.toString());
     	}
     	
     	// Populate the "My Folders" section.
@@ -397,7 +390,8 @@ public class GameInfoActivity extends ActionBarActivity implements OnClickListen
 		if (v.getId() == R.id.game_front_button || v.getId() == R.id.game_back_button ||
 				v.getId() == R.id.game_screenshot_button || v.getId() == R.id.game_game_button ||
 				v.getId() == R.id.game_manual_button) {
-			String title = ((TextView)findViewById(R.id.game_header)).getText().toString();
+			String title = getSupportActionBar().getTitle().toString();
+			String subTitle = getSupportActionBar().getSubtitle().toString();
 			String rfgId = gameInfo.getRFGID();
 			String folder = rfgId.substring(0, 5);
 			String type = null;
@@ -416,11 +410,13 @@ public class GameInfoActivity extends ActionBarActivity implements OnClickListen
 			if(type != null && !type.equals("ss")) {
 				Intent myIntent = new Intent(GameInfoActivity.this, WebViewActivity.class);
 				myIntent.putExtra(Constants.INTENT_WEB_TITLE, title);
+				myIntent.putExtra(Constants.INTENT_WEB_SUBTITLE, subTitle);
 				myIntent.putExtra(Constants.INTENT_WEB_URL, Constants.FUNCTION_IMAGE + folder + "/" + type + "/" + rfgId + ".jpg");
 		        startActivityForResult(myIntent, 0);
 			} else if (type.equals("ss")) {
 				Intent myIntent = new Intent(GameInfoActivity.this, WebViewActivity.class);
 				myIntent.putExtra(Constants.INTENT_WEB_TITLE, title);
+				myIntent.putExtra(Constants.INTENT_WEB_SUBTITLE, subTitle);
 				myIntent.putExtra(Constants.INTENT_WEB_URL, Constants.FUNCTION_SCREENSHOT + "?" + Constants.PARAM_RFGID + "=" + rfgId);
 		        startActivityForResult(myIntent, 0);
 			}
