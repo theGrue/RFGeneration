@@ -4,78 +4,12 @@
 	android:layout_height="fill_parent"
 	android:background="@drawable/body"
 	android:orientation="vertical">
-  
-    <!-- Header -->
-    <RelativeLayout 
-	    android:id="@+id/collection_header"
-	    android:layout_width="fill_parent" 
-	    android:background="@drawable/bg" 
-	    android:layout_height="wrap_content" 
-	    android:layout_gravity="top">
-    
-		<ImageView 
-			android:src="@drawable/left"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:contentDescription="@string/app_name" />
 
-		<ProgressBar
-		    android:id="@+id/collection_progress"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentRight="true"
-		    android:layout_centerVertical="true"
-		    android:layout_marginRight="5dp"  />
-		
-	</RelativeLayout>
-	
-	<LinearLayout 
-	    android:id="@+id/collection_titlebar"
-	    android:layout_width="fill_parent" 
-	    android:layout_height="wrap_content"
-	    android:layout_gravity="top" 
-	    android:background="@drawable/splash" 
-	    android:layout_marginTop="1dp" 
-	    android:layout_marginBottom="1dp"
-	    android:clickable="true">
-		<ImageView
-		    android:id="@+id/collection_folder"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="center_vertical"
-		    android:src="@drawable/folder"
-		    android:paddingLeft="5dip" 
-		    android:visibility="gone" />
-		
-		<ImageView
-		    android:id="@+id/collection_folder_for_sale"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="center_vertical"
-		    android:src="@drawable/folder_for_sale"
-		    android:paddingLeft="5dip"  
-		    android:visibility="gone" />
-		
-		<ImageView
-		    android:id="@+id/collection_folder_private"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="center_vertical"
-		    android:src="@drawable/folder_private"
-		    android:paddingLeft="5dip"  
-		    android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/collection_text"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dip"
-            android:textColor="@drawable/body"
-            android:textStyle="bold"
-            android:singleLine="true"
-            android:ellipsize="marquee" />
-
-    </LinearLayout>
+    <View
+        android:id="@+id/collection_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
     
 	<fragment
 	   	android:name="com.jgrue.rfgeneration.CollectionListFragment"

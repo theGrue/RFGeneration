@@ -4,50 +4,6 @@
 	android:layout_height="fill_parent"
 	android:background="@drawable/background"
 	android:orientation="vertical">
-	
-    <!-- Header -->
-    <RelativeLayout 
-	    android:layout_width="fill_parent" 
-	    android:background="@drawable/bg" 
-	    android:layout_height="wrap_content" 
-	    android:layout_gravity="top">
-    
-		<ImageView 
-			android:src="@drawable/left"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:contentDescription="@string/app_name" />	 
-			
-		<ProgressBar
-		    android:id="@+id/game_progress"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentRight="true"
-		    android:layout_centerVertical="true"
-		    android:layout_marginRight="5dp"  />
-			
-	</RelativeLayout>
-	
-    <LinearLayout 
-	    android:layout_width="fill_parent" 
-	    android:layout_height="wrap_content"
-	    android:layout_gravity="top" 
-	    android:background="@drawable/splash" 
-	    android:layout_marginTop="1dp" 
-	    android:layout_marginBottom="1dp">
-
-        <TextView
-            android:id="@+id/game_header"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:padding="5dip"
-            android:textColor="@drawable/body"
-            android:textStyle="bold"
-            android:singleLine="true"
-            android:ellipsize="marquee" />
-        
-    </LinearLayout>
     
     <!-- Content -->
     <ScrollView
@@ -59,37 +15,6 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:orientation="vertical" >
-
-            <LinearLayout
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:orientation="vertical"
-		        android:background="@drawable/body">
-		        
-	            <TextView
-	                android:id="@+id/game_title"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:textAppearance="?android:attr/textAppearanceLarge"
-	                android:textColor="@drawable/splash"
-	                android:textStyle="bold"
-	                android:layout_marginLeft="5dp"
-	                android:layout_marginRight="5dp" />
-	            
-	            <TextView
-	                android:id="@+id/game_info"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:textColor="@drawable/link"
-	                android:layout_marginLeft="5dp"
-	                android:layout_marginRight="5dp" />
-	            
-	            <View
-	                android:layout_width="fill_parent"
-	                android:layout_height="1dp"
-	                android:background="@drawable/border"/>
-            
-            </LinearLayout>
             
             <!-- My Folders -->
 	        <LinearLayout

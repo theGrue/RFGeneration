@@ -57,4 +57,5 @@ public class Constants {
 	public static final String INTENT_TYPE = PARAM_TYPE;
 	public static final String INTENT_WEB_URL = "URL";
 	public static final String INTENT_WEB_TITLE = "Title";
+	public static final String INTENT_WEB_SUBTITLE = "Subtitle";
 }

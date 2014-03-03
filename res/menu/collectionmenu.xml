@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/filters" android:title="@string/filters_label"></item>
-    <item android:id="@+id/home" android:title="@string/home_label"></item>
-    
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+    <item android:id="@+id/filters" android:title="@string/filters_label"
+        yourapp:showAsAction="always"></item>
 </menu>

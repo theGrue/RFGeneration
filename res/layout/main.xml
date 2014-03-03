@@ -4,51 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" 
     android:background="@drawable/background" >
-
-    <!-- Header -->
-    <RelativeLayout 
-	    android:id="@+id/main_header"
-	    android:layout_width="fill_parent" 
-	    android:background="@drawable/bg" 
-	    android:layout_height="wrap_content" 
-	    android:layout_gravity="top">
-    
-		<ImageView 
-			android:src="@drawable/left"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:contentDescription="@string/app_name" />	 
-			
-		<ProgressBar
-		    android:id="@+id/main_progress"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentRight="true"
-		    android:layout_centerVertical="true"
-		    android:layout_marginRight="5dp"  />
-			
-	</RelativeLayout>
 	
-	<LinearLayout 
-	    android:layout_width="fill_parent" 
-	    android:layout_height="wrap_content"
-	    android:layout_gravity="top" 
-	    android:background="@drawable/splash" 
-	    android:layout_marginTop="1dp" 
-	    android:layout_marginBottom="1dp">
-        <TextView
-            android:id="@+id/collection_header"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5dip"
-            android:textColor="@drawable/body"
-            android:textStyle="bold"
-            android:singleLine="true"
-            android:ellipsize="marquee" />
-
-    </LinearLayout>
-    
     <!-- Content -->
     <ScrollView
         android:layout_width="fill_parent"
@@ -86,7 +42,7 @@
 	                        android:textColor="@drawable/splash"
 	                        android:textStyle="bold"
 	                        android:layout_marginLeft="5dp" />
-
+	                    
 	                    <ImageView
 	                        android:id="@+id/search_settings_button"
 	                        android:layout_width="wrap_content"
@@ -180,8 +136,8 @@
 	                    android:layout_marginLeft="5dip"
 	                    android:layout_marginRight="5dip"
 	                    android:background="@drawable/splash" />
-
-	                <TableLayout
+
+					<TableLayout
 	                    android:id="@+id/folder_table"
 	                    android:layout_width="fill_parent"
 	                    android:layout_height="wrap_content"

@@ -26,13 +26,19 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -41,8 +47,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TableRow.LayoutParams;
+import android.widget.Toast;
 
-public class SearchListActivity extends ListActivity {
+public class SearchListActivity extends ActionBarListActivity {
 	private static final String TAG = "SearchListActivity";
 	private String searchGame;
 	private boolean quickSearch = true;
@@ -56,7 +63,11 @@ public class SearchListActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.search);
+		
+		final ActionBar actionBar = getSupportActionBar();
+        setSupportProgressBarIndeterminateVisibility(true);
 		
 		searchGame = getIntent().getStringExtra(Constants.INTENT_SEARCH);
 		isUpc = getIntent().getStringExtra(Constants.INTENT_TYPE) != null && 
@@ -66,28 +77,27 @@ public class SearchListActivity extends ListActivity {
 		variantRegex = Pattern.compile(" \\[.*\\]$");
 		paddingUnit = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
 		
-		TextView currentPage = (TextView) findViewById(R.id.search_text);
-        currentPage.setText("Search results for \"" + searchGame + "\"...");
+		actionBar.setTitle("Quick Search");
+        actionBar.setSubtitle("Search results for \"" + searchGame + "\"...");
 		
 		setListAdapter(new SearchAdapter(gameList));
+		getListView().setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+            	Intent myIntent = new Intent(v.getContext(), GameInfoActivity.class);
+        	  	myIntent.putExtra(Constants.INTENT_GAME_ID, gameList.get(position).getId());
+        		myIntent.putExtra(Constants.INTENT_GAME_RFGID, gameList.get(position).getRFGID());
+        		myIntent.putExtra(Constants.INTENT_GAME_CONSOLE, gameList.get(position).getConsole());
+        		myIntent.putExtra(Constants.INTENT_GAME_REGION, gameList.get(position).getRegion());
+        		myIntent.putExtra(Constants.INTENT_GAME_TYPE, gameList.get(position).getType());
+        		myIntent.putExtra(Constants.INTENT_GAME_TITLE, gameList.get(position).getTitle());
+        		myIntent.putExtra(Constants.INTENT_GAME_PUBLISHER, gameList.get(position).getPublisher());
+        		myIntent.putExtra(Constants.INTENT_GAME_YEAR, gameList.get(position).getYear());
+        		myIntent.putExtra(Constants.INTENT_GAME_GENRE, gameList.get(position).getGenre());
+        		startActivityForResult(myIntent, 0);
+            }
+        });
     }
-    
-    @Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
-	  
-	  	Intent myIntent = new Intent(v.getContext(), GameInfoActivity.class);
-	  	myIntent.putExtra(Constants.INTENT_GAME_ID, gameList.get(position).getId());
-		myIntent.putExtra(Constants.INTENT_GAME_RFGID, gameList.get(position).getRFGID());
-		myIntent.putExtra(Constants.INTENT_GAME_CONSOLE, gameList.get(position).getConsole());
-		myIntent.putExtra(Constants.INTENT_GAME_REGION, gameList.get(position).getRegion());
-		myIntent.putExtra(Constants.INTENT_GAME_TYPE, gameList.get(position).getType());
-		myIntent.putExtra(Constants.INTENT_GAME_TITLE, gameList.get(position).getTitle());
-		myIntent.putExtra(Constants.INTENT_GAME_PUBLISHER, gameList.get(position).getPublisher());
-		myIntent.putExtra(Constants.INTENT_GAME_YEAR, gameList.get(position).getYear());
-		myIntent.putExtra(Constants.INTENT_GAME_GENRE, gameList.get(position).getGenre());
-		startActivityForResult(myIntent, 0);
-	}
 
     private class SearchAdapter extends EndlessAdapter {
     	
@@ -363,7 +373,7 @@ public class SearchListActivity extends ListActivity {
 			}
 			
 			if (nextPage >= numPages && numPages != -1)
-				findViewById(R.id.search_progress).setVisibility(View.GONE);
+				setSupportProgressBarIndeterminateVisibility(false);
 		}
     	
 		@Override
@@ -378,5 +388,13 @@ public class SearchListActivity extends ListActivity {
     	if(rfgData != null)
     		rfgData.close();
     	super.onDestroy();
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        //inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

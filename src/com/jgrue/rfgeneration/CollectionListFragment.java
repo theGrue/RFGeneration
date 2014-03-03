@@ -28,6 +28,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
@@ -181,13 +182,13 @@ public class CollectionListFragment extends ListFragment implements LoaderManage
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 		adapter.swapCursor(cursor);
 		adapter.notifyDataSetChanged(); 
-		getActivity().findViewById(R.id.collection_progress).setVisibility(View.GONE);	   
+		((ActionBarActivity) getActivity()).setSupportProgressBarIndeterminateVisibility(false);
 	}
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
 		adapter.swapCursor(null);
-		getActivity().findViewById(R.id.collection_progress).setVisibility(View.VISIBLE);	  
+		((ActionBarActivity) getActivity()).setSupportProgressBarIndeterminateVisibility(true);  
 	}
 	
 	@Override

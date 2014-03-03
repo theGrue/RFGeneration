@@ -37,12 +37,15 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
@@ -53,7 +56,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class GameInfoActivity extends FragmentActivity implements OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
+public class GameInfoActivity extends ActionBarActivity implements OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
 	private static final String TAG = "GameInfoActivity";
 	private RFGenerationData rfgData;
 	private GameInfo gameInfo;
@@ -67,7 +70,11 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.gamedetail);
+        
+        final ActionBar actionBar = getSupportActionBar();
+        setSupportProgressBarIndeterminateVisibility(true);
 		
 		rfgData = new RFGenerationData(this);
 		variantRegex = Pattern.compile(" \\[.*\\]$");
@@ -142,11 +149,7 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
     	}
     	
     	// Display the basic info.
-    	if(gameInfo.getConsole() !=null)
-    		((TextView)findViewById(R.id.game_header)).setText(gameInfo.getTitle() + " (" + gameInfo.getConsole() + ")");
-    	else
-    		((TextView)findViewById(R.id.game_header)).setText(gameInfo.getTitle());
-    	((TextView)findViewById(R.id.game_title)).setText(mainTitle);
+    	getSupportActionBar().setTitle(gameInfo.getTitle());
     	
     	StringBuilder sb = new StringBuilder();
     	sb.append(variationTitle);
@@ -160,9 +163,7 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
     	if(gameInfo.getType() != null && !gameInfo.getType().equals("S"))
     		sb.insert(0, "[" + gameInfo.getType() + "] ");
     	if(sb.toString().length() > 0) {
-    		((TextView)findViewById(R.id.game_info)).setText(sb.toString());
-    	} else {
-    		findViewById(R.id.game_info).setVisibility(View.GONE);
+    		getSupportActionBar().setSubtitle(sb.toString());
     	}
     	
     	// Populate the "My Folders" section.
@@ -380,7 +381,7 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 				displayGameInfo();
 			}
 			
-			findViewById(R.id.game_progress).setVisibility(View.GONE);
+			setSupportProgressBarIndeterminateVisibility(false);
 		}
     }
 
@@ -389,7 +390,8 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 		if (v.getId() == R.id.game_front_button || v.getId() == R.id.game_back_button ||
 				v.getId() == R.id.game_screenshot_button || v.getId() == R.id.game_game_button ||
 				v.getId() == R.id.game_manual_button) {
-			String title = ((TextView)findViewById(R.id.game_header)).getText().toString();
+			String title = getSupportActionBar().getTitle().toString();
+			String subTitle = getSupportActionBar().getSubtitle().toString();
 			String rfgId = gameInfo.getRFGID();
 			String folder = rfgId.substring(0, 5);
 			String type = null;
@@ -408,11 +410,13 @@ public class GameInfoActivity extends FragmentActivity implements OnClickListene
 			if(type != null && !type.equals("ss")) {
 				Intent myIntent = new Intent(GameInfoActivity.this, WebViewActivity.class);
 				myIntent.putExtra(Constants.INTENT_WEB_TITLE, title);
+				myIntent.putExtra(Constants.INTENT_WEB_SUBTITLE, subTitle);
 				myIntent.putExtra(Constants.INTENT_WEB_URL, Constants.FUNCTION_IMAGE + folder + "/" + type + "/" + rfgId + ".jpg");
 		        startActivityForResult(myIntent, 0);
 			} else if (type.equals("ss")) {
 				Intent myIntent = new Intent(GameInfoActivity.this, WebViewActivity.class);
 				myIntent.putExtra(Constants.INTENT_WEB_TITLE, title);
+				myIntent.putExtra(Constants.INTENT_WEB_SUBTITLE, subTitle);
 				myIntent.putExtra(Constants.INTENT_WEB_URL, Constants.FUNCTION_SCREENSHOT + "?" + Constants.PARAM_RFGID + "=" + rfgId);
 		        startActivityForResult(myIntent, 0);
 			}
