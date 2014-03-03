@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">RF Generation</string>
     <string name="login_header">Login</string>
     <string name="username_label">Username:</string>
@@ -10,7 +10,7 @@
     <string name="all_folders_label">All Folders</string>
     <string name="owned_folders_label">Owned Folders</string>
     <string name="quick_search_header">Quick Search</string>
-    <string name="pending_label">Now Loading...</string>
+    <string name="pending_label">Now Loading&#8230;</string>
     <string name="unknown_console">"???"</string>
     <string name="logout_label">Logout</string>
     <string name="filters_label">Filters</string>
