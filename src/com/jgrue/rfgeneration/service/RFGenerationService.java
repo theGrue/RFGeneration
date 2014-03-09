@@ -140,8 +140,10 @@ public class RFGenerationService extends Service {
     			String[] nextLine = reader.readNext();
     			
     			// Empty folders return an HTML page instead of a CSV. If we don't get some columns, just get out of here.
-    			if(nextLine.length <= 1)
+    			if(nextLine.length <= 1) {
+    				reader.close();
     				return true;
+    			}
     			
     			// Create some variables to use in the loop below.
     			int year = 0;
@@ -188,6 +190,8 @@ public class RFGenerationService extends Service {
                     
                     gameList.add(gameInsert);
                 }
+    			
+    			reader.close();
     			
     			getContentResolver().bulkInsert(Uri.withAppendedPath(RFGenerationProvider.COLLECTION_URI, Long.toString(folderId)), 
 					gameList.toArray(new ContentValues[]{}));
