@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class RFGenerationData extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "rfgeneration.db";
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 4;
 	
 	public RFGenerationData(Context ctx) {
 		super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
@@ -82,6 +82,16 @@ public class RFGenerationData extends SQLiteOpenHelper {
 			ih.prepareForInsert(); ih.bind(id, 216); ih.bind(name, "Microsoft Xbox One"); ih.bind(abbv, "XBOne"); ih.execute();
 			ih.prepareForInsert(); ih.bind(id, 217); ih.bind(name, "GOG.com"); ih.bind(abbv, "GOG"); ih.execute();
 		}
+
+        if (oldVersion < 4) {
+            ih.prepareForInsert(); ih.bind(id, 218); ih.bind(name, "Videomaster Colour Cartridge"); ih.bind(abbv, "VCC"); ih.execute();
+            ih.prepareForInsert(); ih.bind(id, 219); ih.bind(name, "Commodore PET"); ih.bind(abbv, "PET"); ih.execute();
+            ih.prepareForInsert(); ih.bind(id, 220); ih.bind(name, "Bandai Datach Joint ROM System"); ih.bind(abbv, "JRS"); ih.execute();
+            ih.prepareForInsert(); ih.bind(id, 221); ih.bind(name, "LaserDisc"); ih.bind(abbv, "LD"); ih.execute();
+            ih.prepareForInsert(); ih.bind(id, 222); ih.bind(name, "Nintendo New Nintendo 3DS"); ih.bind(abbv, "N3DS"); ih.execute();
+            ih.prepareForInsert(); ih.bind(id, 223); ih.bind(name, "Sega AI Computer"); ih.bind(abbv, "AIC"); ih.execute();
+            ih.prepareForInsert(); ih.bind(id, 224); ih.bind(name, "Apple IIGS"); ih.bind(abbv, "IIGS"); ih.execute();
+        }
 	}
 	
 	private void insertConsoles(SQLiteDatabase db) {
@@ -178,7 +188,7 @@ public class RFGenerationData extends SQLiteOpenHelper {
         ih.prepareForInsert(); ih.bind(id, 85); ih.bind(name, "NEC SuperGrafx"); ih.bind(abbv, "SGfx"); ih.execute();
         ih.prepareForInsert(); ih.bind(id, 86); ih.bind(name, "SNK Neo Geo Pocket"); ih.bind(abbv, "NGP"); ih.execute();
         ih.prepareForInsert(); ih.bind(id, 87); ih.bind(name, "Nintendo DS"); ih.bind(abbv, "DS"); ih.execute();
-        ih.prepareForInsert(); ih.bind(id, 88); ih.bind(name, "Nintendo Pokémon Mini"); ih.bind(abbv, "PKMN"); ih.execute();
+        ih.prepareForInsert(); ih.bind(id, 88); ih.bind(name, "Nintendo PokÃ©mon Mini"); ih.bind(abbv, "PKMN"); ih.execute();
         ih.prepareForInsert(); ih.bind(id, 89); ih.bind(name, "Tiger Gizmondo"); ih.bind(abbv, "Giz"); ih.execute();
         ih.prepareForInsert(); ih.bind(id, 90); ih.bind(name, "Cougar Boy / MegaDuck"); ih.bind(abbv, "CB"); ih.execute();
         ih.prepareForInsert(); ih.bind(id, 91); ih.bind(name, "Bandai WonderSwan"); ih.bind(abbv, "WS"); ih.execute();
