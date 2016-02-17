@@ -131,7 +131,7 @@ public class RFGenerationService extends Service {
     		try {
     			Connection.Response document = Jsoup.connect(Constants.FUNCTION_CSV + 
     					"&" + Constants.PARAM_FOLDER + "=" + URLEncoder.encode(folderName) + 
-    					"&" + Constants.PARAM_USERNAME + "=" + settings.getString(Constants.PREFS_USERNAME, "") )
+    					"&" + Constants.PARAM_USERNAME + "=" + URLEncoder.encode(settings.getString(Constants.PREFS_USERNAME, "")) )
     				.cookie(Constants.LOGIN_COOKIE, LoginScraper.getCookie(ctx))
     				.timeout(Constants.TIMEOUT)
     				.execute();
